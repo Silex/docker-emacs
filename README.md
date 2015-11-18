@@ -1,5 +1,7 @@
 # Emacs in docker!
 
+**WORK IN PROGRESS - DONT REPORT ISSUES UNTIL THIS LINE IS GONE**
+
 Run emacs in a docker:
 
 ``` shell
