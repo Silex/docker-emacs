@@ -7,7 +7,7 @@ run apt-get update && \
 
 # Build emacs
 arg EMACS_REPOSITORY="https://git.savannah.gnu.org/git/emacs.git"
-arg EMACS_BRANCH="emacs-24.4"
+arg EMACS_BRANCH="emacs-25.2-rc2"
 run git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /tmp/emacs && \
     cd /tmp/emacs && \
     ./autogen.sh && \
