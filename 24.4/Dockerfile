@@ -6,7 +6,7 @@ run apt-get update && \
     apt-get build-dep -y emacs24
 
 # Build emacs
-arg EMACS_REPOSITORY="https://git.savannah.gnu.org/git/emacs.git"
+arg EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
 arg EMACS_BRANCH="emacs-24.4"
 run git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /tmp/emacs && \
     cd /tmp/emacs && \
@@ -16,5 +16,4 @@ run git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /tmp/emacs && \
     rm -rf /tmp/emacs
 
 workdir /rootfs
-
 entrypoint ["emacs"]
