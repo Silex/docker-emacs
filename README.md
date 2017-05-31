@@ -3,8 +3,8 @@
 - `24.3` [24.3/Dockerfile](https://github.com/silex/docker-emacs/blob/master/24.3/Dockerfile)
 - `24.4` [24.4/Dockerfile](https://github.com/silex/docker-emacs/blob/master/24.4/Dockerfile)
 - `24.5`, `24` [24.5/Dockerfile](https://github.com/silex/docker-emacs/blob/master/24.5/Dockerfile)
-- `25.1`, `25`, `latest` [25.1/Dockerfile](https://github.com/silex/docker-emacs/blob/master/25.1/Dockerfile)
-- `25.2-rc2` [25.1-rc2/Dockerfile](https://github.com/silex/docker-emacs/blob/master/25.2-rc2/Dockerfile)
+- `25.1` [25.1/Dockerfile](https://github.com/silex/docker-emacs/blob/master/25.1/Dockerfile)
+- `25.2`, `25`, `latest` [25.2/Dockerfile](https://github.com/silex/docker-emacs/blob/master/25.2/Dockerfile)
 - `master` [master/Dockerfile](https://github.com/silex/docker-emacs/blob/master/master/Dockerfile)
 
 # Description
