@@ -1,9 +1,25 @@
-from ubuntu:14.04
+from ubuntu:16.04
 
 # Install dependencies
 run apt-get update && \
-    apt-get install -y curl git && \
-    apt-get build-dep -y emacs24
+    apt-get install -y \
+            autoconf \
+            automake \
+            build-essential \
+            curl \
+            git \
+            imagemagick \
+            libgif-dev \
+            libgnutls-dev \
+            libgtk2.0-dev \
+            libjpeg-dev \
+            libmagick++-dev \
+            libncurses-dev \
+            libpng-dev \
+            libtiff-dev \
+            libx11-dev \
+            libxpm-dev \
+            texinfo
 
 # Build emacs
 arg EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
