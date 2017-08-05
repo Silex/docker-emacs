@@ -9,6 +9,7 @@ run apt-get update && \
             curl \
             git \
             imagemagick \
+            libdbus-1-dev \
             libgif-dev \
             libgnutls-dev \
             libgtk2.0-dev \
