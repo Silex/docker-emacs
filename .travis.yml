@@ -5,7 +5,8 @@ services: docker
 env:
   - EMACS_BRANCH="emacs-24.5"       DOCKER_TAGS="24.5 24"
   - EMACS_BRANCH="emacs-25.1"       DOCKER_TAGS="25.1"
-  - EMACS_BRANCH="emacs-25.2"       DOCKER_TAGS="25.2 25 latest"
+  - EMACS_BRANCH="emacs-25.2"       DOCKER_TAGS="25.2"
+  - EMACS_BRANCH="emacs-25.3"       DOCKER_TAGS="25.3 25 latest"
   - EMACS_BRANCH="master"           DOCKER_TAGS="master"
 
 before_install: source functions.sh
