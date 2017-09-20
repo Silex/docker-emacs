@@ -9,6 +9,7 @@ run apt-get update && \
             curl \
             git \
             imagemagick \
+            ispell \
             libdbus-1-dev \
             libgif-dev \
             libgnutls-dev \
