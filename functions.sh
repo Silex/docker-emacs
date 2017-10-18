@@ -3,7 +3,7 @@
 build()
 {
   for tag in $DOCKER_TAGS; do
-    docker build -t silex/emacs:$tag --build-arg="EMACS_BRANCH=$EMACS_BRANCH" .
+    docker build -t silex/emacs:$tag --build-arg="GIT_BRANCH=$GIT_BRANCH" .
   done
 }
 

@@ -24,9 +24,9 @@ RUN apt-get update && \
             texinfo
 
 # Build emacs
-ARG EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
-ARG EMACS_BRANCH
-RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /tmp/emacs && \
+ARG GIT_REPOSITORY="git://git.sv.gnu.org/emacs.git"
+ARG GIT_BRANCH
+RUN git clone --depth 1 --branch $GIT_BRANCH $GIT_REPOSITORY /tmp/emacs && \
     cd /tmp/emacs && \
     ./autogen.sh && \
     ./configure && \
