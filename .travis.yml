@@ -7,6 +7,7 @@ env:
   - GIT_BRANCH="emacs-25.1"       DOCKER_TAGS="25.1"
   - GIT_BRANCH="emacs-25.2"       DOCKER_TAGS="25.2"
   - GIT_BRANCH="emacs-25.3"       DOCKER_TAGS="25.3 25 latest"
+  - GIT_BRANCH="emacs-26.0.91"    DOCKER_TAGS="26.0"
   - GIT_BRANCH="master"           DOCKER_TAGS="master"
 
 before_install: source functions.sh
