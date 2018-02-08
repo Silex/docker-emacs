@@ -4,6 +4,7 @@
 - `25.1` [25.1/Dockerfile](https://github.com/silex/docker-emacs/blob/master/25.1/Dockerfile)
 - `25.2` [25.2/Dockerfile](https://github.com/silex/docker-emacs/blob/master/25.2/Dockerfile)
 - `25.3`, `25`, `latest` [25.3/Dockerfile](https://github.com/silex/docker-emacs/blob/master/25.3/Dockerfile)
+- `26.0` [26.0/Dockerfile](https://github.com/silex/docker-emacs/blob/master/26.0/Dockerfile)
 - `master` [master/Dockerfile](https://github.com/silex/docker-emacs/blob/master/master/Dockerfile)
 
 # Description
