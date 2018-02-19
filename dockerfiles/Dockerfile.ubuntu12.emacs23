@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:12.04
 
 # Install dependencies
 RUN apt-get update && \
@@ -26,10 +26,11 @@ RUN apt-get update && \
 # Build emacs
 ARG GIT_REPOSITORY="git://git.sv.gnu.org/emacs.git"
 ARG GIT_BRANCH
+
 RUN git clone --depth 1 --branch $GIT_BRANCH $GIT_REPOSITORY /tmp/emacs && \
     cd /tmp/emacs && \
-    ./autogen.sh && \
-    ./configure && \
+    ./configure --with-crt-dir=/usr/lib/x86_64-linux-gnu && \
+    make bootstrap && \
     make -j 8 install && \
     rm -rf /tmp/emacs
 

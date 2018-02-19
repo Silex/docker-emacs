@@ -3,6 +3,7 @@ language: generic
 services: docker
 
 env:
+  - GIT_BRANCH="emacs-23.4"       DOCKER_TAGS="23.4 23"
   - GIT_BRANCH="emacs-24.5"       DOCKER_TAGS="24.5 24"
   - GIT_BRANCH="emacs-25.1"       DOCKER_TAGS="25.1"
   - GIT_BRANCH="emacs-25.2"       DOCKER_TAGS="25.2"
