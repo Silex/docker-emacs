@@ -55,7 +55,7 @@ push()
   if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     for tag in $DOCKER_TAGS; do
-      echo Push $DOCKER_REPO/$DOCKER_IMG:$tag
+      echo Pushing $DOCKER_REPO/$DOCKER_IMG:$tag
       docker push $DOCKER_REPO/$DOCKER_IMG:$tag
     done
   fi
