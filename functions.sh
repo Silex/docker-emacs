@@ -19,11 +19,11 @@ fetch()
   [ ! -d $TRAVIS_CACHE ] &&  mkdir $TRAVIS_CACHE
 
   if [ ! -d $TRAVIS_CACHE/$GIT_BRANCH ]; then
-    echo git clone --branch $GIT_BRANCH $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
-    git clone --branch $GIT_BRANCH $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
+    echo git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
+    git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
   else
-    echo "cd $TRAVIS_CACHE/$GIT_BRANCH; git pull"
-    (cd $TRAVIS_CACHE/$GIT_BRANCH; git pull)
+    echo "cd $TRAVIS_CACHE/$GIT_BRANCH; git pull --depth 1"
+    (cd $TRAVIS_CACHE/$GIT_BRANCH; git pull --depth 1)
   fi
 
   # Copy updated sources to docker build context, and then remove
