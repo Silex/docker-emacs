@@ -26,6 +26,7 @@ RUN apt-get update && \
 # Build emacs
 ARG GIT_REPOSITORY="git://git.sv.gnu.org/emacs.git"
 ARG GIT_BRANCH
+
 RUN git clone --depth 1 --branch $GIT_BRANCH $GIT_REPOSITORY /tmp/emacs && \
     cd /tmp/emacs && \
     ./autogen.sh && \
