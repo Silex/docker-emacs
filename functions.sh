@@ -46,6 +46,7 @@ build()
     docker build -t $DOCKER_REPO/$DOCKER_IMG:$tag \
            --cache-from $DOCKER_REPO/$DOCKER_IMG:$tag \
            --build-arg="GIT_BRANCH=$GIT_BRANCH" \
+           --pull \
            -f Dockerfile.$major .
   done
 }
