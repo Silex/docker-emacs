@@ -55,7 +55,14 @@ build()
 
 push()
 {
-  if [ "$TRAVIS_BRANCH" == "master" ]; then
+  # DOCKER_USERNAME is empty for forked repositories
+  # TRAVIS_PULL_REQUEST is "true" for pull requests
+  # TRAVIS_BRANCH is the current branch or the PR target branch
+  # TRAVIS_PULL_REQUEST_BRANCH is the PR source branch
+  current_branch=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} # Not really needed but on the safe side
+  if [ -z "$DOCKER_USERNAME" ] || [ "$TRAVIS_PULL_REQUEST" == "true" ] || [ "$current_branch" != "master" ]; then
+    echo Not pushing
+  else
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     for tag in $DOCKER_TAGS; do
       echo Pushing $DOCKER_REPO/$DOCKER_IMG:$tag
