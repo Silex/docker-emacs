@@ -34,17 +34,19 @@ fetch()
 
 build()
 {
+  # Pull previous image and use it as cache in the build.
+  # This is how docker knows if the sources have changed.
+  first_tag=$(echo $DOCKER_TAGS | cut -d " " -f 1)
+  docker pull $DOCKER_REPO/$DOCKER_IMG:$first_tag
+
   for tag in $DOCKER_TAGS; do
     echo Building $DOCKER_REPO/$DOCKER_IMG:$tag from source $GIT_BRANCH
 
     # Select Dockerfile based on major number, i.e. "24.5" => "24"
     major=$(echo $tag | cut -d "." -f 1)
 
-    # Pull previous image and use it as cache in the build.
-    # This is how docker knows if the sources have changed.
-    docker pull $DOCKER_REPO/$DOCKER_IMG:$tag
     docker build -t $DOCKER_REPO/$DOCKER_IMG:$tag \
-           --cache-from $DOCKER_REPO/$DOCKER_IMG:$tag \
+           --cache-from $DOCKER_REPO/$DOCKER_IMG:$first_tag \
            --build-arg="GIT_BRANCH=$GIT_BRANCH" \
            --pull \
            -f Dockerfile.$major .
