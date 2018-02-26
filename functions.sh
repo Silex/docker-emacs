@@ -19,7 +19,7 @@ fetch()
   [ ! -d $TRAVIS_CACHE ] &&  mkdir $TRAVIS_CACHE
 
   if [ ! -d $TRAVIS_CACHE/$GIT_BRANCH ]; then
-    echo git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
+    echo "git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH"
     git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
   else
     echo "cd $TRAVIS_CACHE/$GIT_BRANCH; git pull --depth 1"
@@ -34,22 +34,34 @@ fetch()
 
 build()
 {
-  # Pull previous image and use it as cache in the build.
-  # This is how docker knows if the sources have changed.
-  first_tag=$(echo $DOCKER_TAGS | cut -d " " -f 1)
-  docker pull $DOCKER_REPO/$DOCKER_IMG:$first_tag
+  # branch "emacs-26.0.91" => version "26.0" => major "26"
+  version=$(echo "$GIT_BRANCH" | cut -d "-" -f 2 | cut -d "." -f 1,2)
+  major=$(echo "$GIT_BRANCH" | cut -d "-" -f 2 | cut -d "." -f 1)
 
+  # "full" build, halt after first stage in Dockerfile
+  echo "Building $DOCKER_REPO/$DOCKER_IMG:$version from source $GIT_BRANCH"
+  docker pull $DOCKER_REPO/$DOCKER_IMG:$version
+  docker build -t full \
+         --target full \
+         --cache-from $DOCKER_REPO/$DOCKER_IMG:$version \
+         --build-arg="GIT_BRANCH=$GIT_BRANCH" \
+         -f Dockerfile.$major .
+
+  # "slim" build, run second stage in Dockerfile
+  echo "Building $DOCKER_REPO/$DOCKER_IMG:$version-slim from source $GIT_BRANCH"
+  docker pull $DOCKER_REPO/$DOCKER_IMG:$version-slim
+  docker build -t slim \
+         --cache-from $DOCKER_REPO/$DOCKER_IMG:$version \
+         --cache-from $DOCKER_REPO/$DOCKER_IMG:$version-slim \
+         --build-arg="GIT_BRANCH=$GIT_BRANCH" \
+         -f Dockerfile.$major .
+
+  # Assign the desired tags
   for tag in $DOCKER_TAGS; do
-    echo Building $DOCKER_REPO/$DOCKER_IMG:$tag from source $GIT_BRANCH
-
-    # Select Dockerfile based on major number, i.e. "24.5" => "24"
-    major=$(echo $tag | cut -d "." -f 1)
-
-    docker build -t $DOCKER_REPO/$DOCKER_IMG:$tag \
-           --cache-from $DOCKER_REPO/$DOCKER_IMG:$first_tag \
-           --build-arg="GIT_BRANCH=$GIT_BRANCH" \
-           --pull \
-           -f Dockerfile.$major .
+      echo "Tagging $DOCKER_REPO/$DOCKER_IMG:$tag"
+      docker tag full $DOCKER_REPO/$DOCKER_IMG:$tag
+      echo "Tagging $DOCKER_REPO/$DOCKER_IMG:$tag-slim"
+      docker tag slim $DOCKER_REPO/$DOCKER_IMG:$tag-slim
   done
 }
 
@@ -65,8 +77,10 @@ push()
   else
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     for tag in $DOCKER_TAGS; do
-      echo Pushing $DOCKER_REPO/$DOCKER_IMG:$tag
+      echo "Pushing $DOCKER_REPO/$DOCKER_IMG:$tag"
       docker push $DOCKER_REPO/$DOCKER_IMG:$tag
+      echo "Pushing $DOCKER_REPO/$DOCKER_IMG:$tag-slim"
+      docker push $DOCKER_REPO/$DOCKER_IMG:$tag-slim
     done
   fi
 }
