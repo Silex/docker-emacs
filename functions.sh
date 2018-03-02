@@ -44,6 +44,7 @@ build()
   echo "Building $DOCKER_REPO/$DOCKER_IMG:$version from source $GIT_BRANCH"
   docker pull $DOCKER_REPO/$DOCKER_IMG:$version
   docker build -t full \
+         --pull \
          --target full \
          --cache-from $DOCKER_REPO/$DOCKER_IMG:$version \
          --build-arg="GIT_BRANCH=$GIT_BRANCH" \
@@ -53,6 +54,7 @@ build()
   echo "Building $DOCKER_REPO/$DOCKER_IMG:$version-slim from source $GIT_BRANCH"
   docker pull $DOCKER_REPO/$DOCKER_IMG:$version-slim
   docker build -t slim \
+         --pull \
          --cache-from $DOCKER_REPO/$DOCKER_IMG:$version \
          --cache-from $DOCKER_REPO/$DOCKER_IMG:$version-slim \
          --build-arg="GIT_BRANCH=$GIT_BRANCH" \
