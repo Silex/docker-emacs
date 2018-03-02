@@ -22,8 +22,8 @@ fetch()
     echo "git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH"
     git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
   else
-    echo "cd $TRAVIS_CACHE/$GIT_BRANCH; git pull --depth 1"
-    (cd $TRAVIS_CACHE/$GIT_BRANCH; git pull --depth 1)
+    echo "cd $TRAVIS_CACHE/$GIT_BRANCH && git fetch --depth 1 && git reset --hard && git clean -fdx"
+    (cd $TRAVIS_CACHE/$GIT_BRANCH && git fetch --depth 1 && git reset --hard && git clean -fdx)
   fi
 
   # Copy updated sources to docker build context, and then remove
