@@ -18,14 +18,23 @@ fetch()
   # that further pulls don't do anything. This is fine because git
   # doesn't permit tags to be moved.
 
-  [[ ! -d $TRAVIS_CACHE ]] &&  mkdir $TRAVIS_CACHE
+  [[ ! -d $TRAVIS_CACHE ]] && mkdir $TRAVIS_CACHE
 
   if [[ ! -d $TRAVIS_CACHE/$GIT_BRANCH ]]; then
-    echo "git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH"
+    echo Clone repository
     git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
   else
-    echo "cd $TRAVIS_CACHE/$GIT_BRANCH && git fetch --depth 1 && git reset --hard && git clean -fdx"
-    (cd $TRAVIS_CACHE/$GIT_BRANCH && git fetch --depth 1 && git reset --hard && git clean -fdx)
+    echo Update repository
+    (cd $TRAVIS_CACHE/$GIT_BRANCH;
+    git fetch --depth 1 origin $GIT_BRANCH
+    if [[ $(git name-rev --name-only --tags HEAD) == "undefined" ]]; then
+      # We are on a branch
+      git reset --hard origin/$GIT_BRANCH
+    else
+      # We are on a tag
+      git checkout $GIT_BRANCH
+    fi
+    git clean -fdx)
   fi
 
   # Copy updated sources to docker build context, and then remove
