@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Determine Dockerhub name by splitting the "repo slug",
 # i.e. if the GitHub repo is Silex/emacs then DOCKER_REPO=silex
 DOCKER_REPO=$(echo $TRAVIS_REPO_SLUG | cut -d "/" -f 1 | tr '[:upper:]' '[:lower:]')
@@ -71,10 +73,9 @@ push()
   # TRAVIS_PULL_REQUEST is "true" for pull requests
   # TRAVIS_BRANCH is the current branch or the PR target branch
   # TRAVIS_PULL_REQUEST_BRANCH is the PR source branch
-  current_branch=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} # Not really needed but on the safe side
-  if [ -z "$DOCKER_USERNAME" ] || [ "$TRAVIS_PULL_REQUEST" == "true" ] || [ "$current_branch" != "master" ]; then
-    echo Not pushing
-  else
+  current_branch=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
+  if [[ ! -z "$DOCKER_USERNAME" ]] && [[ "$TRAVIS_PULL_REQUEST" != "true" ]] && \
+     [[ "$current_branch" == "master" ]] || [[ "$current_branch" == "staging-"* ]]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
     for tag in $DOCKER_TAGS; do
       echo "Pushing $DOCKER_REPO/$DOCKER_IMG:$tag"
@@ -82,5 +83,7 @@ push()
       echo "Pushing $DOCKER_REPO/$DOCKER_IMG:$tag-slim"
       docker push $DOCKER_REPO/$DOCKER_IMG:$tag-slim
     done
+  else
+    echo Not pushing
   fi
 }
