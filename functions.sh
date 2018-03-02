@@ -18,9 +18,9 @@ fetch()
   # that further pulls don't do anything. This is fine because git
   # doesn't permit tags to be moved.
 
-  [ ! -d $TRAVIS_CACHE ] &&  mkdir $TRAVIS_CACHE
+  [[ ! -d $TRAVIS_CACHE ]] &&  mkdir $TRAVIS_CACHE
 
-  if [ ! -d $TRAVIS_CACHE/$GIT_BRANCH ]; then
+  if [[ ! -d $TRAVIS_CACHE/$GIT_BRANCH ]]; then
     echo "git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH"
     git clone --branch $GIT_BRANCH --depth 1 $GIT_SRC_REPO $TRAVIS_CACHE/$GIT_BRANCH
   else
