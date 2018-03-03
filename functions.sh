@@ -26,12 +26,13 @@ fetch()
   else
     echo Update repository
     (cd $TRAVIS_CACHE/$GIT_BRANCH;
-    git fetch --depth 1 origin $GIT_BRANCH
     if [[ $(git name-rev --name-only --tags HEAD) == "undefined" ]]; then
       # We are on a branch
+      git fetch --depth 1 origin $GIT_BRANCH
       git reset --hard origin/$GIT_BRANCH
     else
       # We are on a tag
+      git fetch origin tag $GIT_BRANCH
       git checkout $GIT_BRANCH
     fi
     git clean -fdx)
