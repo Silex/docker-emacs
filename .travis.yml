@@ -15,7 +15,7 @@ env:
   - GIT_BRANCH="emacs-26.0.91"    DOCKER_TAGS="26.0"
   - GIT_BRANCH="master"           DOCKER_TAGS="master"
 
-before_install: source functions.sh
+before_install: source travis.sh
 
 before_script: fetch
 
