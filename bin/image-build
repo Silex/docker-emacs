@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ $# -lt 3 ]; then
+  echo "usage: $0 REPOSITORY TAGS DIRECTORY" >&2
+  exit 1
+fi
+
+repository="$1"
+tags="$2"
+directory="$3"
+
+image="$(echo $tags | cut -d ' ' -f 1)"
+aliases="$(echo $tags | cut -d ' ' -f 2-)"
+
+# Pull previous image and use it as cache in the build.
+# This is how docker knows if the sources have changed.
+echo "Pulling $image"
+docker pull "$repository:$image" || true # Don't error if image does not exist
+
+# Build the new image
+echo "Building $repository:$image"
+docker build \
+       --pull \
+       -t "$repository:$image" \
+       --cache-from "$repository:$image" \
+       "$directory"
+
+# Assign the tags
+for tag in $aliases; do
+  echo "Tagging $repository:$tag"
+  docker tag "$repository:$image" "$repository:$tag"
+done

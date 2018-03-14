@@ -1,0 +1,49 @@
+---
+- tags: [master]
+  branch: master
+  template: xenial
+- tags: [master-dev]
+  branch: master
+  template: xenial/dev
+
+- tags: [26.0, 26]
+  branch: emacs-26.0.91
+  template: xenial
+- tags: [26.0-dev, 26-dev]
+  branch: emacs-26.0.91
+  template: xenial/dev
+
+- tags: [25.3, 25, latest]
+  branch: emacs-25.3
+  template: xenial
+- tags: [25.3-dev, 25-dev, dev]
+  branch: emacs-25.3
+  template: xenial/dev
+
+- tags: [25.2]
+  branch: emacs-25.2
+  template: xenial
+- tags: [25.2-dev]
+  branch: emacs-25.2
+  template: xenial/dev
+
+- tags: [25.1]
+  branch: emacs-25.1
+  template: xenial
+- tags: [25.1-dev]
+  branch: emacs-25.1
+  template: xenial/dev
+
+- tags: [24.5, 24]
+  branch: emacs-24.5
+  template: xenial
+- tags: [24.5-dev, 24-dev]
+  branch: emacs-24.5
+  template: xenial/dev
+
+- tags: [23.4, 23]
+  branch: emacs-23.4
+  template: precise
+- tags: [23.4-dev, 23-dev]
+  branch: emacs-23.4
+  template: precise/dev

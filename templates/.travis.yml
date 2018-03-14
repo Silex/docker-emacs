@@ -1,0 +1,23 @@
+language: generic
+
+services: docker
+
+cache:
+  directories:
+  - $HOME/emacs-src
+
+env:
+{{ENV}}
+
+before_install: source bin/setup-env
+
+before_script: image-prepare "$GIT_REPOSITORY" "$GIT_BRANCH" "$TRAVIS_CACHE/$GIT_BRANCH" "$IMAGE_DIRECTORY"
+
+script: image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
+
+after_success: image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
+
+notifications:
+  email:
+    on_success: never
+    on_failure: never

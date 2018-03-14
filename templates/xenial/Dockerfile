@@ -1,15 +1,11 @@
-FROM ubuntu:16.04 as full
+FROM ubuntu:16.04
 
-# Install dependencies
 RUN apt-get update && \
     apt-get install -y \
             autoconf \
             automake \
             build-essential \
-            curl \
-            git \
             imagemagick \
-            ispell \
             libdbus-1-dev \
             libgif-dev \
             libgnutls-dev \
@@ -21,34 +17,23 @@ RUN apt-get update && \
             libtiff-dev \
             libx11-dev \
             libxpm-dev \
-            python \
-            texinfo
+            texinfo \
+            && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /rootfs
-ENV PATH="/opt/emacs/bin:/root/.cask/bin:${PATH}"
-CMD ["emacs"]
-
-# Build emacs
-ARG GIT_BRANCH
-COPY $GIT_BRANCH /tmp/emacs/
-
-RUN cd /tmp/emacs && \
+COPY {{BRANCH}} /opt/emacs
+RUN cd /opt/emacs && \
     ./autogen.sh && \
-    ./configure --prefix=/opt/emacs && \
-    make -j 8 install && \
-    rm -rf /tmp/emacs
+    ./configure && \
+    make -j 8 install
 
-# Install Cask
-RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+# ------------------------------------------------------------
 
-#--------------------------------------------------------------------------------
 FROM ubuntu:16.04
 
-# Install dependencies
 RUN apt-get update && \
     apt-get install -y \
             curl \
-            git \
             imagemagick \
             ispell \
             libgif7 \
@@ -63,14 +48,13 @@ RUN apt-get update && \
             libx11-6 \
             libxft2 \
             libxpm4 \
-            python \
-            texinfo
+            texinfo \
+            && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /rootfs
-ENV PATH="/opt/emacs/bin:/root/.cask/bin:${PATH}"
+ENV EMACS_BRANCH="{{BRANCH}}"
+ENV EMACS_VERSION="{{VERSION}}"
+
+COPY --from=0 /usr/local /
+
 CMD ["emacs"]
-
-COPY --from=full /opt/emacs /opt/emacs/
-
-# Install Cask
-RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
