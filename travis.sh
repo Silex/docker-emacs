@@ -12,12 +12,6 @@ GIT_SRC_REPO="git://git.sv.gnu.org/emacs.git"
 
 fetch()
 {
-  # Fetch and update sources from git. This works for branches
-  # ("master") as well as tagged releases ("emacs-25.3"). However
-  # checking out a tag leaves you in the 'detached HEAD' state such
-  # that further pulls don't do anything. This is fine because git
-  # doesn't permit tags to be moved.
-
   [[ ! -d "$TRAVIS_CACHE" ]] && mkdir "$TRAVIS_CACHE"
 
   if [[ ! -d "$TRAVIS_CACHE/$GIT_BRANCH" ]]; then
