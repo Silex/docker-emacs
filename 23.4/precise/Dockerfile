@@ -1,15 +1,11 @@
-FROM ubuntu:12.04 as full
+FROM ubuntu:12.04
 
-# Install dependencies
 RUN apt-get update && \
     apt-get install -y \
             autoconf \
             automake \
             build-essential \
-            curl \
-            git \
             imagemagick \
-            ispell \
             libdbus-1-dev \
             libgif-dev \
             libgnutls-dev \
@@ -21,29 +17,23 @@ RUN apt-get update && \
             libtiff-dev \
             libx11-dev \
             libxpm-dev \
-            texinfo
+            texinfo \
+            && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /rootfs
-ENV PATH="/opt/emacs/bin:${PATH}"
-CMD ["emacs"]
-
-# Build emacs
-ARG GIT_BRANCH
-COPY $GIT_BRANCH /tmp/emacs/
-
-RUN cd /tmp/emacs && \
-    ./configure --prefix=/opt/emacs \
-                --with-crt-dir=/usr/lib/x86_64-linux-gnu && \
+COPY emacs-23.4 /opt/emacs
+RUN cd /opt/emacs && \
+    ./configure --with-crt-dir=/usr/lib/x86_64-linux-gnu && \
     make bootstrap && \
-    make -j 8 install && \
-    rm -rf /tmp/emacs
+    make -j 8 install
 
-#--------------------------------------------------------------------------------
+# ------------------------------------------------------------
+
 FROM ubuntu:12.04
 
-# Install dependencies
 RUN apt-get update && \
     apt-get install -y \
+            curl \
             imagemagick \
             ispell \
             libgif4 \
@@ -57,10 +47,13 @@ RUN apt-get update && \
             libtiff4 \
             libx11-6 \
             libxpm4 \
-            texinfo
+            texinfo \
+            && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /rootfs
-ENV PATH="/opt/emacs/bin:${PATH}"
+ENV EMACS_BRANCH="emacs-23.4"
+ENV EMACS_VERSION="23.4"
+
+COPY --from=0 /usr/local /usr/local
+
 CMD ["emacs"]
-
-COPY --from=full /opt/emacs /opt/emacs/

@@ -7,21 +7,28 @@ cache:
   - $HOME/emacs-src
 
 env:
-  - GIT_BRANCH="emacs-23.4"       DOCKER_TAGS="23.4 23"
-  - GIT_BRANCH="emacs-24.5"       DOCKER_TAGS="24.5 24"
-  - GIT_BRANCH="emacs-25.1"       DOCKER_TAGS="25.1"
-  - GIT_BRANCH="emacs-25.2"       DOCKER_TAGS="25.2"
-  - GIT_BRANCH="emacs-25.3"       DOCKER_TAGS="25.3 25 latest"
-  - GIT_BRANCH="emacs-26.0.91"    DOCKER_TAGS="26.0"
-  - GIT_BRANCH="master"           DOCKER_TAGS="master"
+  - IMAGE_TAGS="master"                            IMAGE_DIRECTORY="master/xenial"                     GIT_BRANCH="master"
+  - IMAGE_TAGS="master-dev"                        IMAGE_DIRECTORY="master/xenial/dev"                 GIT_BRANCH="master"
+  - IMAGE_TAGS="26.0 26"                           IMAGE_DIRECTORY="26.0/xenial"                       GIT_BRANCH="emacs-26.0.91"
+  - IMAGE_TAGS="26.0-dev 26-dev"                   IMAGE_DIRECTORY="26.0/xenial/dev"                   GIT_BRANCH="emacs-26.0.91"
+  - IMAGE_TAGS="25.3 25 latest"                    IMAGE_DIRECTORY="25.3/xenial"                       GIT_BRANCH="emacs-25.3"
+  - IMAGE_TAGS="25.3-dev 25-dev dev"               IMAGE_DIRECTORY="25.3/xenial/dev"                   GIT_BRANCH="emacs-25.3"
+  - IMAGE_TAGS="25.2"                              IMAGE_DIRECTORY="25.2/xenial"                       GIT_BRANCH="emacs-25.2"
+  - IMAGE_TAGS="25.2-dev"                          IMAGE_DIRECTORY="25.2/xenial/dev"                   GIT_BRANCH="emacs-25.2"
+  - IMAGE_TAGS="25.1"                              IMAGE_DIRECTORY="25.1/xenial"                       GIT_BRANCH="emacs-25.1"
+  - IMAGE_TAGS="25.1-dev"                          IMAGE_DIRECTORY="25.1/xenial/dev"                   GIT_BRANCH="emacs-25.1"
+  - IMAGE_TAGS="24.5 24"                           IMAGE_DIRECTORY="24.5/xenial"                       GIT_BRANCH="emacs-24.5"
+  - IMAGE_TAGS="24.5-dev 24-dev"                   IMAGE_DIRECTORY="24.5/xenial/dev"                   GIT_BRANCH="emacs-24.5"
+  - IMAGE_TAGS="23.4 23"                           IMAGE_DIRECTORY="23.4/precise"                      GIT_BRANCH="emacs-23.4"
+  - IMAGE_TAGS="23.4-dev 23-dev"                   IMAGE_DIRECTORY="23.4/precise/dev"                  GIT_BRANCH="emacs-23.4"
 
-before_install: source travis.sh
+before_install: source bin/setup-env
 
-before_script: fetch
+before_script: image-prepare "$GIT_REPOSITORY" "$GIT_BRANCH" "$TRAVIS_CACHE/$GIT_BRANCH" "$IMAGE_DIRECTORY"
 
-script: build
+script: image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
 
-after_success: push
+after_success: image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
 
 notifications:
   email:
