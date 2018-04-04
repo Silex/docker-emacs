@@ -5,6 +5,10 @@
 - tags: [master-dev]
   branch: master
   template: xenial/dev
+- tags: [master-alpine]
+  branch: master
+  template: alpine
+  patches: alpine/patches/26+
 
 - tags: [26.0, 26]
   branch: emacs-26.0.91
@@ -12,6 +16,10 @@
 - tags: [26.0-dev, 26-dev]
   branch: emacs-26.0.91
   template: xenial/dev
+- tags: [26.0-alpine, 26-alpine]
+  branch: emacs-26.0.91
+  template: alpine
+  patches: alpine/patches/26+
 
 - tags: [25.3, 25, latest]
   branch: emacs-25.3
@@ -19,6 +27,10 @@
 - tags: [25.3-dev, 25-dev, dev]
   branch: emacs-25.3
   template: xenial/dev
+- tags: [25.3-alpine, 25-alpine, alpine]
+  branch: emacs-25.3
+  template: alpine
+  patches: alpine/patches/25
 
 - tags: [25.2]
   branch: emacs-25.2
@@ -26,6 +38,10 @@
 - tags: [25.2-dev]
   branch: emacs-25.2
   template: xenial/dev
+- tags: [25.2-alpine]
+  branch: emacs-25.2
+  template: alpine
+  patches: alpine/patches/25
 
 - tags: [25.1]
   branch: emacs-25.1

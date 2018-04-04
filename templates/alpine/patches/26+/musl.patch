@@ -1,0 +1,13 @@
+diff --git a/configure.ac b/configure.ac
+index d2269d6f3..8e45d5723 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2232,7 +2232,7 @@ AC_CACHE_CHECK(
+    fi])
+ doug_lea_malloc=$emacs_cv_var_doug_lea_malloc
+ 
+-hybrid_malloc=
++hybrid_malloc=yes
+ system_malloc=yes
+ 
+ test "$CANNOT_DUMP" = yes ||
