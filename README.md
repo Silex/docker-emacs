@@ -27,6 +27,12 @@ Run Emacs in a docker!
 - `23.4`, `23` [(23.4/precise/bootstrap/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/precise/bootstrap/Dockerfile)
 - `23.4-dev`, `23-dev` [(23.4/precise/bootstrap/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/precise/bootstrap/dev/Dockerfile)
 
+This project offers many different docker images. The variants *-dev*
+and *-alpine* can be described as follows:
+
+- *-dev* images contain additional developer tools such as [Cask](https://cask.readthedocs.io), [git](https://git-scm.com/), [curl](https://curl.haxx.se/) and [Python](https://www.python.org/);
+- *-alpine* images are based on [Alpine Linux](https://alpinelinux.org/) and should be relatively small.
+
 # Usage
 
 ## Console
