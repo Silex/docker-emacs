@@ -2,6 +2,14 @@
 
 Run Emacs in a docker!
 
+This project provides different docker images. The variants can be described as follow:
+
+- `-dev` images contain additional developer tools such as
+  [Cask](https://cask.readthedocs.io), [git](https://git-scm.com),
+  [curl](https://curl.haxx.se) and [Python](https://www.python.org).
+  The Emacs source is also available at `/opt/emacs` if you need to build Emacs differently.
+- `-alpine` images are based on [Alpine Linux](https://alpinelinux.org/) and are the smallest in size.
+
 # Tags
 
 - `master` [(master/xenial/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/master/xenial/Dockerfile)
