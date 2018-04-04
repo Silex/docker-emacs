@@ -57,9 +57,23 @@
   branch: emacs-24.5
   template: xenial/dev
 
+- tags: [24.4]
+  branch: emacs-24.4
+  template: precise/autogen
+- tags: [24.4-dev]
+  branch: emacs-24.4
+  template: precise/autogen/dev
+
+- tags: [24.3]
+  branch: emacs-24.3
+  template: precise/autogen
+- tags: [24.3-dev]
+  branch: emacs-24.3
+  template: precise/autogen/dev
+
 - tags: [23.4, 23]
   branch: emacs-23.4
-  template: precise
+  template: precise/bootstrap
 - tags: [23.4-dev, 23-dev]
   branch: emacs-23.4
-  template: precise/dev
+  template: precise/bootstrap/dev
