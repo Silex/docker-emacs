@@ -20,8 +20,12 @@ Run Emacs in a docker!
 - `25.1-dev` [(25.1/xenial/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.1/xenial/dev/Dockerfile)
 - `24.5`, `24` [(24.5/xenial/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.5/xenial/Dockerfile)
 - `24.5-dev`, `24-dev` [(24.5/xenial/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.5/xenial/dev/Dockerfile)
-- `23.4`, `23` [(23.4/precise/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/precise/Dockerfile)
-- `23.4-dev`, `23-dev` [(23.4/precise/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/precise/dev/Dockerfile)
+- `24.4` [(24.4/precise/autogen/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.4/precise/autogen/Dockerfile)
+- `24.4-dev` [(24.4/precise/autogen/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.4/precise/autogen/dev/Dockerfile)
+- `24.3` [(24.3/precise/autogen/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.3/precise/autogen/Dockerfile)
+- `24.3-dev` [(24.3/precise/autogen/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.3/precise/autogen/dev/Dockerfile)
+- `23.4`, `23` [(23.4/precise/bootstrap/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/precise/bootstrap/Dockerfile)
+- `23.4-dev`, `23-dev` [(23.4/precise/bootstrap/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/precise/bootstrap/dev/Dockerfile)
 
 # Usage
 
