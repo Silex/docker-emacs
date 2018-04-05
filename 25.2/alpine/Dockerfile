@@ -26,18 +26,16 @@ RUN apk add --no-cache \
     ncurses-libs \
     pango-dev \
     paxmark \
+    texinfo \
     tiff-dev \
     && /bin/true
 
-ENV EMACS_BRANCH="emacs-25.2"
-ENV EMACS_VERSION="25.2"
-
-COPY $EMACS_BRANCH /opt/emacs/
+COPY emacs-25.2 /opt/emacs/
 COPY patches /opt/emacs/patches
 RUN cd /opt/emacs && \
     git apply patches/* && \
     ./autogen.sh && \
-    ./configure --without-makeinfo && \
+    ./configure && \
     make -j 8 install
 
 # ------------------------------------------------------------
@@ -45,9 +43,10 @@ RUN cd /opt/emacs && \
 FROM alpine:3.7
 
 RUN apk add --no-cache \
+    aspell \
+    aspell-en \
     curl \
     desktop-file-utils \
-    git \
     hicolor-icon-theme \
     so:libICE.so.6 \
     so:libORBit-2.so.0 \
@@ -121,6 +120,9 @@ RUN apk add --no-cache \
     so:libxml2.so.2 \
     so:libz.so.1 \
     && /bin/true
+
+ENV EMACS_BRANCH="emacs-25.2"
+ENV EMACS_VERSION="25.2"
 
 COPY --from=0 /usr/local /usr/local
 
