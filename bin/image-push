@@ -19,9 +19,9 @@ if [[ ! -z "$DOCKER_USERNAME" ]] && [[ "$TRAVIS_PULL_REQUEST" != "true" ]] && \
    [[ "$github_branch" == "master" ]] || [[ "$github_branch" == "staging-"* ]]; then
   docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   for tag in $tags; do
-    echo "Pushing $repository:$tag"
+    echo ">>> pushing $repository:$tag"
     docker push "$repository:$tag"
   done
 else
-  echo "Not pushing"
+  echo ">>> not pushing"
 fi

@@ -14,10 +14,10 @@ directory="$3"
 mkdir -p "$(dirname $directory)"
 
 if [[ ! -d "$directory" ]]; then
-  echo "Cloning repository"
+  echo ">>> cloning repository"
   git clone --branch "$branch" --depth 1 "$repository" "$directory"
 else
-  echo "Updating repository"
+  echo ">>> updating repository"
   cd "$directory"
   if [[ "$(git name-rev --name-only --tags HEAD)" == "undefined" ]]; then
     # We are on a branch
