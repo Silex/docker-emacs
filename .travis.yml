@@ -5,39 +5,32 @@ services: docker
 cache:
   timeout: 900
   directories:
-  - $HOME/cache
+    - $HOME/cache
 
 env:
-  - IMAGE_TAGS="master"                            IMAGE_DIRECTORY="master/xenial"                     GIT_BRANCH="master"
-  - IMAGE_TAGS="master-dev"                        IMAGE_DIRECTORY="master/xenial/dev"                 GIT_BRANCH="master"
-  - IMAGE_TAGS="master-alpine"                     IMAGE_DIRECTORY="master/alpine"                     GIT_BRANCH="master"
-  - IMAGE_TAGS="26.1 26 latest"                    IMAGE_DIRECTORY="26.1/xenial"                       GIT_BRANCH="emacs-26.1"
-  - IMAGE_TAGS="26.1-dev 26-dev dev"               IMAGE_DIRECTORY="26.1/xenial/dev"                   GIT_BRANCH="emacs-26.1"
-  - IMAGE_TAGS="26.1-alpine 26-alpine alpine"      IMAGE_DIRECTORY="26.1/alpine"                       GIT_BRANCH="emacs-26.1"
-  - IMAGE_TAGS="25.3 25"                           IMAGE_DIRECTORY="25.3/xenial"                       GIT_BRANCH="emacs-25.3"
-  - IMAGE_TAGS="25.3-dev 25-dev"                   IMAGE_DIRECTORY="25.3/xenial/dev"                   GIT_BRANCH="emacs-25.3"
-  - IMAGE_TAGS="25.3-alpine 25-alpine"             IMAGE_DIRECTORY="25.3/alpine"                       GIT_BRANCH="emacs-25.3"
-  - IMAGE_TAGS="25.2"                              IMAGE_DIRECTORY="25.2/xenial"                       GIT_BRANCH="emacs-25.2"
-  - IMAGE_TAGS="25.2-dev"                          IMAGE_DIRECTORY="25.2/xenial/dev"                   GIT_BRANCH="emacs-25.2"
-  - IMAGE_TAGS="25.2-alpine"                       IMAGE_DIRECTORY="25.2/alpine"                       GIT_BRANCH="emacs-25.2"
-  - IMAGE_TAGS="25.1"                              IMAGE_DIRECTORY="25.1/xenial"                       GIT_BRANCH="emacs-25.1"
-  - IMAGE_TAGS="25.1-dev"                          IMAGE_DIRECTORY="25.1/xenial/dev"                   GIT_BRANCH="emacs-25.1"
-  - IMAGE_TAGS="24.5 24"                           IMAGE_DIRECTORY="24.5/xenial"                       GIT_BRANCH="emacs-24.5"
-  - IMAGE_TAGS="24.5-dev 24-dev"                   IMAGE_DIRECTORY="24.5/xenial/dev"                   GIT_BRANCH="emacs-24.5"
-  - IMAGE_TAGS="24.4"                              IMAGE_DIRECTORY="24.4/precise/autogen"              GIT_BRANCH="emacs-24.4"
-  - IMAGE_TAGS="24.4-dev"                          IMAGE_DIRECTORY="24.4/precise/autogen/dev"          GIT_BRANCH="emacs-24.4"
-  - IMAGE_TAGS="24.3"                              IMAGE_DIRECTORY="24.3/precise/autogen"              GIT_BRANCH="emacs-24.3"
-  - IMAGE_TAGS="24.3-dev"                          IMAGE_DIRECTORY="24.3/precise/autogen/dev"          GIT_BRANCH="emacs-24.3"
-  - IMAGE_TAGS="23.4 23"                           IMAGE_DIRECTORY="23.4/precise/bootstrap"            GIT_BRANCH="emacs-23.4"
-  - IMAGE_TAGS="23.4-dev 23-dev"                   IMAGE_DIRECTORY="23.4/precise/bootstrap/dev"        GIT_BRANCH="emacs-23.4"
+  - DOCKER_IMAGES="master-dev master"
+  - DOCKER_IMAGES="master-alpine-dev master-alpine"
+  - DOCKER_IMAGES="26.1-dev 26.1"
+  - DOCKER_IMAGES="26.1-alpine-dev 26.1-alpine"
+  - DOCKER_IMAGES="25.3-dev 25.3"
+  - DOCKER_IMAGES="25.3-alpine-dev 25.3-alpine"
+  - DOCKER_IMAGES="25.2-dev 25.2"
+  - DOCKER_IMAGES="25.2-alpine-dev 25.2-alpine"
+  - DOCKER_IMAGES="25.1-dev 25.1"
+  - DOCKER_IMAGES="24.5-dev 24.5"
+  - DOCKER_IMAGES="24.4-dev 24.4"
+  - DOCKER_IMAGES="24.3-dev 24.3"
+  - DOCKER_IMAGES="23.4-dev 23.4"
 
 install:
   - source bin/setup-env
-  - image-prepare "$GIT_REPOSITORY" "$GIT_BRANCH" "$TRAVIS_CACHE/emacs/$GIT_BRANCH" "$IMAGE_DIRECTORY"
-  - docker-load-images "$TRAVIS_CACHE/docker/images.tar"
-  - image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
-  - image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
-  - docker-save-images "$TRAVIS_CACHE/docker/images.tar"
+  - images prepare $DOCKER_IMAGES
+
+script:
+  - images build $DOCKER_IMAGES
+
+after_success:
+  - images push $DOCKER_IMAGES
 
 notifications:
   email:

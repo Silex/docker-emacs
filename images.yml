@@ -1,79 +1,108 @@
 ---
 - tags: [master]
   branch: master
-  template: xenial
+  template: ubuntu/16.04
 - tags: [master-dev]
   branch: master
-  template: xenial/dev
+  template: ubuntu/16.04
+  target: dev
 - tags: [master-alpine]
   branch: master
   template: alpine
   patches: alpine/patches/26+
+- tags: [master-alpine-dev]
+  branch: master
+  template: alpine
+  patches: alpine/patches/26+
+  target: dev
 
 - tags: [26.1, 26, latest]
   branch: emacs-26.1
-  template: xenial
+  template: ubuntu/16.04
 - tags: [26.1-dev, 26-dev, dev]
   branch: emacs-26.1
-  template: xenial/dev
+  template: ubuntu/16.04
+  target: dev
 - tags: [26.1-alpine, 26-alpine, alpine]
   branch: emacs-26.1
   template: alpine
   patches: alpine/patches/26+
+- tags: [26.1-alpine-dev, 26-alpine-dev]
+  branch: emacs-26.1
+  template: alpine
+  patches: alpine/patches/26+
+  target: dev
 
 - tags: [25.3, 25]
   branch: emacs-25.3
-  template: xenial
+  template: ubuntu/16.04
 - tags: [25.3-dev, 25-dev]
   branch: emacs-25.3
-  template: xenial/dev
+  template: ubuntu/16.04
+  target: dev
 - tags: [25.3-alpine, 25-alpine]
   branch: emacs-25.3
   template: alpine
   patches: alpine/patches/25
+- tags: [25.3-alpine-dev, 25-alpine-dev, alpine-dev]
+  branch: emacs-25.3
+  template: alpine
+  patches: alpine/patches/25
+  target: dev
 
 - tags: [25.2]
   branch: emacs-25.2
-  template: xenial
+  template: ubuntu/16.04
 - tags: [25.2-dev]
   branch: emacs-25.2
-  template: xenial/dev
+  template: ubuntu/16.04
+  target: dev
 - tags: [25.2-alpine]
   branch: emacs-25.2
   template: alpine
   patches: alpine/patches/25
+- tags: [25.2-alpine-dev]
+  branch: emacs-25.2
+  template: alpine
+  patches: alpine/patches/25
+  target: dev
 
 - tags: [25.1]
   branch: emacs-25.1
-  template: xenial
+  template: ubuntu/16.04
 - tags: [25.1-dev]
   branch: emacs-25.1
-  template: xenial/dev
+  template: ubuntu/16.04
+  target: dev
 
 - tags: [24.5, 24]
   branch: emacs-24.5
-  template: xenial
+  template: ubuntu/16.04
 - tags: [24.5-dev, 24-dev]
   branch: emacs-24.5
-  template: xenial/dev
+  template: ubuntu/16.04
+  target: dev
 
 - tags: [24.4]
   branch: emacs-24.4
-  template: precise/autogen
+  template: ubuntu/12.04/autogen
 - tags: [24.4-dev]
   branch: emacs-24.4
-  template: precise/autogen/dev
+  template: ubuntu/12.04/autogen
+  target: dev
 
 - tags: [24.3]
   branch: emacs-24.3
-  template: precise/autogen
+  template: ubuntu/12.04/autogen
 - tags: [24.3-dev]
   branch: emacs-24.3
-  template: precise/autogen/dev
+  template: ubuntu/12.04/autogen
+  target: dev
 
 - tags: [23.4, 23]
   branch: emacs-23.4
-  template: precise/bootstrap
+  template: ubuntu/12.04/bootstrap
 - tags: [23.4-dev, 23-dev]
   branch: emacs-23.4
-  template: precise/bootstrap/dev
+  template: ubuntu/12.04/bootstrap
+  target: dev

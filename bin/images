@@ -1,0 +1,258 @@
+#!/usr/bin/env ruby
+
+require 'pty'
+require 'yaml'
+require 'ostruct'
+require 'optparse'
+require 'fileutils'
+
+class Image < OpenStruct
+  def self.all
+    directory = File.join(File.dirname(__FILE__), '..')
+    YAML.load_file(File.join(directory, '/images.yml')).map do |h|
+      Image.new(h)
+    end
+  end
+
+  def tag
+    tags.first
+  end
+
+  def aliases
+    tags[1..-1]
+  end
+
+  def version
+    case branch
+    when /emacs-(\d+\.\d+)/
+      $1
+    else
+      branch
+    end
+  end
+
+  def directory
+    File.join(version, template)
+  end
+
+  def dockerfile
+    File.join(directory, 'Dockerfile')
+  end
+
+  def tags
+    # Ensure tags are strings
+    super.map(&:to_s)
+  end
+end
+
+def run!(*args)
+  command = format(*args)
+  puts 'running: %s' % command
+
+  raw = ''
+  PTY.spawn(command) do |stdout_err, stdin, pid|
+    begin
+      while (char = stdout_err.getc)
+        raw << char
+        print char
+      end
+    rescue Errno::EIO # always raised when PTY runs out of input
+    ensure
+      Process.waitpid pid
+    end
+  end
+  code = $?.exitstatus
+  raise format('error %d', code) if code > 0
+  raw
+end
+
+class String
+  def quotify
+    format('"%s"', self)
+  end
+
+  def backquotify
+    format('`%s`', self)
+  end
+end
+
+def prepare(options, argv)
+  images = Image.all
+  argv.each do |i|
+    image = images.find{ |img| img.tag == i }
+
+    puts format('>>> syncing branch %s with repository %s', image.branch, options[:git_repository])
+    directory = format('%s/%s', options[:travis_cache], image.branch)
+    run!('git-sync "%s" "%s" "%s"', options[:git_repository], image.branch, directory)
+
+    # Copy updated sources to docker build context, and then remove
+    # the .git directory so it doesn't affect cache calculations
+    puts format('>>> copying source to %s', image.directory)
+    source_directory = File.join(image.directory, 'source')
+    FileUtils.rm_rf(source_directory)
+    FileUtils.cp_r(directory, source_directory, preserve: true)
+    FileUtils.rm_rf(File.join(source_directory, '.git'))
+  end
+end
+
+def build(options, argv)
+  images = Image.all
+  argv.each do |i|
+    image = images.find{ |img| img.tag == i }
+
+    # Pull previous image in order to use it as cache in the build
+    docker_image = format('%s:%s', options[:docker_repository], image.tag)
+    puts format('>>> pulling %s', docker_image)
+    run!('docker pull "%s"', docker_image) rescue nil
+
+    # Build the new image
+    Dir.chdir(image.directory) do
+      puts format('>>> building %s from source %s (target: %s)', docker_image, image.branch, image.target)
+      caches = `docker images -q`.split.map{ |s| format('--cache-from %s', s) }.join(' ')
+      run!('docker build --pull --tag "%s" --target="%s" %s .', docker_image, image.target.to_s, caches)
+    end
+
+    # Assign the rest of the tags
+    tags = image.aliases.map{ |tag| format('%s:%s', options[:docker_repository], tag) }
+    tags.each do |img|
+      puts format('>>> tagging %s', img)
+      run!('docker tag "%s" "%s"', docker_image, img)
+    end
+  end
+end
+
+# DOCKER_USERNAME is empty for forked repositories
+# TRAVIS_PULL_REQUEST is "true" for pull requests
+# TRAVIS_BRANCH is the current branch or the PR target branch
+# TRAVIS_PULL_REQUEST_BRANCH is the PR source branch
+def push(options, argv)
+  images = Image.all
+  argv.each do |i|
+    image = images.find{ |img| img.tag == i }
+
+    current_branch = ENV['TRAVIS_PULL_REQUEST_BRANCH'] || ENV['TRAVIS_BRANCH']
+    has_user = ENV.has_key?('DOCKER_USERNAME')
+    is_pull_request = ENV['TRAVIS_PULL_REQUEST'] == 'true'
+    is_allowed_branch = (current_branch == 'master' || current_branch.start_with?('staging-'))
+    if has_user && !is_pull_request && is_allowed_branch
+      run!('docker login -u="%s" -p="%s"', ENV['DOCKER_USERNAME'], ENV['DOCKER_PASSWORD'])
+      image.tags.each do |tag|
+        img = format('%s:%s', options[:docker_repository], tag)
+        puts format('>>> pushing %s', img)
+        run!('docker push "%s"', img)
+      end
+    else
+      puts format('>>> not pushing %s:%s', options[:docker_repository], image.tag)
+    end
+  end
+end
+
+def generate(options, argv)
+  images = Image.all
+  generate_dockerfiles(images)
+  generate_readme(images)
+  generate_travis(images)
+end
+
+def generate_dockerfiles(images)
+  puts '>>> generating dockerfiles'
+  images.each do |image|
+    directory = image.directory
+    FileUtils.rm_rf(image.directory)
+    FileUtils.mkdir_p(image.directory)
+    content = File.read(format('templates/%s/Dockerfile', image.template))
+    content.gsub!('{{BRANCH}}', image.branch)
+    content.gsub!('{{VERSION}}', image.version.to_s)
+    File.write(image.dockerfile, content)
+
+    if image.patches
+      patches_directory = format('%s/patches', image.directory)
+      FileUtils.mkdir_p(patches_directory)
+      patches_files = Dir[format('templates/%s/*', image.patches)]
+      FileUtils.cp(patches_files, patches_directory)
+    end
+  end
+end
+
+def generate_readme(images)
+  puts '>>> generating README.md'
+  tags = images.map do |image|
+    format('- %s [(%s)](https://github.com/silex/docker-emacs/blob/master/%s)',
+           image.tags.map(&:backquotify).join(', '),
+           image.dockerfile,
+           image.dockerfile)
+  end.flatten
+  content = File.read('templates/README.md')
+  content.gsub!('{{TAGS}}', tags.join("\n"))
+  File.write('README.md', content)
+end
+
+def generate_travis(images)
+  puts '>>> generating .travis.yml'
+  envs = images.group_by{ |i| [i.branch, i.template] }.map(&:last).map do |arr|
+    arr.sort_by!{ |i| i.target.nil? ? 1 : 0 }
+    format('  - DOCKER_IMAGES="%s"', arr.map(&:tag).join(' '))
+  end
+  content = File.read('templates/.travis.yml')
+  content.gsub!('{{ENV}}', envs.join("\n"))
+  File.write('.travis.yml', content)
+end
+
+options = {
+  travis_cache:      ENV['TRAVIS_CACHE'],
+  git_repository:    ENV['GIT_REPOSITORY'],
+  docker_repository: ENV['DOCKER_REPOSITORY']
+}
+
+global = OptionParser.new do |opts|
+  opts.banner = 'Usage: images COMMAND'
+  opts.separator ''
+  opts.separator <<~COMMANDS
+  Commands:
+    prepare:  prepare the images to be built (git sync).
+    build:    build the images.
+    push:     push the images.
+    generate: generate the Dockerfiles, README and travis files.
+  COMMANDS
+end
+
+commands = {
+  'prepare' => OptionParser.new do |opts|
+    opts.banner = 'Usage: images prepare [OPTIONS] IMAGE1 [IMAGE2...]'
+    opts.separator ''
+    opts.separator 'Prepare the images (sync with git, copy to images directory, remove .git directory).'
+    opts.separator ''
+    opts.separator 'Options:'
+    opts.on('--git-repository=REPOSITORY', 'Sets the git repository (default $GIT_REPOSITORY)') do |repository|
+      options[:git_repository] = repository
+    end
+    opts.on('--travis-cache=CACHE', 'Sets the travis cache (default $TRAVIS_CACHE)') do |cache|
+      options[:travis_cache] = cache
+    end
+  end,
+  'build' => OptionParser.new do |opts|
+    opts.banner = 'Usage: images build IMAGE1 [IMAGE2...]'
+    opts.separator ''
+    opts.separator 'Build the images.'
+  end,
+  'push' => OptionParser.new do |opts|
+    opts.banner = 'Usage: images push IMAGE1 [IMAGE2...]'
+    opts.separator ''
+    opts.separator 'Push the images.'
+  end,
+  'generate' => OptionParser.new do |opts|
+    opts.banner = 'Usage: images generate'
+    opts.separator ''
+    opts.separator 'Generate the Dockerfiles, README and travis files.'
+  end
+}
+
+global.order!
+command = ARGV.shift
+if commands[command]
+  commands[command].order!
+  send(command, options, ARGV)
+else
+  $stderr.puts(global.help)
+  exit(1)
+end

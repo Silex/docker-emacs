@@ -5,18 +5,20 @@ services: docker
 cache:
   timeout: 900
   directories:
-  - $HOME/cache
+    - $HOME/cache
 
 env:
 {{ENV}}
 
 install:
   - source bin/setup-env
-  - image-prepare "$GIT_REPOSITORY" "$GIT_BRANCH" "$TRAVIS_CACHE/emacs/$GIT_BRANCH" "$IMAGE_DIRECTORY"
-  - docker-load-images "$TRAVIS_CACHE/docker/images.tar"
-  - image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
-  - image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
-  - docker-save-images "$TRAVIS_CACHE/docker/images.tar"
+  - images prepare $DOCKER_IMAGES
+
+script:
+  - images build $DOCKER_IMAGES
+
+after_success:
+  - images push $DOCKER_IMAGES
 
 notifications:
   email:

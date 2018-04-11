@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -Eeuo pipefail
 
 if [ $# -lt 3 ]; then
   echo "usage: $0 REPOSITORY BRANCH DIRECTORY" >&2

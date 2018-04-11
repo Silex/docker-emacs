@@ -31,4 +31,4 @@ docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix silex/emacs
 ## Contributions
 
 Yes please! You should mostly do your modifications to `images.yml` or inside the `/templates` directory,
-then run `bin/update` to apply the changes.
+then run `bin/images generate` to apply the changes.

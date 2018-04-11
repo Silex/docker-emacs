@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-TRAVIS_CACHE="$HOME/cache"
-GIT_REPOSITORY="git://git.sv.gnu.org/emacs.git"
-GITHUB_USER="$(echo $TRAVIS_REPO_SLUG | cut -d '/' -f 1 | tr '[:upper:]' '[:lower:]')"
-DOCKER_REPOSITORY="$GITHUB_USER/emacs"
-PATH="$(pwd)/bin:$PATH"
+export TRAVIS_CACHE="$HOME/cache"
+export GIT_REPOSITORY="git://git.sv.gnu.org/emacs.git"
+export GITHUB_USER="$(echo $TRAVIS_REPO_SLUG | cut -d '/' -f 1 | tr '[:upper:]' '[:lower:]')"
+export DOCKER_REPOSITORY="$GITHUB_USER/emacs"
+export PATH="$(pwd)/bin:$PATH"
