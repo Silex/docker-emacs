@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TRAVIS_CACHE="$HOME/emacs-src"
+TRAVIS_CACHE="$HOME/cache"
 GIT_REPOSITORY="git://git.sv.gnu.org/emacs.git"
 GITHUB_USER="$(echo $TRAVIS_REPO_SLUG | cut -d '/' -f 1 | tr '[:upper:]' '[:lower:]')"
 DOCKER_REPOSITORY="$GITHUB_USER/emacs"

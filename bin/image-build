@@ -14,18 +14,9 @@ directory="$3"
 image="$(echo $tags | cut -d ' ' -f 1)"
 aliases="$(echo $tags | cut -d ' ' -f 2-)"
 
-# Pull previous image and use it as cache in the build.
-# This is how docker knows if the sources have changed.
-echo ">>> pulling $repository:$image"
-docker pull "$repository:$image" || true # Don't error if image does not exist
-
 # Build the new image
 echo ">>> building $repository:$image in $directory"
-docker build \
-       --pull \
-       -t "$repository:$image" \
-       --cache-from "$repository:$image" \
-       "$directory"
+docker build --pull -t "$repository:$image" "$directory"
 
 # Assign the tags
 for tag in $aliases; do

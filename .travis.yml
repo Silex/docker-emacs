@@ -4,7 +4,7 @@ services: docker
 
 cache:
   directories:
-  - $HOME/emacs-src
+  - $HOME/cache
 
 env:
   - IMAGE_TAGS="master"                            IMAGE_DIRECTORY="master/xenial"                     GIT_BRANCH="master"
@@ -30,13 +30,19 @@ env:
   - IMAGE_TAGS="23.4 23"                           IMAGE_DIRECTORY="23.4/precise/bootstrap"            GIT_BRANCH="emacs-23.4"
   - IMAGE_TAGS="23.4-dev 23-dev"                   IMAGE_DIRECTORY="23.4/precise/bootstrap/dev"        GIT_BRANCH="emacs-23.4"
 
-before_install: source bin/setup-env
+before_install:
+  - source bin/setup-env
 
-before_script: image-prepare "$GIT_REPOSITORY" "$GIT_BRANCH" "$TRAVIS_CACHE/$GIT_BRANCH" "$IMAGE_DIRECTORY"
+before_script:
+  - image-prepare "$GIT_REPOSITORY" "$GIT_BRANCH" "$TRAVIS_CACHE/emacs/$GIT_BRANCH" "$IMAGE_DIRECTORY"
+  - docker-load-images "$TRAVIS_CACHE/docker/images.tar"
 
-script: image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
+script:
+  - image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
+  - docker-save-images "$TRAVIS_CACHE/docker/images.tar"
 
-after_success: image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
+after_success:
+  - image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
 
 notifications:
   email:
