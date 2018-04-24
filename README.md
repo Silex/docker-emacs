@@ -45,7 +45,7 @@ docker run -it --rm silex/emacs
 ### GUI
 
 ``` shell
-xhost + # WARN: this comes with security issues
+xhost +local # WARN: this comes with security issues
 docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix silex/emacs
 ```
 
