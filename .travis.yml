@@ -3,6 +3,7 @@ language: generic
 services: docker
 
 cache:
+  timeout: 900
   directories:
   - $HOME/cache
 
