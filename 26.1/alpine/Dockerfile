@@ -30,7 +30,7 @@ RUN apk add --no-cache \
     tiff-dev \
     && /bin/true
 
-COPY emacs-26.0.91 /opt/emacs/
+COPY emacs-26.1-rc1 /opt/emacs/
 COPY patches /opt/emacs/patches
 RUN cd /opt/emacs && \
     git apply patches/* && \
@@ -121,8 +121,8 @@ RUN apk add --no-cache \
     so:libz.so.1 \
     && /bin/true
 
-ENV EMACS_BRANCH="emacs-26.0.91"
-ENV EMACS_VERSION="26.0"
+ENV EMACS_BRANCH="emacs-26.1-rc1"
+ENV EMACS_VERSION="26.1"
 
 COPY --from=0 /usr/local /usr/local
 
