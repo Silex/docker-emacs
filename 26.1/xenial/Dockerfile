@@ -21,7 +21,7 @@ RUN apt-get update && \
             && \
     rm -rf /var/lib/apt/lists/*
 
-COPY emacs-26.1-rc1 /opt/emacs
+COPY emacs-26.1 /opt/emacs
 RUN cd /opt/emacs && \
     ./autogen.sh && \
     ./configure && \
@@ -52,7 +52,7 @@ RUN apt-get update && \
             && \
     rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-26.1-rc1"
+ENV EMACS_BRANCH="emacs-26.1"
 ENV EMACS_VERSION="26.1"
 
 COPY --from=0 /usr/local /usr/local

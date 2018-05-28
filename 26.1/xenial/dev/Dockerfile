@@ -25,7 +25,7 @@ RUN apt-get update && \
             && \
     rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-26.1-rc1"
+ENV EMACS_BRANCH="emacs-26.1"
 ENV EMACS_VERSION="26.1"
 
 COPY $EMACS_BRANCH /opt/emacs

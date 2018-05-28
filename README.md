@@ -14,12 +14,12 @@ This project provides different docker images:
 - `master` [(master/xenial/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/master/xenial/Dockerfile)
 - `master-dev` [(master/xenial/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/master/xenial/dev/Dockerfile)
 - `master-alpine` [(master/alpine/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/master/alpine/Dockerfile)
-- `26.1-rc1`, `26` [(26.1/xenial/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/26.1/xenial/Dockerfile)
-- `26.1-rc1-dev`, `26-dev` [(26.1/xenial/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/26.1/xenial/dev/Dockerfile)
-- `26.1-rc1-alpine`, `26-alpine` [(26.1/alpine/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/26.1/alpine/Dockerfile)
-- `25.3`, `25`, `latest` [(25.3/xenial/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.3/xenial/Dockerfile)
-- `25.3-dev`, `25-dev`, `dev` [(25.3/xenial/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.3/xenial/dev/Dockerfile)
-- `25.3-alpine`, `25-alpine`, `alpine` [(25.3/alpine/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.3/alpine/Dockerfile)
+- `26.1`, `26`, `latest` [(26.1/xenial/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/26.1/xenial/Dockerfile)
+- `26.1-dev`, `26-dev`, `dev` [(26.1/xenial/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/26.1/xenial/dev/Dockerfile)
+- `26.1-alpine`, `26-alpine`, `alpine` [(26.1/alpine/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/26.1/alpine/Dockerfile)
+- `25.3`, `25` [(25.3/xenial/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.3/xenial/Dockerfile)
+- `25.3-dev`, `25-dev` [(25.3/xenial/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.3/xenial/dev/Dockerfile)
+- `25.3-alpine`, `25-alpine` [(25.3/alpine/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.3/alpine/Dockerfile)
 - `25.2` [(25.2/xenial/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.2/xenial/Dockerfile)
 - `25.2-dev` [(25.2/xenial/dev/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.2/xenial/dev/Dockerfile)
 - `25.2-alpine` [(25.2/alpine/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/25.2/alpine/Dockerfile)
@@ -45,7 +45,7 @@ docker run -it --rm silex/emacs
 ### GUI
 
 ``` shell
-xhost + # WARN: this comes with security issues
+xhost +local # WARN: this comes with security issues
 docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix silex/emacs
 ```
 
