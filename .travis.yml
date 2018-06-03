@@ -40,10 +40,10 @@ before_script:
 
 script:
   - image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
-  - docker-save-images "$TRAVIS_CACHE/docker/images.tar"
 
 after_success:
   - image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
+  - docker-save-images "$TRAVIS_CACHE/docker/images.tar"
 
 notifications:
   email:
