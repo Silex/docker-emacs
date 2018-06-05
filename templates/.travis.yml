@@ -10,17 +10,11 @@ cache:
 env:
 {{ENV}}
 
-before_install:
+install:
   - source bin/setup-env
-
-before_script:
   - image-prepare "$GIT_REPOSITORY" "$GIT_BRANCH" "$TRAVIS_CACHE/emacs/$GIT_BRANCH" "$IMAGE_DIRECTORY"
   - docker-load-images "$TRAVIS_CACHE/docker/images.tar"
-
-script:
   - image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
-
-after_success:
   - image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
   - docker-save-images "$TRAVIS_CACHE/docker/images.tar"
 
