@@ -20,6 +20,7 @@ RUN apt-get update && \
             libtiff-dev \
             libx11-dev \
             libxpm-dev \
+            openssh-client \
             python \
             texinfo \
             && \
@@ -61,6 +62,7 @@ RUN apt-get update && \
             libx11-6 \
             libxft2 \
             libxpm4 \
+            openssh-client \
             texinfo \
             && \
     rm -rf /var/lib/apt/lists/*

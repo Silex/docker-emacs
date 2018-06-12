@@ -27,6 +27,7 @@ RUN apk add --no-cache \
     linux-headers \
     ncurses-dev \
     ncurses-libs \
+    openssh-client \
     pango-dev \
     paxmark \
     texinfo \
@@ -60,6 +61,7 @@ RUN apk add --no-cache \
     curl \
     desktop-file-utils \
     hicolor-icon-theme \
+    openssh-client \
     so:libICE.so.6 \
     so:libORBit-2.so.0 \
     so:libSM.so.6 \
