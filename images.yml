@@ -1,10 +1,10 @@
 ---
 - tags: [master]
   branch: master
-  template: ubuntu/16.04
+  template: ubuntu/18.04
 - tags: [master-dev]
   branch: master
-  template: ubuntu/16.04
+  template: ubuntu/18.04
   target: dev
 - tags: [master-alpine]
   branch: master
@@ -18,10 +18,10 @@
 
 - tags: [26.1, 26, latest]
   branch: emacs-26.1
-  template: ubuntu/16.04
+  template: ubuntu/18.04
 - tags: [26.1-dev, 26-dev, dev]
   branch: emacs-26.1
-  template: ubuntu/16.04
+  template: ubuntu/18.04
   target: dev
 - tags: [26.1-alpine, 26-alpine, alpine]
   branch: emacs-26.1
@@ -35,10 +35,10 @@
 
 - tags: [25.3, 25]
   branch: emacs-25.3
-  template: ubuntu/16.04
+  template: ubuntu/18.04
 - tags: [25.3-dev, 25-dev]
   branch: emacs-25.3
-  template: ubuntu/16.04
+  template: ubuntu/18.04
   target: dev
 - tags: [25.3-alpine, 25-alpine]
   branch: emacs-25.3
@@ -52,10 +52,10 @@
 
 - tags: [25.2]
   branch: emacs-25.2
-  template: ubuntu/16.04
+  template: ubuntu/18.04
 - tags: [25.2-dev]
   branch: emacs-25.2
-  template: ubuntu/16.04
+  template: ubuntu/18.04
   target: dev
 - tags: [25.2-alpine]
   branch: emacs-25.2
@@ -69,18 +69,18 @@
 
 - tags: [25.1]
   branch: emacs-25.1
-  template: ubuntu/16.04
+  template: ubuntu/18.04
 - tags: [25.1-dev]
   branch: emacs-25.1
-  template: ubuntu/16.04
+  template: ubuntu/18.04
   target: dev
 
 - tags: [24.5, 24]
   branch: emacs-24.5
-  template: ubuntu/16.04
+  template: ubuntu/18.04
 - tags: [24.5-dev, 24-dev]
   branch: emacs-24.5
-  template: ubuntu/16.04
+  template: ubuntu/18.04
   target: dev
 
 - tags: [24.4]
