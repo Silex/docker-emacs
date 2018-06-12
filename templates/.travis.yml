@@ -5,18 +5,31 @@ services: docker
 cache:
   timeout: 900
   directories:
-  - $HOME/cache
+    - $HOME/cache
 
 env:
 {{ENV}}
 
 install:
   - source bin/setup-env
-  - image-prepare "$GIT_REPOSITORY" "$GIT_BRANCH" "$TRAVIS_CACHE/emacs/$GIT_BRANCH" "$IMAGE_DIRECTORY"
-  - docker-load-images "$TRAVIS_CACHE/docker/images.tar"
-  - image-build "$DOCKER_REPOSITORY" "$IMAGE_TAGS" "$IMAGE_DIRECTORY"
-  - image-push "$DOCKER_REPOSITORY" "$IMAGE_TAGS"
-  - docker-save-images "$TRAVIS_CACHE/docker/images.tar"
+  - images prepare $DOCKER_IMAGES
+
+script:
+  - images build $DOCKER_IMAGES
+
+after_success:
+  - |
+    # DOCKER_USERNAME is empty for forked repositories
+    # TRAVIS_PULL_REQUEST is "true" for pull requests
+    # TRAVIS_BRANCH is the current branch or the PR target branch
+    # TRAVIS_PULL_REQUEST_BRANCH is the PR source branch
+    github_branch="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
+    if [[ ! -z "$DOCKER_USERNAME" ]] && [[ "$TRAVIS_PULL_REQUEST" != "true" ]] && \
+       [[ "$github_branch" == "master" ]] || [[ "$github_branch" == "staging-"* ]]; then
+      images push $DOCKER_IMAGES
+    else
+      echo ">>> not pushing"
+    fi
 
 notifications:
   email:
