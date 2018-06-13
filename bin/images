@@ -75,13 +75,20 @@ class String
   end
 end
 
-def prepare(options, argv)
-  raise ArgumentError.new('"images prepare" requires at least one image.') if argv.empty?
+def with_images(source)
+  raise OptionParser::MissingArgument.new('at least one image is required.') if ARGV.empty?
 
-  images = Image.load(options[:source])
-  argv.each do |i|
-    image = images.find{ |img| img.tag == i }
+  images = ARGV.map{ |s| Image.load(source).find{ |i| i.tags.include?(s) } }
+  unknown = ARGV.select.with_index{ |s, i| images[i].nil? }
+  raise OptionParser::InvalidArgument.new(format('the following tag(s) do not exist: %s', unknown.join(', '))) unless unknown.empty?
 
+  images.compact.each do |image|
+    yield image
+  end
+end
+
+def prepare(options)
+  with_images(options[:source]) do |image|
     puts format('>>> syncing branch %s with repository %s', image.branch, options[:git_repository])
     directory = format('%s/%s', options[:travis_cache], image.branch)
     run!('git-sync "%s" "%s" "%s"', options[:git_repository], image.branch, directory)
@@ -96,13 +103,8 @@ def prepare(options, argv)
   end
 end
 
-def build(options, argv)
-  raise ArgumentError.new('"images build" requires at least one image.') if argv.empty?
-
-  images = Image.load(options[:source])
-  argv.each do |i|
-    image = images.find{ |img| img.tag == i }
-
+def build(options)
+  with_images(options[:source]) do |image|
     # Pull previous image in order to use it as cache in the build
     docker_image = format('%s:%s', options[:docker_repository], image.tag)
     puts format('>>> pulling %s', docker_image)
@@ -124,13 +126,8 @@ def build(options, argv)
   end
 end
 
-def push(options, argv)
-  raise ArgumentError.new('"images push" requires at least one image.') if argv.empty?
-
-  images = Image.load(options[:source])
-  argv.each do |i|
-    image = images.find{ |img| img.tag == i }
-
+def push(options)
+  with_images(options[:source]) do |image|
     run!('docker login --username="%s" --password="%s"', options[:docker_username], options[:docker_password])
     image.tags.each do |tag|
       img = format('%s:%s', options[:docker_repository], tag)
@@ -140,7 +137,7 @@ def push(options, argv)
   end
 end
 
-def generate(options, argv)
+def generate(options)
   images = Image.load(options[:source])
   generate_dockerfiles(images)
   generate_readme(images)
@@ -268,21 +265,19 @@ commands = {
 
 Dir.chdir(File.join(File.dirname(__FILE__), '..')) do
   begin
+    scope = global
     global.order!
     command = ARGV.shift
-    if commands[command]
-      commands[command].order!
-      begin
-        send(command, options, ARGV)
-      rescue => e
-        $stderr.puts e.message
-        $stderr.puts
-        $stderr.puts commands[command].help
-      end
-    else
-      $stderr.puts(global.help)
-      exit(1)
-    end
+    raise OptionParser::MissingArgument.new('"images" requires a command.') if command.nil?
+    raise OptionParser::InvalidArgument.new(format('"%s" is not a valid command', command)) unless commands.has_key?(command)
+    scope = commands[command]
+    scope.order!
+    send(command, options)
+  rescue OptionParser::ParseError => e
+    $stderr.puts e.message
+    $stderr.puts
+    $stderr.puts scope.help
+    exit(1)
   rescue => e
     $stderr.puts(e.message)
     exit(1)
