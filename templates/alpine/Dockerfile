@@ -43,7 +43,7 @@ COPY patches /opt/emacs/patches
 RUN cd /opt/emacs && \
     git apply patches/* && \
     ./autogen.sh && \
-    ./configure && \
+    ./configure{{CONFIGURE}} && \
     make -j 8 install
 
 ENV PATH="/root/.cask/bin:$PATH"

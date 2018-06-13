@@ -33,7 +33,7 @@ COPY source /opt/emacs
 
 RUN cd /opt/emacs && \
     ./autogen.sh && \
-    ./configure && \
+    ./configure{{CONFIGURE}} && \
     make -j 8 install
 
 ENV PATH="/root/.cask/bin:$PATH"

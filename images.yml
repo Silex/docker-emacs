@@ -70,17 +70,21 @@
 - tags: [25.1]
   branch: emacs-25.1
   template: ubuntu/18.04
+  configure: CFLAGS=-no-pie
 - tags: [25.1-dev]
   branch: emacs-25.1
   template: ubuntu/18.04
+  configure: CFLAGS=-no-pie
   target: dev
 
 - tags: [24.5, 24]
   branch: emacs-24.5
   template: ubuntu/18.04
+  configure: CFLAGS=-no-pie
 - tags: [24.5-dev, 24-dev]
   branch: emacs-24.5
   template: ubuntu/18.04
+  configure: CFLAGS=-no-pie
   target: dev
 
 - tags: [24.4]
@@ -102,7 +106,9 @@
 - tags: [23.4, 23]
   branch: emacs-23.4
   template: ubuntu/12.04/bootstrap
+  configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu
 - tags: [23.4-dev, 23-dev]
   branch: emacs-23.4
   template: ubuntu/12.04/bootstrap
   target: dev
+  configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu

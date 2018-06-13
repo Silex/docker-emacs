@@ -32,7 +32,7 @@ ENV EMACS_VERSION="{{VERSION}}"
 COPY source /opt/emacs
 
 RUN cd /opt/emacs && \
-    ./configure --with-crt-dir=/usr/lib/x86_64-linux-gnu && \
+    ./configure{{CONFIGURE}} && \
     make bootstrap && \
     make -j 8 install
 

@@ -154,8 +154,9 @@ def generate_dockerfiles(images)
     FileUtils.rm_rf(image.directory)
     FileUtils.mkdir_p(image.directory)
     content = File.read(format('templates/%s/Dockerfile', image.template))
-    content.gsub!('{{BRANCH}}', image.branch)
+    content.gsub!('{{BRANCH}}', image.branch.to_s)
     content.gsub!('{{VERSION}}', image.version.to_s)
+    content.gsub!('{{CONFIGURE}}', image.configure ? format(' %s', image.configure) : '')
     File.write(image.dockerfile, content)
 
     if image.patches
