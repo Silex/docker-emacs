@@ -9,7 +9,7 @@ This project provides different docker images:
   The Emacs source is also available at `/opt/emacs` if you need to build Emacs differently.
 - The `-alpine` variants (~200MB) follow the same logic as the main images but are based on [Alpine Linux](https://alpinelinux.org).
 
-## Tags
+# Tags
 
 - `master` [(master/ubuntu/18.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/master/ubuntu/18.04/Dockerfile)
 - `master-dev` [(master/ubuntu/18.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/master/ubuntu/18.04/Dockerfile)
@@ -38,22 +38,22 @@ This project provides different docker images:
 - `23.4`, `23` [(23.4/ubuntu/12.04/bootstrap/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/ubuntu/12.04/bootstrap/Dockerfile)
 - `23.4-dev`, `23-dev` [(23.4/ubuntu/12.04/bootstrap/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/ubuntu/12.04/bootstrap/Dockerfile)
 
-## Usage
+# Usage
 
-### Console
+## Console
 
 ``` shell
 docker run -it --rm silex/emacs
 ```
 
-### GUI
+## GUI
 
 ``` shell
 xhost +local # WARN: this comes with security issues
 docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix silex/emacs
 ```
 
-## Contributions
+# Contributions
 
 Yes please! You should mostly do your modifications to `images.yml` or inside the `/templates` directory,
 then run `bin/images generate` to apply the changes.
