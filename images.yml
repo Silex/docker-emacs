@@ -85,18 +85,18 @@
 
 - tags: [24.4]
   branch: emacs-24.4
-  template: ubuntu/12.04/autogen
+  template: ubuntu/12.04
 - tags: [24.4-dev]
   branch: emacs-24.4
-  template: ubuntu/12.04/autogen
+  template: ubuntu/12.04
   target: dev
 
 - tags: [24.3]
   branch: emacs-24.3
-  template: ubuntu/12.04/autogen
+  template: ubuntu/12.04
 - tags: [24.3-dev]
   branch: emacs-24.3
-  template: ubuntu/12.04/autogen
+  template: ubuntu/12.04
   target: dev
 
 - tags: [23.4, 23]
