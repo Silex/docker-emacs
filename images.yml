@@ -27,7 +27,7 @@
   branch: emacs-26.1
   template: alpine/3.7
   patches: alpine/3.7/patches/26+
-- tags: [26.1-alpine-dev, 26-alpine-dev]
+- tags: [26.1-alpine-dev, 26-alpine-dev, alpine-dev]
   branch: emacs-26.1
   template: alpine/3.7
   patches: alpine/3.7/patches/26+
@@ -44,7 +44,7 @@
   branch: emacs-25.3
   template: alpine/3.7
   patches: alpine/3.7/patches/25
-- tags: [25.3-alpine-dev, 25-alpine-dev, alpine-dev]
+- tags: [25.3-alpine-dev, 25-alpine-dev]
   branch: emacs-25.3
   template: alpine/3.7
   patches: alpine/3.7/patches/25
