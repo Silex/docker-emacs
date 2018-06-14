@@ -7,8 +7,6 @@ RUN apt-get update && \
             autotools-dev \
             build-essential \
             curl \
-            dbus-x11 \
-            debhelper \
             dpkg-dev \
             git \
             gnupg-agent \
@@ -65,45 +63,27 @@ FROM ubuntu:18.04
 RUN apt-get update && \
     apt-get install -y \
             curl \
+            gpm \
             imagemagick \
             ispell \
             libacl1 \
             libasound2 \
-            libc6 \
-            libcairo2 \
             libdbus-1-3 \
-            libfontconfig1 \
-            libfreetype6 \
-            libgdk-pixbuf2.0-0 \
             libgif7 \
-            libglib2.0-0 \
             libgnutls30 \
-            libgpm2 \
             libgtk-3-0 \
-            libice6 \
             libjpeg8 \
             libm17n-0 \
-            libmagickcore-6.q16-3 \
             libmagickwand-6.q16-3 \
-            libotf0 \
-            libpango-1.0-0 \
             libpng16-16 \
             librsvg2-2 \
-            libselinux1 \
             libsm6 \
             libtiff5 \
-            libtinfo5 \
-            libx11-6 \
             libx11-xcb1 \
-            libxcb1 \
-            libxfixes3 \
-            libxft2 \
             libxml2 \
             libxpm4 \
-            libxrender1 \
             openssh-client \
             texinfo \
-            zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
 ENV EMACS_BRANCH="emacs-26.1"
