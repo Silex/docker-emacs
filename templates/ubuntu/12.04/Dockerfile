@@ -13,6 +13,7 @@ RUN apt-get update && \
             libdbus-1-dev \
             libgif-dev \
             libgnutls-dev \
+            libgpm-dev \
             libgtk2.0-dev \
             libjpeg-dev \
             libmagick++-dev \
@@ -24,8 +25,7 @@ RUN apt-get update && \
             openssh-client \
             python \
             texinfo \
-            && \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 ENV EMACS_BRANCH="{{BRANCH}}"
 ENV EMACS_VERSION="{{VERSION}}"
@@ -49,6 +49,7 @@ FROM ubuntu:12.04
 RUN apt-get update && \
     apt-get install -y \
             curl \
+            gpm \
             imagemagick \
             ispell \
             libcanberra-gtk-module \
@@ -65,8 +66,7 @@ RUN apt-get update && \
             libxpm4 \
             openssh-client \
             texinfo \
-            && \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 ENV EMACS_BRANCH="{{BRANCH}}"
 ENV EMACS_VERSION="{{VERSION}}"

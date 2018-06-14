@@ -17,8 +17,7 @@ RUN apk add --no-cache \
         git \
         glib-dev \
         gnutls-dev \
-        libc-utils \
-        gtk+2.0-dev \
+        gtk+3.0-dev \
         libcanberra-gtk3 \
         libjpeg-turbo-dev \
         libpng-dev \
@@ -63,7 +62,6 @@ RUN apk add --no-cache \
         gconf \
         giflib \
         gtk+3.0 \
-        libc-utils \
         libcanberra-gtk3 \
         librsvg \
         libxpm \

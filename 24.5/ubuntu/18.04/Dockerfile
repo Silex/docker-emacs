@@ -33,10 +33,7 @@ RUN apt-get update && \
             libxaw7-dev \
             libxml2-dev \
             openssh-client \
-            procps \
             python \
-            quilt \
-            sharutils \
             texinfo \
             xaw3dg-dev \
             zlib1g-dev \
@@ -76,7 +73,6 @@ RUN apt-get update && \
             libgtk-3-0 \
             libjpeg8 \
             libm17n-0 \
-            libmagickwand-6.q16-3 \
             libpng16-16 \
             librsvg2-2 \
             libsm6 \
