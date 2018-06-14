@@ -88,6 +88,9 @@ def with_images(source)
 end
 
 def prepare(options)
+  raise OptionParser::MissingArgument.new('git-repository not set.') if options[:git_repository].nil?
+  raise OptionParser::MissingArgument.new('travis-cache not set.') if options[:travis_cache].nil?
+
   with_images(options[:source]) do |image|
     puts format('>>> syncing branch %s with repository %s', image.branch, options[:git_repository])
     directory = format('%s/%s', options[:travis_cache], image.branch)
@@ -104,6 +107,8 @@ def prepare(options)
 end
 
 def build(options)
+  raise OptionParser::MissingArgument.new('docker-repository not set.') if options[:docker_repository].nil?
+
   with_images(options[:source]) do |image|
     # Pull previous image in order to use it as cache in the build
     docker_image = format('%s:%s', options[:docker_repository], image.tag)
@@ -127,6 +132,10 @@ def build(options)
 end
 
 def push(options)
+  raise OptionParser::MissingArgument.new('docker-repository not set.') if options[:docker_repository].nil?
+  raise OptionParser::MissingArgument.new('docker-username not set.') if options[:docker_username].nil?
+  raise OptionParser::MissingArgument.new('docker-password not set.') if options[:docker_password].nil?
+
   with_images(options[:source]) do |image|
     run!('docker login --username="%s" --password="%s"', options[:docker_username], options[:docker_password])
     image.tags.each do |tag|
