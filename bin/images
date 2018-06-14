@@ -2,6 +2,7 @@
 
 require 'pty'
 require 'yaml'
+require 'find'
 require 'ostruct'
 require 'optparse'
 require 'fileutils'
@@ -65,6 +66,11 @@ def run!(*args)
   raw
 end
 
+def find_executable(command)
+  return command if system(format('which %s >/dev/null 2>&1', command))
+  return Find.find(File.dirname(__FILE__)).find{ |path| File.basename(path) == command }
+end
+
 class String
   def quotify
     format('"%s"', self)
@@ -94,7 +100,7 @@ def prepare(options)
   with_images(options[:source]) do |image|
     puts format('>>> syncing branch %s with repository %s', image.branch, options[:git_repository])
     directory = format('%s/%s', options[:travis_cache], image.branch)
-    run!('git-sync "%s" "%s" "%s"', options[:git_repository], image.branch, directory)
+    run!('%s "%s" "%s" "%s"', find_executable('git-sync'), options[:git_repository], image.branch, directory)
 
     # Copy updated sources to docker build context, and then remove
     # the .git directory so it doesn't affect cache calculations
