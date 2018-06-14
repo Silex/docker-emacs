@@ -223,10 +223,10 @@ commands = {
     opts.separator 'Prepare the images (sync with git, copy to images directory, remove .git directory).'
     opts.separator ''
     opts.separator 'Options:'
-    opts.on('--git-repository=REPOSITORY', 'Sets the git repository (default $GIT_REPOSITORY)') do |repository|
+    opts.on('--git-repository=REPOSITORY', 'Sets the git repository (default $GIT_REPOSITORY).') do |repository|
       options[:git_repository] = repository
     end
-    opts.on('--travis-cache=CACHE', 'Sets the travis cache (default $TRAVIS_CACHE)') do |cache|
+    opts.on('--travis-cache=CACHE', 'Sets the travis cache (default $TRAVIS_CACHE).') do |cache|
       options[:travis_cache] = cache
     end
   end,
@@ -236,7 +236,7 @@ commands = {
     opts.separator 'Build the images.'
     opts.separator ''
     opts.separator 'Options:'
-    opts.on('--docker-repository=REPOSITORY', 'Sets the docker repository (default $DOCKER_REPOSITORY)') do |repository|
+    opts.on('--docker-repository=REPOSITORY', 'Sets the docker repository (default $DOCKER_REPOSITORY).') do |repository|
       options[:docker_repository] = repository
     end
   end,
@@ -246,13 +246,13 @@ commands = {
     opts.separator 'Push the images.'
     opts.separator ''
     opts.separator 'Options:'
-    opts.on('--docker-repository=REPO', 'Sets the docker repository (default $DOCKER_REPOSITORY)') do |repository|
+    opts.on('--docker-repository=REPO', 'Sets the docker repository (default $DOCKER_REPOSITORY).') do |repository|
       options[:docker_repository] = repository
     end
-    opts.on('--docker-username=USERNAME', 'Sets the docker username (default $DOCKER_USERNAME)') do |username|
+    opts.on('--docker-username=USERNAME', 'Sets the docker username (default $DOCKER_USERNAME).') do |username|
       options[:docker_username] = username
     end
-    opts.on('--docker-password=PASSWORD', 'Sets the docker password (default $DOCKER_PASSWORD)') do |password|
+    opts.on('--docker-password=PASSWORD', 'Sets the docker password (default $DOCKER_PASSWORD).') do |password|
       options[:docker_password] = password
     end
   end,
@@ -269,7 +269,7 @@ Dir.chdir(File.join(File.dirname(__FILE__), '..')) do
     global.order!
     command = ARGV.shift
     raise OptionParser::MissingArgument.new('"images" requires a command.') if command.nil?
-    raise OptionParser::InvalidArgument.new(format('"%s" is not a valid command', command)) unless commands.has_key?(command)
+    raise OptionParser::InvalidArgument.new(format('"%s" is not a valid command.', command)) unless commands.has_key?(command)
     scope = commands[command]
     scope.order!
     send(command, options)
