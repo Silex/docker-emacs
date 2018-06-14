@@ -9,6 +9,7 @@ RUN apt-get update && \
             git \
             imagemagick \
             ispell \
+            libcanberra-gtk-module \
             libdbus-1-dev \
             libgif-dev \
             libgnutls-dev \
@@ -50,6 +51,7 @@ RUN apt-get update && \
             curl \
             imagemagick \
             ispell \
+            libcanberra-gtk-module \
             libgif4 \
             libgnutls26 \
             libgtk2.0-0 \

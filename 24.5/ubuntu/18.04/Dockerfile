@@ -14,6 +14,7 @@ RUN apt-get update && \
             ispell \
             libacl1-dev \
             libasound2-dev \
+            libcanberra-gtk3-module \
             libdbus-1-dev \
             libgif-dev \
             libgnutls28-dev \
@@ -68,6 +69,7 @@ RUN apt-get update && \
             ispell \
             libacl1 \
             libasound2 \
+            libcanberra-gtk3-module \
             libdbus-1-3 \
             libgif7 \
             libgnutls30 \

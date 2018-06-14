@@ -19,6 +19,7 @@ RUN apk add --no-cache \
         gnutls-dev \
         libc-utils \
         gtk+2.0-dev \
+        libcanberra-gtk3 \
         libjpeg-turbo-dev \
         libpng-dev \
         librsvg-dev \
@@ -63,6 +64,7 @@ RUN apk add --no-cache \
         giflib \
         gtk+3.0 \
         libc-utils \
+        libcanberra-gtk3 \
         librsvg \
         libxpm \
         openssh-client \
