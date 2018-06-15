@@ -81,23 +81,23 @@ class String
   end
 end
 
-def with_images(source)
-  raise OptionParser::MissingArgument.new('at least one image is required.') if ARGV.empty?
-
-  images = ARGV.map{ |s| Image.load(source).find{ |i| i.tags.include?(s) } }
-  unknown = ARGV.select.with_index{ |s, i| images[i].nil? }
-  raise OptionParser::InvalidArgument.new(format('the following tag(s) do not exist: %s', unknown.join(', '))) unless unknown.empty?
-
-  images.compact.each do |image|
-    yield image
+def with_images(source, tags)
+  images = Image.load(source)
+  unless tags.empty?
+    filtered = tags.map { |s| images.find{ |i| i.tags.include?(s) } }
+    unknown = tags.select.with_index { |s, i| filtered[i].nil? }
+    raise OptionParser::InvalidArgument.new(format('the following tag(s) do not exist: %s', unknown.join(', '))) unless unknown.empty?
+    images = filtered.compact
   end
+  return images unless block_given?
+  images.each{ |i| yield i }
 end
 
-def prepare(options)
+def prepare(options, tags)
   raise OptionParser::MissingArgument.new('git-repository not set.') if options[:git_repository].nil?
   raise OptionParser::MissingArgument.new('travis-cache not set.') if options[:travis_cache].nil?
 
-  with_images(options[:source]) do |image|
+  with_images(options[:source], tags) do |image|
     puts format('>>> syncing branch %s with repository %s', image.branch, options[:git_repository])
     directory = format('%s/%s', options[:travis_cache], image.branch)
     run!('%s "%s" "%s" "%s"', find_executable('git-sync'), options[:git_repository], image.branch, directory)
@@ -112,10 +112,10 @@ def prepare(options)
   end
 end
 
-def build(options)
+def build(options, tags)
   raise OptionParser::MissingArgument.new('docker-repository not set.') if options[:docker_repository].nil?
 
-  with_images(options[:source]) do |image|
+  with_images(options[:source], tags) do |image|
     # Pull previous image in order to use it as cache in the build
     docker_image = format('%s:%s', options[:docker_repository], image.tag)
     puts format('>>> pulling %s', docker_image)
@@ -137,12 +137,12 @@ def build(options)
   end
 end
 
-def push(options)
+def push(options, tags)
   raise OptionParser::MissingArgument.new('docker-repository not set.') if options[:docker_repository].nil?
   raise OptionParser::MissingArgument.new('docker-username not set.') if options[:docker_username].nil?
   raise OptionParser::MissingArgument.new('docker-password not set.') if options[:docker_password].nil?
 
-  with_images(options[:source]) do |image|
+  with_images(options[:source], tags) do |image|
     run!('docker login --username="%s" --password="%s"', options[:docker_username], options[:docker_password])
     image.tags.each do |tag|
       img = format('%s:%s', options[:docker_repository], tag)
@@ -152,8 +152,16 @@ def push(options)
   end
 end
 
-def generate(options)
-  images = Image.load(options[:source])
+def test(options, tags)
+  raise OptionParser::MissingArgument.new('docker-repository not set.') if options[:docker_repository].nil?
+
+  with_images(options[:source], tags) do |image|
+    run!('docker run --rm "%s:%s" emacs --version', options[:docker_repository], image.tag)
+  end
+end
+
+def generate(options, tags)
+  images = with_images(options[:source], tags)
   generate_dockerfiles(images)
   generate_readme(images)
   generate_travis(images)
@@ -222,6 +230,7 @@ global = OptionParser.new do |opts|
           prepare:  prepare the images to be built (git sync).
           build:    build the images.
           push:     push the images.
+          test:     test the images.
           generate: generate the Dockerfiles, README and travis files.
   COMMANDS
   opts.separator ''
@@ -246,7 +255,7 @@ commands = {
     end
   end,
   'build' => OptionParser.new do |opts|
-    opts.banner = 'Usage: images build IMAGE1 [IMAGE2...]'
+    opts.banner = 'Usage: images build IMAGE [IMAGE...]'
     opts.separator ''
     opts.separator 'Build the images.'
     opts.separator ''
@@ -256,7 +265,7 @@ commands = {
     end
   end,
   'push' => OptionParser.new do |opts|
-    opts.banner = 'Usage: images push IMAGE1 [IMAGE2...]'
+    opts.banner = 'Usage: images push IMAGE [IMAGE...]'
     opts.separator ''
     opts.separator 'Push the images.'
     opts.separator ''
@@ -271,8 +280,18 @@ commands = {
       options[:docker_password] = password
     end
   end,
+  'test' => OptionParser.new do |opts|
+    opts.banner = 'Usage: images test IMAGE [IMAGE...]'
+    opts.separator ''
+    opts.separator 'Test the images.'
+    opts.separator ''
+    opts.separator 'Options:'
+    opts.on('--docker-repository=REPOSITORY', 'Sets the docker repository (default $DOCKER_REPOSITORY).') do |repository|
+      options[:docker_repository] = repository
+    end
+  end,
   'generate' => OptionParser.new do |opts|
-    opts.banner = 'Usage: images generate'
+    opts.banner = 'Usage: images generate IMAGE [IMAGE...]'
     opts.separator ''
     opts.separator 'Generate the Dockerfiles, README and travis files.'
   end
@@ -287,7 +306,7 @@ Dir.chdir(File.join(File.dirname(__FILE__), '..')) do
     raise OptionParser::InvalidArgument.new(format('"%s" is not a valid command.', command)) unless commands.has_key?(command)
     scope = commands[command]
     scope.order!
-    send(command, options)
+    send(command, options, ARGV)
   rescue OptionParser::ParseError => e
     $stderr.puts e.message
     $stderr.puts
