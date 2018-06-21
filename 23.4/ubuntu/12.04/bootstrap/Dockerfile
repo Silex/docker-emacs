@@ -7,6 +7,7 @@ RUN apt-get update && \
             build-essential \
             curl \
             git \
+            gnupg \
             imagemagick \
             ispell \
             libcanberra-gtk-module \
@@ -46,6 +47,7 @@ FROM ubuntu:12.04
 RUN apt-get update && \
     apt-get install -y \
             curl \
+            gnupg \
             gpm \
             imagemagick \
             ispell \

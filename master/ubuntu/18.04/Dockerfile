@@ -9,7 +9,7 @@ RUN apt-get update && \
             curl \
             dpkg-dev \
             git \
-            gnupg-agent \
+            gnupg \
             imagemagick \
             ispell \
             libacl1-dev \
@@ -61,6 +61,7 @@ FROM ubuntu:18.04
 RUN apt-get update && \
     apt-get install -y \
             curl \
+            gnupg \
             gpm \
             imagemagick \
             ispell \
