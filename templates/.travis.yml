@@ -12,8 +12,8 @@ env:
 
 install:
   - source bin/setup-env
-  - images prepare $DOCKER_IMAGES
-  - images build $DOCKER_IMAGES
+  - travis_retry images prepare $DOCKER_IMAGES
+  - travis_retry images build $DOCKER_IMAGES
   - images test $DOCKER_IMAGES
 
 after_success:
