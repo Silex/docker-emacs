@@ -32,13 +32,14 @@ docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix silex/emacs
 
 # Alternatives
 
-- [flycheck/emacs-cask](https://hub.docker.com/r/flycheck/emacs-cask) is a collection of Docker images containing a
+- [flycheck/emacs-cask](https://hub.docker.com/r/flycheck/emacs-cask): collection of docker images containing a
   minimal Emacs compiled from source with Cask.
-- [flycheck/emacs-travis](https://github.com/flycheck/emacs-travis) contains a makefile which provides targets to
+- [flycheck/emacs-travis](https://github.com/flycheck/emacs-travis): makefile which provides targets to
   install Emacs stable and emacs-snapshot, Texinfo and Cask.
-- [jgkamat/airy-docker-emacs](https://github.com/jgkamat/airy-docker-emacs) are alpine-based docker images that have
+- [jgkamat/airy-docker-emacs](https://github.com/jgkamat/airy-docker-emacs): alpine-based docker images that have
   Emacs installed through the package manager.
-- [rejeep/evm](https://github.com/rejeep/evm) provides pre-built Emacs binaries.
+- [JAremko/docker-emacs](https://github.com/JAremko/docker-emacs): collection of docker images with focus on GUI usage.
+- [rejeep/evm](https://github.com/rejeep/evm): pre-built Emacs binaries.
 
 # Contributions
 
