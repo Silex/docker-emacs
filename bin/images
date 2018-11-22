@@ -23,12 +23,8 @@ class Image < OpenStruct
   end
 
   def version
-    case branch
-    when /emacs-(\d+\.\d+)/
-      $1
-    else
-      branch
-    end
+    # Ensure version is a string
+    super.to_s
   end
 
   def directory

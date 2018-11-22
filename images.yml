@@ -1,113 +1,139 @@
 ---
 - tags: [master]
+  version: master
   branch: master
   template: ubuntu/18.04
 - tags: [master-dev]
+  version: master
   branch: master
   template: ubuntu/18.04
   target: dev
 - tags: [master-alpine]
+  version: master
   branch: master
   template: alpine/3.7
   patches: alpine/3.7/patches/26+
 - tags: [master-alpine-dev]
+  version: master
   branch: master
   template: alpine/3.7
   patches: alpine/3.7/patches/26+
   target: dev
 
 - tags: [26.1, 26, latest]
+  version: 26.1
   branch: emacs-26.1
   template: ubuntu/18.04
 - tags: [26.1-dev, 26-dev, dev]
+  version: 26.1
   branch: emacs-26.1
   template: ubuntu/18.04
   target: dev
 - tags: [26.1-alpine, 26-alpine, alpine]
+  version: 26.1
   branch: emacs-26.1
   template: alpine/3.7
   patches: alpine/3.7/patches/26+
 - tags: [26.1-alpine-dev, 26-alpine-dev, alpine-dev]
+  version: 26.1
   branch: emacs-26.1
   template: alpine/3.7
   patches: alpine/3.7/patches/26+
   target: dev
 
 - tags: [25.3, 25]
+  version: 25.3
   branch: emacs-25.3
   template: ubuntu/18.04
 - tags: [25.3-dev, 25-dev]
+  version: 25.3
   branch: emacs-25.3
   template: ubuntu/18.04
   target: dev
 - tags: [25.3-alpine, 25-alpine]
+  version: 25.3
   branch: emacs-25.3
   template: alpine/3.7
   patches: alpine/3.7/patches/25
 - tags: [25.3-alpine-dev, 25-alpine-dev]
+  version: 25.3
   branch: emacs-25.3
   template: alpine/3.7
   patches: alpine/3.7/patches/25
   target: dev
 
 - tags: [25.2]
+  version: 25.2
   branch: emacs-25.2
   template: ubuntu/18.04
 - tags: [25.2-dev]
+  version: 25.2
   branch: emacs-25.2
   template: ubuntu/18.04
   target: dev
 - tags: [25.2-alpine]
+  version: 25.2
   branch: emacs-25.2
   template: alpine/3.7
   patches: alpine/3.7/patches/25
 - tags: [25.2-alpine-dev]
+  version: 25.2
   branch: emacs-25.2
   template: alpine/3.7
   patches: alpine/3.7/patches/25
   target: dev
 
 - tags: [25.1]
+  version: 25.1
   branch: emacs-25.1
   template: ubuntu/18.04
   configure: CFLAGS=-no-pie
 - tags: [25.1-dev]
+  version: 25.1
   branch: emacs-25.1
   template: ubuntu/18.04
   configure: CFLAGS=-no-pie
   target: dev
 
 - tags: [24.5, 24]
+  version: 24.5
   branch: emacs-24.5
   template: ubuntu/18.04
   configure: CFLAGS=-no-pie
 - tags: [24.5-dev, 24-dev]
+  version: 24.5
   branch: emacs-24.5
   template: ubuntu/18.04
   configure: CFLAGS=-no-pie
   target: dev
 
 - tags: [24.4]
+  version: 24.4
   branch: emacs-24.4
   template: ubuntu/12.04
 - tags: [24.4-dev]
+  version: 24.4
   branch: emacs-24.4
   template: ubuntu/12.04
   target: dev
 
 - tags: [24.3]
+  version: 24.3
   branch: emacs-24.3
   template: ubuntu/12.04
 - tags: [24.3-dev]
+  version: 24.3
   branch: emacs-24.3
   template: ubuntu/12.04
   target: dev
 
 - tags: [23.4, 23]
+  version: 23.4
   branch: emacs-23.4
   template: ubuntu/12.04/bootstrap
   configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu
 - tags: [23.4-dev, 23-dev]
+  version: 23.4
   branch: emacs-23.4
   template: ubuntu/12.04/bootstrap
   target: dev
