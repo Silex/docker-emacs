@@ -25,6 +25,7 @@ RUN apk add --no-cache \
         librsvg-dev \
         libxaw-dev \
         libxml2-dev \
+        jansson-dev \
         ncurses-dev \
         openssh-client \
         pango-dev \
@@ -67,6 +68,7 @@ RUN apk add --no-cache \
         libcanberra-gtk3 \
         librsvg \
         libxpm \
+        jansson \
         openssh-client \
         tiff \
     && /bin/true

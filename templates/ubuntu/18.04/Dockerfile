@@ -20,6 +20,7 @@ RUN apt-get update && \
             libgnutls28-dev \
             libgpm-dev \
             libgtk-3-dev \
+            libjansson-dev \
             libjpeg-dev \
             liblockfile-dev \
             libm17n-dev \
@@ -72,6 +73,7 @@ RUN apt-get update && \
             libgif7 \
             libgnutls30 \
             libgtk-3-0 \
+            libjansson4 \
             libjpeg8 \
             libm17n-0 \
             libpng16-16 \
