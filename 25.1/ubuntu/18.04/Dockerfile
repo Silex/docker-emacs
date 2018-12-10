@@ -15,6 +15,7 @@ RUN apt-get update && \
             libacl1-dev \
             libasound2-dev \
             libcanberra-gtk3-module \
+            liblcms2-dev \
             libdbus-1-dev \
             libgif-dev \
             libgnutls28-dev \
@@ -69,6 +70,7 @@ RUN apt-get update && \
             libacl1 \
             libasound2 \
             libcanberra-gtk3-module \
+            liblcms2-2 \
             libdbus-1-3 \
             libgif7 \
             libgnutls30 \
