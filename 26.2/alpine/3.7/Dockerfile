@@ -33,7 +33,7 @@ RUN apk add --no-cache \
         tiff-dev \
     && /bin/true
 
-ENV EMACS_BRANCH="emacs-26.1.90"
+ENV EMACS_BRANCH="emacs-26.1.91"
 ENV EMACS_VERSION="26.2"
 
 COPY source /opt/emacs/
@@ -71,7 +71,7 @@ RUN apk add --no-cache \
         tiff \
     && /bin/true
 
-ENV EMACS_BRANCH="emacs-26.1.90"
+ENV EMACS_BRANCH="emacs-26.1.91"
 ENV EMACS_VERSION="26.2"
 
 COPY --from=0 /usr/local /usr/local
