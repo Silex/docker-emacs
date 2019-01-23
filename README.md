@@ -41,6 +41,10 @@ This project provides different docker images:
 - `24.4-dev` [(24.4/ubuntu/12.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.4/ubuntu/12.04/Dockerfile)
 - `24.3` [(24.3/ubuntu/12.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.3/ubuntu/12.04/Dockerfile)
 - `24.3-dev` [(24.3/ubuntu/12.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.3/ubuntu/12.04/Dockerfile)
+- `24.2` [(24.2/ubuntu/12.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.2/ubuntu/12.04/Dockerfile)
+- `24.2-dev` [(24.2/ubuntu/12.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.2/ubuntu/12.04/Dockerfile)
+- `24.1` [(24.1/ubuntu/12.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.1/ubuntu/12.04/Dockerfile)
+- `24.1-dev` [(24.1/ubuntu/12.04/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/24.1/ubuntu/12.04/Dockerfile)
 - `23.4`, `23` [(23.4/ubuntu/12.04/bootstrap/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/ubuntu/12.04/bootstrap/Dockerfile)
 - `23.4-dev`, `23-dev` [(23.4/ubuntu/12.04/bootstrap/Dockerfile)](https://github.com/silex/docker-emacs/blob/master/23.4/ubuntu/12.04/bootstrap/Dockerfile)
 
