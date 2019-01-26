@@ -36,7 +36,7 @@ COPY source /opt/emacs
 RUN cd /opt/emacs && \
     ./autogen.sh && \
     ./configure && \
-    make -j 8 install
+    make install
 
 ENV PATH="/root/.cask/bin:$PATH"
 RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python

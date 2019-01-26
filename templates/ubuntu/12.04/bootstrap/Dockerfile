@@ -36,7 +36,7 @@ COPY source /opt/emacs
 RUN cd /opt/emacs && \
     ./configure{{CONFIGURE}} && \
     make bootstrap && \
-    make -j 8 install
+    make install
 
 CMD ["emacs"]
 

@@ -36,7 +36,7 @@ COPY source /opt/emacs
 RUN cd /opt/emacs && \
     ./configure --with-crt-dir=/usr/lib/x86_64-linux-gnu && \
     make bootstrap && \
-    make -j 8 install
+    make install
 
 CMD ["emacs"]
 
