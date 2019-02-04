@@ -12,12 +12,10 @@
   version: master
   branch: master
   template: alpine/3.9
-  patches: alpine/3.9/patches/26+
 - tags: [master-alpine-dev]
   version: master
   branch: master
   template: alpine/3.9
-  patches: alpine/3.9/patches/26+
   target: dev
 
 - tags: [26.2]
@@ -33,12 +31,10 @@
   version: 26.2
   branch: emacs-26.1.91
   template: alpine/3.9
-  patches: alpine/3.9/patches/26+
 - tags: [26.2-alpine-dev]
   version: 26.2
   branch: emacs-26.1.91
   template: alpine/3.9
-  patches: alpine/3.9/patches/26+
   target: dev
 
 - tags: [26.1, 26, latest]
@@ -54,12 +50,10 @@
   version: 26.1
   branch: emacs-26.1
   template: alpine/3.9
-  patches: alpine/3.9/patches/26+
 - tags: [26.1-alpine-dev, 26-alpine-dev, alpine-dev]
   version: 26.1
   branch: emacs-26.1
   template: alpine/3.9
-  patches: alpine/3.9/patches/26+
   target: dev
 
 - tags: [25.3, 25]

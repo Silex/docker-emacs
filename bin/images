@@ -90,6 +90,8 @@ def prepare(options, tags)
     FileUtils.rm_rf(source_directory)
     FileUtils.cp_r(directory, source_directory, preserve: true)
     FileUtils.rm_rf(File.join(source_directory, '.git'))
+
+    FileUtils.cp_r(File.join(image.directory, 'patches'), source_directory) if image.patches
   end
 end
 

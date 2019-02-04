@@ -38,10 +38,9 @@ ENV EMACS_BRANCH="{{BRANCH}}"
 ENV EMACS_VERSION="{{VERSION}}"
 
 COPY source /opt/emacs/
-COPY patches /opt/emacs/patches
 
 RUN cd /opt/emacs && \
-    git apply patches/* && \
+    if [ -d patches ]; then git apply patches/*; fi && \
     ./autogen.sh && \
     ./configure{{CONFIGURE}} && \
     make -j 8 install
