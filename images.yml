@@ -11,13 +11,13 @@
 - tags: [master-alpine]
   version: master
   branch: master
-  template: alpine/3.7
-  patches: alpine/3.7/patches/26+
+  template: alpine/3.9
+  patches: alpine/3.9/patches/26+
 - tags: [master-alpine-dev]
   version: master
   branch: master
-  template: alpine/3.7
-  patches: alpine/3.7/patches/26+
+  template: alpine/3.9
+  patches: alpine/3.9/patches/26+
   target: dev
 
 - tags: [26.2]
@@ -32,13 +32,13 @@
 - tags: [26.2-alpine]
   version: 26.2
   branch: emacs-26.1.91
-  template: alpine/3.7
-  patches: alpine/3.7/patches/26+
+  template: alpine/3.9
+  patches: alpine/3.9/patches/26+
 - tags: [26.2-alpine-dev]
   version: 26.2
   branch: emacs-26.1.91
-  template: alpine/3.7
-  patches: alpine/3.7/patches/26+
+  template: alpine/3.9
+  patches: alpine/3.9/patches/26+
   target: dev
 
 - tags: [26.1, 26, latest]
@@ -53,13 +53,13 @@
 - tags: [26.1-alpine, 26-alpine, alpine]
   version: 26.1
   branch: emacs-26.1
-  template: alpine/3.7
-  patches: alpine/3.7/patches/26+
+  template: alpine/3.9
+  patches: alpine/3.9/patches/26+
 - tags: [26.1-alpine-dev, 26-alpine-dev, alpine-dev]
   version: 26.1
   branch: emacs-26.1
-  template: alpine/3.7
-  patches: alpine/3.7/patches/26+
+  template: alpine/3.9
+  patches: alpine/3.9/patches/26+
   target: dev
 
 - tags: [25.3, 25]
@@ -74,13 +74,13 @@
 - tags: [25.3-alpine, 25-alpine]
   version: 25.3
   branch: emacs-25.3
-  template: alpine/3.7
-  patches: alpine/3.7/patches/25
+  template: alpine/3.9
+  patches: alpine/3.9/patches/25
 - tags: [25.3-alpine-dev, 25-alpine-dev]
   version: 25.3
   branch: emacs-25.3
-  template: alpine/3.7
-  patches: alpine/3.7/patches/25
+  template: alpine/3.9
+  patches: alpine/3.9/patches/25
   target: dev
 
 - tags: [25.2]
@@ -95,13 +95,13 @@
 - tags: [25.2-alpine]
   version: 25.2
   branch: emacs-25.2
-  template: alpine/3.7
-  patches: alpine/3.7/patches/25
+  template: alpine/3.9
+  patches: alpine/3.9/patches/25
 - tags: [25.2-alpine-dev]
   version: 25.2
   branch: emacs-25.2
-  template: alpine/3.7
-  patches: alpine/3.7/patches/25
+  template: alpine/3.9
+  patches: alpine/3.9/patches/25
   target: dev
 
 - tags: [25.1]
