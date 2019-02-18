@@ -166,10 +166,10 @@
   version: 23.4
   branch: emacs-23.4
   template: ubuntu/12.04/bootstrap
-  configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu
+  configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no
 - tags: [23.4-dev, 23-dev]
   version: 23.4
   branch: emacs-23.4
   template: ubuntu/12.04/bootstrap
   target: dev
-  configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu
+  configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no

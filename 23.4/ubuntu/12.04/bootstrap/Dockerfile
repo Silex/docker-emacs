@@ -34,7 +34,7 @@ ENV EMACS_VERSION="23.4"
 COPY source /opt/emacs
 
 RUN cd /opt/emacs && \
-    ./configure --with-crt-dir=/usr/lib/x86_64-linux-gnu && \
+    ./configure --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no && \
     make bootstrap && \
     make install
 
