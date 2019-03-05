@@ -36,7 +36,8 @@ COPY source /opt/emacs
 RUN cd /opt/emacs && \
     ./configure --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no && \
     make bootstrap && \
-    make install
+    make install && \
+    find /usr/local/share -name \*.elc -print0 | xargs -0 touch
 
 CMD ["emacs"]
 
