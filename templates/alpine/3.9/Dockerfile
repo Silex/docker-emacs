@@ -45,7 +45,8 @@ RUN cd /opt/emacs && \
     if [ -d patches ]; then git apply patches/*; fi && \
     ./autogen.sh && \
     ./configure{{CONFIGURE}} && \
-    make -j 8 install
+    make -j 8 && \
+    make install
 
 ENV PATH="/root/.cask/bin:$PATH"
 RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
