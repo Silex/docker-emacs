@@ -44,7 +44,7 @@ COPY source /opt/emacs/
 RUN cd /opt/emacs && \
     if [ -d patches ]; then git apply patches/*; fi && \
     ./autogen.sh && \
-    ./configure && \
+    ./configure --with-modules && \
     make -j 8 && \
     make install
 

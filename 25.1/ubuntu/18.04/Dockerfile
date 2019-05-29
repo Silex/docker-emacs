@@ -48,7 +48,7 @@ COPY source /opt/emacs
 
 RUN cd /opt/emacs && \
     ./autogen.sh && \
-    ./configure CFLAGS=-no-pie && \
+    ./configure CFLAGS=-no-pie --with-modules && \
     make -j 8 && \
     make install
 
