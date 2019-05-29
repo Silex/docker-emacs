@@ -48,7 +48,7 @@ COPY source /opt/emacs
 
 RUN cd /opt/emacs && \
     ./autogen.sh && \
-    ./configure && \
+    ./configure --with-modules && \
     make -j 8 && \
     make install
 

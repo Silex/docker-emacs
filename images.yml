@@ -3,77 +3,93 @@
   version: master
   branch: master
   template: ubuntu/18.04
+  configure: --with-modules
 - tags: [master-dev]
   version: master
   branch: master
   template: ubuntu/18.04
+  configure: --with-modules
   target: dev
 - tags: [master-alpine]
   version: master
   branch: master
   template: alpine/3.9
+  configure: --with-modules
 - tags: [master-alpine-dev]
   version: master
   branch: master
   template: alpine/3.9
+  configure: --with-modules
   target: dev
 
 - tags: [26.2]
   version: 26.2
   branch: emacs-26.2
   template: ubuntu/18.04
+  configure: --with-modules
 - tags: [26.2-dev]
   version: 26.2
   branch: emacs-26.2
   template: ubuntu/18.04
+  configure: --with-modules
   target: dev
 - tags: [26.2-alpine]
   version: 26.2
   branch: emacs-26.2
   template: alpine/3.9
+  configure: --with-modules
 - tags: [26.2-alpine-dev]
   version: 26.2
   branch: emacs-26.2
   template: alpine/3.9
+  configure: --with-modules
   target: dev
 
 - tags: [26.1, 26, latest]
   version: 26.1
   branch: emacs-26.1
   template: ubuntu/18.04
+  configure: --with-modules
 - tags: [26.1-dev, 26-dev, dev]
   version: 26.1
   branch: emacs-26.1
   template: ubuntu/18.04
+  configure: --with-modules
   target: dev
 - tags: [26.1-alpine, 26-alpine, alpine]
   version: 26.1
   branch: emacs-26.1
   template: alpine/3.9
+  configure: --with-modules
 - tags: [26.1-alpine-dev, 26-alpine-dev, alpine-dev]
   version: 26.1
   branch: emacs-26.1
   template: alpine/3.9
+  configure: --with-modules
   target: dev
 
 - tags: [25.3, 25]
   version: 25.3
   branch: emacs-25.3
   template: ubuntu/18.04
+  configure: --with-modules
 - tags: [25.3-dev, 25-dev]
   version: 25.3
   branch: emacs-25.3
   template: ubuntu/18.04
+  configure: --with-modules
   target: dev
 - tags: [25.3-alpine, 25-alpine]
   version: 25.3
   branch: emacs-25.3
   template: alpine/3.9
+  configure: --with-modules
   patches: alpine/3.9/patches/25
 - tags: [25.3-alpine-dev, 25-alpine-dev]
   version: 25.3
   branch: emacs-25.3
   template: alpine/3.9
+  configure: --with-modules
   patches: alpine/3.9/patches/25
   target: dev
 
@@ -81,20 +97,24 @@
   version: 25.2
   branch: emacs-25.2
   template: ubuntu/18.04
+  configure: --with-modules
 - tags: [25.2-dev]
   version: 25.2
   branch: emacs-25.2
   template: ubuntu/18.04
+  configure: --with-modules
   target: dev
 - tags: [25.2-alpine]
   version: 25.2
   branch: emacs-25.2
   template: alpine/3.9
+  configure: --with-modules
   patches: alpine/3.9/patches/25
 - tags: [25.2-alpine-dev]
   version: 25.2
   branch: emacs-25.2
   template: alpine/3.9
+  configure: --with-modules
   patches: alpine/3.9/patches/25
   target: dev
 
@@ -102,12 +122,12 @@
   version: 25.1
   branch: emacs-25.1
   template: ubuntu/18.04
-  configure: CFLAGS=-no-pie
+  configure: CFLAGS=-no-pie --with-modules
 - tags: [25.1-dev]
   version: 25.1
   branch: emacs-25.1
   template: ubuntu/18.04
-  configure: CFLAGS=-no-pie
+  configure: CFLAGS=-no-pie --with-modules
   target: dev
 
 - tags: [24.5, 24]
