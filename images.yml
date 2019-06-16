@@ -45,46 +45,46 @@
   configure: --with-modules
   target: dev
 
-- tags: [26.2]
+- tags: [26.2, 26, latest]
   version: 26.2
   branch: emacs-26.2
   template: ubuntu/18.04
   configure: --with-modules
-- tags: [26.2-dev]
+- tags: [26.2-dev, 26-dev, dev]
   version: 26.2
   branch: emacs-26.2
   template: ubuntu/18.04
   configure: --with-modules
   target: dev
-- tags: [26.2-alpine]
+- tags: [26.2-alpine, 26-alpine, alpine]
   version: 26.2
   branch: emacs-26.2
   template: alpine/3.9
   configure: --with-modules
-- tags: [26.2-alpine-dev]
+- tags: [26.2-alpine-dev, 26-alpine-dev, alpine-dev]
   version: 26.2
   branch: emacs-26.2
   template: alpine/3.9
   configure: --with-modules
   target: dev
 
-- tags: [26.1, 26, latest]
+- tags: [26.1]
   version: 26.1
   branch: emacs-26.1
   template: ubuntu/18.04
   configure: --with-modules
-- tags: [26.1-dev, 26-dev, dev]
+- tags: [26.1-dev]
   version: 26.1
   branch: emacs-26.1
   template: ubuntu/18.04
   configure: --with-modules
   target: dev
-- tags: [26.1-alpine, 26-alpine, alpine]
+- tags: [26.1-alpine]
   version: 26.1
   branch: emacs-26.1
   template: alpine/3.9
   configure: --with-modules
-- tags: [26.1-alpine-dev, 26-alpine-dev, alpine-dev]
+- tags: [26.1-alpine-dev]
   version: 26.1
   branch: emacs-26.1
   template: alpine/3.9
