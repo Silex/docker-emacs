@@ -22,6 +22,29 @@
   configure: --with-modules
   target: dev
 
+- tags: [26.3]
+  version: 26.3
+  branch: emacs-26.2.90
+  template: ubuntu/18.04
+  configure: --with-modules
+- tags: [26.3-dev]
+  version: 26.3
+  branch: emacs-26.2.90
+  template: ubuntu/18.04
+  configure: --with-modules
+  target: dev
+- tags: [26.3-alpine]
+  version: 26.3
+  branch: emacs-26.2.90
+  template: alpine/3.9
+  configure: --with-modules
+- tags: [26.3-alpine-dev]
+  version: 26.3
+  branch: emacs-26.2.90
+  template: alpine/3.9
+  configure: --with-modules
+  target: dev
+
 - tags: [26.2]
   version: 26.2
   branch: emacs-26.2
