@@ -41,7 +41,7 @@ RUN apt-get update && \
             zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-26.3-rc1"
+ENV EMACS_BRANCH="emacs-26.3"
 ENV EMACS_VERSION="26.3"
 
 COPY source /opt/emacs
@@ -90,7 +90,7 @@ RUN apt-get update && \
             texinfo \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-26.3-rc1"
+ENV EMACS_BRANCH="emacs-26.3"
 ENV EMACS_VERSION="26.3"
 
 COPY --from=0 /usr/local /usr/local

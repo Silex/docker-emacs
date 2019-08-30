@@ -24,23 +24,23 @@
 
 - tags: [26.3]
   version: 26.3
-  branch: emacs-26.3-rc1
+  branch: emacs-26.3
   template: ubuntu/18.04
   configure: --with-modules
 - tags: [26.3-dev]
   version: 26.3
-  branch: emacs-26.3-rc1
+  branch: emacs-26.3
   template: ubuntu/18.04
   configure: --with-modules
   target: dev
 - tags: [26.3-alpine]
   version: 26.3
-  branch: emacs-26.3-rc1
+  branch: emacs-26.3
   template: alpine/3.9
   configure: --with-modules
 - tags: [26.3-alpine-dev]
   version: 26.3
-  branch: emacs-26.3-rc1
+  branch: emacs-26.3
   template: alpine/3.9
   configure: --with-modules
   target: dev
