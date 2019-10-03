@@ -39,6 +39,10 @@ RUN cd /opt/emacs && \
     make && \
     make install
 
+RUN mkdir -p /root/.emacs.d/elpa/gnupg && \
+    chmod 700 /root/.emacs.d/elpa/gnupg && \
+    gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --homedir /root/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
+
 CMD ["emacs"]
 
 # ------------------------------------------------------------
@@ -71,6 +75,7 @@ RUN apt-get update && \
 ENV EMACS_BRANCH="{{BRANCH}}"
 ENV EMACS_VERSION="{{VERSION}}"
 
+COPY --from=0 /root/.emacs.d /root/.emacs.d
 COPY --from=0 /usr/local /usr/local
 
 CMD ["emacs"]
