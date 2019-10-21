@@ -57,6 +57,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
 RUN mkdir -p /root/.emacs.d/elpa/gnupg && \
     chmod 700 /root/.emacs.d/elpa/gnupg && \
+    gpg -q --homedir /root/.emacs.d/elpa/gnupg -k | grep 81E42C40 || \
     gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --homedir /root/.emacs.d/elpa/gnupg --recv-keys 066DAFCB81E42C40
 
 CMD ["emacs"]
