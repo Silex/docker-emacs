@@ -40,8 +40,6 @@ install:
   - travis_retry images prepare $DOCKER_IMAGES
   - travis_retry images build $DOCKER_IMAGES
   - images test $DOCKER_IMAGES
-
-after_success:
   - |
     # DOCKER_USERNAME is empty for forked repositories
     # TRAVIS_PULL_REQUEST is "true" for pull requests
