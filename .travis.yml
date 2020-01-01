@@ -17,6 +17,8 @@ branches:
 env:
   - DOCKER_IMAGES="master-dev master"
   - DOCKER_IMAGES="master-alpine-dev master-alpine"
+  - DOCKER_IMAGES="27.0-dev 27.0"
+  - DOCKER_IMAGES="27.0-alpine-dev 27.0-alpine"
   - DOCKER_IMAGES="26.3-dev 26.3"
   - DOCKER_IMAGES="26.3-alpine-dev 26.3-alpine"
   - DOCKER_IMAGES="26.2-dev 26.2"
