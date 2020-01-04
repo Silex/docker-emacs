@@ -7,6 +7,16 @@ require 'ostruct'
 require 'optparse'
 require 'fileutils'
 
+class String
+  def quotify
+    format('"%s"', self)
+  end
+
+  def backquotify
+    format('`%s`', self)
+  end
+end
+
 class Image < OpenStruct
   def self.load(file)
     YAML.load_file(file).map do |h|
@@ -50,16 +60,6 @@ end
 def find_executable(command)
   return command if system(format('which %s >/dev/null 2>&1', command))
   return Find.find(File.dirname(__FILE__)).find{ |path| File.basename(path) == command }
-end
-
-class String
-  def quotify
-    format('"%s"', self)
-  end
-
-  def backquotify
-    format('`%s`', self)
-  end
 end
 
 def with_images(source, tags)
