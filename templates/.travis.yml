@@ -1,7 +1,6 @@
-language: generic
 sudo: required
-
 services: docker
+language: generic
 
 cache:
   timeout: 900
