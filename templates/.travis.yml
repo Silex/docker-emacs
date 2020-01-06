@@ -1,7 +1,5 @@
 language: generic
 sudo: required
-dist: trusty
-group: deprecated-2017Q4
 
 services: docker
 
@@ -18,6 +16,7 @@ env:
 {{ENV}}
 
 install:
+  - sudo sh -c 'echo 0 > /proc/sys/kernel/randomize_va_space'
   - source bin/setup-env
   - travis_retry images prepare $DOCKER_IMAGES
   - travis_retry images build $DOCKER_IMAGES
