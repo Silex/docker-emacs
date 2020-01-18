@@ -15,7 +15,7 @@ env:
 {{ENV}}
 
 install:
-  - sudo sh -c 'echo 0 > /proc/sys/kernel/randomize_va_space'
+  - sudo sysctl kernel.randomize_va_space=0
   - source bin/setup-env
   - travis_retry images prepare $DOCKER_IMAGES
   - travis_retry images build $DOCKER_IMAGES
