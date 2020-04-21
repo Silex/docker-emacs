@@ -41,7 +41,7 @@ RUN apt-get update && \
             zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-27.0.90"
+ENV EMACS_BRANCH="emacs-27.0.91"
 ENV EMACS_VERSION="27.0"
 
 COPY source /opt/emacs
@@ -94,7 +94,7 @@ RUN apt-get update && \
             texinfo \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-27.0.90"
+ENV EMACS_BRANCH="emacs-27.0.91"
 ENV EMACS_VERSION="27.0"
 
 COPY --from=0 /root/.emacs.d /root/.emacs.d

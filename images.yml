@@ -24,23 +24,23 @@
 
 - tags: [27.0, 27]
   version: 27.0
-  branch: emacs-27.0.90
+  branch: emacs-27.0.91
   template: ubuntu/18.04
   configure: --with-modules
 - tags: [27.0-dev, 27-dev]
   version: 27.0
-  branch: emacs-27.0.90
+  branch: emacs-27.0.91
   template: ubuntu/18.04
   configure: --with-modules
   target: dev
 - tags: [27.0-alpine, 27-alpine]
   version: 27.0
-  branch: emacs-27.0.90
+  branch: emacs-27.0.91
   template: alpine/3.9
   configure: --with-modules
 - tags: [27.0-alpine-dev, 27-alpine-dev]
   version: 27.0
-  branch: emacs-27.0.90
+  branch: emacs-27.0.91
   template: alpine/3.9
   configure: --with-modules
   target: dev
