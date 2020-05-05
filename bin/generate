@@ -1,0 +1,152 @@
+#!/usr/bin/env ruby
+
+require 'pty'
+require 'yaml'
+require 'find'
+require 'ostruct'
+require 'optparse'
+require 'fileutils'
+
+class Object
+  def deep_clone
+    Marshal.load(Marshal.dump(self))
+  end
+end
+
+class String
+  def quotify
+    format('"%s"', self)
+  end
+
+  def backquotify
+    format('`%s`', self)
+  end
+end
+
+class Image < OpenStruct
+  def self.load(file)
+    YAML.load_file(file).map do |h|
+      Image.new({ cache: true }.merge(h))
+    end
+  end
+
+  def tag
+    tags.first
+  end
+
+  def aliases
+    tags[1..-1]
+  end
+
+  def version
+    # Ensure version is a string
+    super.to_s
+  end
+
+  def directory
+    File.join(version, template)
+  end
+
+  def dockerfile
+    File.join(directory, 'Dockerfile')
+  end
+
+  def tags
+    # Ensure tags are strings
+    super.map(&:to_s)
+  end
+
+  def gitlab_stage
+    depends ? 'std' : 'dev'
+  end
+end
+
+def generate(options)
+  images = Image.load(options[:source])
+  generate_dockerfiles(images)
+  generate_readme(images)
+  generate_gitlab(images)
+end
+
+def make_patches_string(urls)
+  return '' unless urls
+  commands = urls.map{ |s| format('curl -sSLOJ "%s"', s) }
+  commands << 'git apply *.patch'
+  commands.map!{ |s| format("    %s && \\\n", s) }
+  commands.join
+end
+
+def generate_dockerfiles(images)
+  puts '>>> generating dockerfiles'
+  images.each do |image|
+    FileUtils.rm_rf(image.directory)
+    FileUtils.mkdir_p(image.directory)
+    content = File.read(File.join('templates', image.template, 'Dockerfile'))
+    content.gsub!('{{DEPENDS}}', image.depends.to_s)
+    content.gsub!('{{BRANCH}}', image.branch.to_s)
+    content.gsub!('{{VERSION}}', image.version.to_s)
+    content.gsub!(/ *{{PATCHES}}\n/, make_patches_string(image.patches))
+    content.gsub!('{{CONFIGURE}}', image.configure ? format(' %s', image.configure) : '')
+    File.write(image.dockerfile, content)
+  end
+end
+
+def generate_readme(images)
+  puts '>>> generating README.md'
+  tags = images.map do |image|
+    format('- [%s](https://github.com/Silex/docker-emacs/blob/master/%s)',
+           image.tags.map(&:backquotify).join(', '),
+           image.dockerfile)
+  end.flatten
+  content = File.read('templates/README.md')
+  content.gsub!('{{TAGS}}', tags.join("\n"))
+  File.write('README.md', content)
+end
+
+def generate_gitlab(images)
+  puts '>>> generating .gitlab-ci.yml'
+  h = YAML.load_file('templates/.gitlab-ci.yml')
+  template = h.delete('template')
+  images.each do |image|
+    params = template.deep_clone
+    params['stage'] = image.gitlab_stage
+    params['script'].gsub!('{{DIRECTORY}}', image.directory)
+    params['script'].gsub!('{{CACHE}}', image.cache ? '' : '--no-cache ')
+    params['script'].gsub!('{{TAGS}}', image.tags.map{ |s| format('-t silex/emacs:%s', s) }.join(' '))
+    if image.depends
+      params['needs'] = [format('img-%s', image.depends)]
+    else
+      params.delete('needs')
+    end
+    name = format('img-%s', image.tag)
+    h[name] = params
+  end
+  File.write('.gitlab-ci.yml', h.to_yaml(line_width: -1))
+end
+
+begin
+  options = { source: 'images.yml' }
+  parser = OptionParser.new do |opts|
+    opts.banner = 'Usage: generate'
+    opts.separator ''
+    opts.separator 'Generate the Dockerfiles, README and gitlab files.'
+    opts.separator ''
+    opts.separator 'Options:'
+    opts.on('--source FILE', format('Sets the images source (default %s)', options[:source])) do |source|
+      options[:source] = source
+    end
+  end
+  parser.parse!
+
+  Dir.chdir(File.join(File.dirname(__FILE__), '..')) do
+    generate(options)
+  end
+rescue OptionParser::ParseError => e
+  $stderr.puts e.message
+  $stderr.puts
+  $stderr.puts parser.help
+  exit(1)
+rescue => e
+  $stderr.puts(e.message)
+  exit(1)
+end

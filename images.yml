@@ -3,239 +3,230 @@
   version: master
   branch: master
   template: ubuntu/18.04
-  configure: --with-modules
+  depends: master-dev
+  cache: false
 - tags: [master-dev]
   version: master
   branch: master
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: --with-modules
-  target: dev
+  cache: false
 - tags: [master-alpine]
   version: master
   branch: master
   template: alpine/3.9
-  configure: --with-modules
+  depends: master-alpine-dev
+  cache: false
 - tags: [master-alpine-dev]
   version: master
   branch: master
-  template: alpine/3.9
+  template: alpine/3.9/dev
   configure: --with-modules
-  target: dev
+  cache: false
 
 - tags: [27.0, 27]
   version: 27.0
   branch: emacs-27.0.91
   template: ubuntu/18.04
-  configure: --with-modules
+  depends: 27.0-dev
 - tags: [27.0-dev, 27-dev]
   version: 27.0
   branch: emacs-27.0.91
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: --with-modules
-  target: dev
 - tags: [27.0-alpine, 27-alpine]
   version: 27.0
   branch: emacs-27.0.91
   template: alpine/3.9
-  configure: --with-modules
+  depends: 27.0-alpine-dev
 - tags: [27.0-alpine-dev, 27-alpine-dev]
   version: 27.0
   branch: emacs-27.0.91
-  template: alpine/3.9
+  template: alpine/3.9/dev
   configure: --with-modules
-  target: dev
 
 - tags: [26.3, 26, latest]
   version: 26.3
   branch: emacs-26.3
   template: ubuntu/18.04
-  configure: --with-modules
+  depends: 26.3-dev
 - tags: [26.3-dev, 26-dev, dev]
   version: 26.3
   branch: emacs-26.3
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: --with-modules
-  target: dev
 - tags: [26.3-alpine, 26-alpine, alpine]
   version: 26.3
   branch: emacs-26.3
   template: alpine/3.9
-  configure: --with-modules
+  depends: 26.3-alpine-dev
 - tags: [26.3-alpine-dev, 26-alpine-dev, alpine-dev]
   version: 26.3
   branch: emacs-26.3
-  template: alpine/3.9
+  template: alpine/3.9/dev
   configure: --with-modules
-  target: dev
 
 - tags: [26.2]
   version: 26.2
   branch: emacs-26.2
   template: ubuntu/18.04
-  configure: --with-modules
+  depends: 26.2-dev
 - tags: [26.2-dev]
   version: 26.2
   branch: emacs-26.2
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: --with-modules
-  target: dev
 - tags: [26.2-alpine]
   version: 26.2
   branch: emacs-26.2
   template: alpine/3.9
-  configure: --with-modules
+  depends: 26.2-alpine-dev
 - tags: [26.2-alpine-dev]
   version: 26.2
   branch: emacs-26.2
-  template: alpine/3.9
+  template: alpine/3.9/dev
   configure: --with-modules
-  target: dev
 
 - tags: [26.1]
   version: 26.1
   branch: emacs-26.1
   template: ubuntu/18.04
-  configure: --with-modules
+  depends: 26.1-dev
 - tags: [26.1-dev]
   version: 26.1
   branch: emacs-26.1
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: --with-modules
-  target: dev
 - tags: [26.1-alpine]
   version: 26.1
   branch: emacs-26.1
   template: alpine/3.9
-  configure: --with-modules
+  depends: 26.1-alpine-dev
 - tags: [26.1-alpine-dev]
   version: 26.1
   branch: emacs-26.1
-  template: alpine/3.9
+  template: alpine/3.9/dev
   configure: --with-modules
-  target: dev
 
 - tags: [25.3, 25]
   version: 25.3
   branch: emacs-25.3
   template: ubuntu/18.04
-  configure: --with-modules
+  depends: 25.3-dev
 - tags: [25.3-dev, 25-dev]
   version: 25.3
   branch: emacs-25.3
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: --with-modules
-  target: dev
 - tags: [25.3-alpine, 25-alpine]
   version: 25.3
   branch: emacs-25.3
   template: alpine/3.9
-  configure: --with-modules
-  patches: alpine/3.9/patches/25
+  depends: 25.3-alpine-dev
 - tags: [25.3-alpine-dev, 25-alpine-dev]
   version: 25.3
   branch: emacs-25.3
-  template: alpine/3.9
+  template: alpine/3.9/dev
   configure: --with-modules
-  patches: alpine/3.9/patches/25
-  target: dev
+  patches:
+    - https://git.alpinelinux.org/aports/plain/community/emacs/gamedir.patch?h=3.7-stable
+    - https://git.alpinelinux.org/aports/plain/community/emacs/musl.patch?h=3.7-stable
+    - https://git.alpinelinux.org/aports/plain/community/emacs/noaslr-dump.patch?h=3.7-stable
 
 - tags: [25.2]
   version: 25.2
   branch: emacs-25.2
   template: ubuntu/18.04
-  configure: --with-modules
+  depends: 25.2-dev
 - tags: [25.2-dev]
   version: 25.2
   branch: emacs-25.2
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: --with-modules
-  target: dev
 - tags: [25.2-alpine]
   version: 25.2
   branch: emacs-25.2
   template: alpine/3.9
-  configure: --with-modules
-  patches: alpine/3.9/patches/25
+  depends: 25.2-alpine-dev
 - tags: [25.2-alpine-dev]
   version: 25.2
   branch: emacs-25.2
-  template: alpine/3.9
+  template: alpine/3.9/dev
   configure: --with-modules
-  patches: alpine/3.9/patches/25
-  target: dev
+  patches:
+    - https://git.alpinelinux.org/aports/plain/community/emacs/gamedir.patch?h=3.7-stable
+    - https://git.alpinelinux.org/aports/plain/community/emacs/musl.patch?h=3.7-stable
+    - https://git.alpinelinux.org/aports/plain/community/emacs/noaslr-dump.patch?h=3.7-stable
 
 - tags: [25.1]
   version: 25.1
   branch: emacs-25.1
   template: ubuntu/18.04
-  configure: CFLAGS=-no-pie --with-modules
+  depends: 25.1-dev
 - tags: [25.1-dev]
   version: 25.1
   branch: emacs-25.1
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: CFLAGS=-no-pie --with-modules
-  target: dev
 
 - tags: [24.5, 24]
   version: 24.5
   branch: emacs-24.5
   template: ubuntu/18.04
-  configure: CFLAGS=-no-pie
+  depends: 24.5-dev
 - tags: [24.5-dev, 24-dev]
   version: 24.5
   branch: emacs-24.5
-  template: ubuntu/18.04
+  template: ubuntu/18.04/dev
   configure: CFLAGS=-no-pie
-  target: dev
 
 - tags: [24.4]
   version: 24.4
   branch: emacs-24.4
   template: ubuntu/12.04
+  depends: 24.4-dev
 - tags: [24.4-dev]
   version: 24.4
   branch: emacs-24.4
-  template: ubuntu/12.04
-  target: dev
+  template: ubuntu/12.04/dev
 
 - tags: [24.3]
   version: 24.3
   branch: emacs-24.3
   template: ubuntu/12.04
+  depends: 24.3-dev
 - tags: [24.3-dev]
   version: 24.3
   branch: emacs-24.3
-  template: ubuntu/12.04
-  target: dev
+  template: ubuntu/12.04/dev
 
 - tags: [24.2]
   version: 24.2
   branch: emacs-24.2
   template: ubuntu/12.04
+  depends: 24.2-dev
 - tags: [24.2-dev]
   version: 24.2
   branch: emacs-24.2
-  template: ubuntu/12.04
-  target: dev
+  template: ubuntu/12.04/dev
 
 - tags: [24.1]
   version: 24.1
   branch: emacs-24.1
   template: ubuntu/12.04
+  depends: 24.1-dev
 - tags: [24.1-dev]
   version: 24.1
   branch: emacs-24.1
-  template: ubuntu/12.04
-  target: dev
+  template: ubuntu/12.04/dev
 
 - tags: [23.4, 23]
   version: 23.4
   branch: emacs-23.4
   template: ubuntu/12.04/bootstrap
-  configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no
+  depends: 23.4-dev
 - tags: [23.4-dev, 23-dev]
   version: 23.4
   branch: emacs-23.4
-  template: ubuntu/12.04/bootstrap
-  target: dev
+  template: ubuntu/12.04/bootstrap/dev
   configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no
