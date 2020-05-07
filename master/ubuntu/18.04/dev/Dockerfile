@@ -45,6 +45,8 @@ ENV EMACS_BRANCH="master"
 ENV EMACS_VERSION="master"
 ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
 
+ADD https://git.sv.gnu.org/git/emacs.git/refs/heads/master /tmp/cache
+
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
     ./autogen.sh && \

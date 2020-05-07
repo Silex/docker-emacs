@@ -20,20 +20,20 @@ stages:
 - std
 img-master:
   stage: std
-  script: cd master/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --no-cache -t silex/emacs:master .
+  script: cd master/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:master .
   needs:
   - img-master-dev
 img-master-dev:
   stage: dev
-  script: cd master/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --no-cache -t silex/emacs:master-dev .
+  script: cd master/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:master-dev .
 img-master-alpine:
   stage: std
-  script: cd master/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --no-cache -t silex/emacs:master-alpine .
+  script: cd master/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:master-alpine .
   needs:
   - img-master-alpine-dev
 img-master-alpine-dev:
   stage: dev
-  script: cd master/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --no-cache -t silex/emacs:master-alpine-dev .
+  script: cd master/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:master-alpine-dev .
 img-27.0:
   stage: std
   script: cd 27.0/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:27.0 -t silex/emacs:27 .

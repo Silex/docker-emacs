@@ -45,6 +45,8 @@ ENV EMACS_BRANCH="{{BRANCH}}"
 ENV EMACS_VERSION="{{VERSION}}"
 ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
 
+{{CACHE}}
+
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
     {{PATCHES}}

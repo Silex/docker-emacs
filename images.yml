@@ -4,25 +4,25 @@
   branch: master
   template: ubuntu/18.04
   depends: master-dev
-  cache: false
+  cache: https://git.sv.gnu.org/git/emacs.git/refs/heads/master
 - tags: [master-dev]
   version: master
   branch: master
   template: ubuntu/18.04/dev
   configure: --with-modules
-  cache: false
+  cache: https://git.sv.gnu.org/git/emacs.git/refs/heads/master
 - tags: [master-alpine]
   version: master
   branch: master
   template: alpine/3.9
   depends: master-alpine-dev
-  cache: false
+  cache: https://git.sv.gnu.org/git/emacs.git/refs/heads/master
 - tags: [master-alpine-dev]
   version: master
   branch: master
   template: alpine/3.9/dev
   configure: --with-modules
-  cache: false
+  cache: https://git.sv.gnu.org/git/emacs.git/refs/heads/master
 
 - tags: [27.0, 27]
   version: 27.0

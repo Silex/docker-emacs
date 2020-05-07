@@ -26,7 +26,7 @@ end
 class Image < OpenStruct
   def self.load(file)
     YAML.load_file(file).map do |h|
-      Image.new({ cache: true }.merge(h))
+      Image.new(h)
     end
   end
 
@@ -85,6 +85,7 @@ def generate_dockerfiles(images)
     content.gsub!('{{DEPENDS}}', image.depends.to_s)
     content.gsub!('{{BRANCH}}', image.branch.to_s)
     content.gsub!('{{VERSION}}', image.version.to_s)
+    content.gsub!(/\n{{CACHE}}\n/, image.cache ? format("\nADD %s /tmp/cache\n", image.cache) : '')
     content.gsub!(/ *{{PATCHES}}\n/, make_patches_string(image.patches))
     content.gsub!('{{CONFIGURE}}', image.configure ? format(' %s', image.configure) : '')
     File.write(image.dockerfile, content)
@@ -111,7 +112,6 @@ def generate_gitlab(images)
     params = template.deep_clone
     params['stage'] = image.gitlab_stage
     params['script'].gsub!('{{DIRECTORY}}', image.directory)
-    params['script'].gsub!('{{CACHE}}', image.cache ? '' : '--no-cache ')
     params['script'].gsub!('{{TAGS}}', image.tags.map{ |s| format('-t silex/emacs:%s', s) }.join(' '))
     if image.depends
       params['needs'] = [format('img-%s', image.depends)]
