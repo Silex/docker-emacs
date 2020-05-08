@@ -57,7 +57,12 @@ RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
 
 RUN mkdir -p /root/.emacs.d/elpa/gnupg && \
     chmod 700 /root/.emacs.d/elpa/gnupg && \
-    gpg --homedir /root/.emacs.d/elpa/gnupg --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys 066DAFCB81E42C40
+    for i in {1..3}; do \
+      gpg --keyserver keyserver.ubuntu.com \
+          --homedir /root/.emacs.d/elpa/gnupg \
+          --recv-keys 066DAFCB81E42C40 \
+      && break || sleep 15; \
+    done
 
 RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 ENV PATH="/root/.cask/bin:$PATH"
