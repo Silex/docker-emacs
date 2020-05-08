@@ -219,6 +219,8 @@
   version: 24.1
   branch: emacs-24.1
   template: ubuntu/14.04/dev
+  patches:
+    - https://raw.githubusercontent.com/Silex/docker-emacs/master/templates/patches/0001-Fix-warning-preventing-build-on-ubuntu-14.04.patch
 
 - tags: [23.4, 23]
   version: 23.4
