@@ -34,6 +34,8 @@ ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
 
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
+    curl -sSLOJ "https://gitlab.com/Silex777/docker-emacs/-/raw/master/templates/patches/0001-Fix-warning-preventing-build-on-ubuntu-14.04.patch" && \
+    git apply *.patch && \
     ./autogen.sh && \
     ./configure && \
     make && \
