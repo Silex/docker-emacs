@@ -1,7 +1,7 @@
-FROM ubuntu:12.04
+FROM ubuntu:14.04
 
 RUN apt-get update && \
-    apt-get install -y \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
             autoconf \
             automake \
             build-essential \
@@ -28,17 +28,14 @@ RUN apt-get update && \
             texinfo \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="{{BRANCH}}"
-ENV EMACS_VERSION="{{VERSION}}"
+ENV EMACS_BRANCH="emacs-24.4"
+ENV EMACS_VERSION="24.4"
 ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
-
-{{CACHE}}
 
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
-    {{PATCHES}}
     ./autogen.sh && \
-    ./configure{{CONFIGURE}} && \
+    ./configure && \
     make && \
     make install
 

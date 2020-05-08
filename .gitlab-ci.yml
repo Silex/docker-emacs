@@ -148,41 +148,41 @@ img-24.5-dev:
   script: cd 24.5/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.5-dev -t silex/emacs:24-dev .
 img-24.4:
   stage: std
-  script: cd 24.4/ubuntu/12.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.4 .
+  script: cd 24.4/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.4 .
   needs:
   - img-24.4-dev
 img-24.4-dev:
   stage: dev
-  script: cd 24.4/ubuntu/12.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.4-dev .
+  script: cd 24.4/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.4-dev .
 img-24.3:
   stage: std
-  script: cd 24.3/ubuntu/12.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.3 .
+  script: cd 24.3/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.3 .
   needs:
   - img-24.3-dev
 img-24.3-dev:
   stage: dev
-  script: cd 24.3/ubuntu/12.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.3-dev .
+  script: cd 24.3/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.3-dev .
 img-24.2:
   stage: std
-  script: cd 24.2/ubuntu/12.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.2 .
+  script: cd 24.2/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.2 .
   needs:
   - img-24.2-dev
 img-24.2-dev:
   stage: dev
-  script: cd 24.2/ubuntu/12.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.2-dev .
+  script: cd 24.2/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.2-dev .
 img-24.1:
   stage: std
-  script: cd 24.1/ubuntu/12.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.1 .
+  script: cd 24.1/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.1 .
   needs:
   - img-24.1-dev
 img-24.1-dev:
   stage: dev
-  script: cd 24.1/ubuntu/12.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.1-dev .
+  script: cd 24.1/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.1-dev .
 img-23.4:
   stage: std
-  script: cd 23.4/ubuntu/12.04/bootstrap && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:23.4 -t silex/emacs:23 .
+  script: cd 23.4/ubuntu/14.04/bootstrap && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:23.4 -t silex/emacs:23 .
   needs:
   - img-23.4-dev
 img-23.4-dev:
   stage: dev
-  script: cd 23.4/ubuntu/12.04/bootstrap/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:23.4-dev -t silex/emacs:23-dev .
+  script: cd 23.4/ubuntu/14.04/bootstrap/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:23.4-dev -t silex/emacs:23-dev .

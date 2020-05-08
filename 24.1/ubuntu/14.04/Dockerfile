@@ -1,8 +1,8 @@
-FROM silex/emacs:24.4-dev
-FROM ubuntu:12.04
+FROM silex/emacs:24.1-dev
+FROM ubuntu:14.04
 
 RUN apt-get update && \
-    apt-get install -y \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
             curl \
             gnupg \
             gpm \
@@ -13,19 +13,19 @@ RUN apt-get update && \
             libgnutls26 \
             libgtk2.0-0 \
             libjpeg8 \
-            libmagick++4 \
+            libmagick++5 \
             libncurses5 \
             libpng12-0 \
             libsm6 \
-            libtiff4 \
+            libtiff5 \
             libx11-6 \
             libxpm4 \
             openssh-client \
             texinfo \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-24.4"
-ENV EMACS_VERSION="24.4"
+ENV EMACS_BRANCH="emacs-24.1"
+ENV EMACS_VERSION="24.1"
 
 COPY --from=0 /root/.emacs.d /root/.emacs.d
 COPY --from=0 /usr/local /usr/local

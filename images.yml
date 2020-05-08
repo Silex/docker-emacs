@@ -183,50 +183,50 @@
 - tags: [24.4]
   version: 24.4
   branch: emacs-24.4
-  template: ubuntu/12.04
+  template: ubuntu/14.04
   depends: 24.4-dev
 - tags: [24.4-dev]
   version: 24.4
   branch: emacs-24.4
-  template: ubuntu/12.04/dev
+  template: ubuntu/14.04/dev
 
 - tags: [24.3]
   version: 24.3
   branch: emacs-24.3
-  template: ubuntu/12.04
+  template: ubuntu/14.04
   depends: 24.3-dev
 - tags: [24.3-dev]
   version: 24.3
   branch: emacs-24.3
-  template: ubuntu/12.04/dev
+  template: ubuntu/14.04/dev
 
 - tags: [24.2]
   version: 24.2
   branch: emacs-24.2
-  template: ubuntu/12.04
+  template: ubuntu/14.04
   depends: 24.2-dev
 - tags: [24.2-dev]
   version: 24.2
   branch: emacs-24.2
-  template: ubuntu/12.04/dev
+  template: ubuntu/14.04/dev
 
 - tags: [24.1]
   version: 24.1
   branch: emacs-24.1
-  template: ubuntu/12.04
+  template: ubuntu/14.04
   depends: 24.1-dev
 - tags: [24.1-dev]
   version: 24.1
   branch: emacs-24.1
-  template: ubuntu/12.04/dev
+  template: ubuntu/14.04/dev
 
 - tags: [23.4, 23]
   version: 23.4
   branch: emacs-23.4
-  template: ubuntu/12.04/bootstrap
+  template: ubuntu/14.04/bootstrap
   depends: 23.4-dev
 - tags: [23.4-dev, 23-dev]
   version: 23.4
   branch: emacs-23.4
-  template: ubuntu/12.04/bootstrap/dev
+  template: ubuntu/14.04/bootstrap/dev
   configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no
