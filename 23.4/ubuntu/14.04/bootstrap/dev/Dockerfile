@@ -1,7 +1,7 @@
-FROM ubuntu:12.04
+FROM ubuntu:14.04
 
 RUN apt-get update && \
-    apt-get install -y \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
             autoconf \
             automake \
             build-essential \
@@ -28,14 +28,14 @@ RUN apt-get update && \
             texinfo \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-24.3"
-ENV EMACS_VERSION="24.3"
+ENV EMACS_BRANCH="emacs-23.4"
+ENV EMACS_VERSION="23.4"
 ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
 
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
-    ./autogen.sh && \
-    ./configure && \
+    ./configure --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no && \
+    make bootstrap && \
     make && \
     make install
 
@@ -47,8 +47,5 @@ RUN mkdir -p /root/.emacs.d/elpa/gnupg && \
           --recv-keys 066DAFCB81E42C40 \
       && break || sleep 15; \
     done
-
-RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-ENV PATH="/root/.cask/bin:$PATH"
 
 CMD ["emacs"]
