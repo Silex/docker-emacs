@@ -25,8 +25,16 @@ RUN apt-get update && \
             libxpm-dev \
             openssh-client \
             python \
-            texinfo \
     && rm -rf /var/lib/apt/lists/*
+
+RUN cd /tmp && \
+    curl -sSLO http://ftp.gnu.org/gnu/texinfo/texinfo-4.13a.tar.gz && \
+    tar xzf texinfo-4.13a.tar.gz && \
+    cd texinfo-4.13 && \
+    ./configure && \
+    make && \
+    make install && \
+    rm -rf texinfo*
 
 ENV EMACS_BRANCH="emacs-23.4"
 ENV EMACS_VERSION="23.4"
