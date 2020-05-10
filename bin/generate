@@ -118,6 +118,9 @@ def generate_gitlab(images)
     else
       params.delete('needs')
     end
+    if image.platforms
+      params['variables'] = { 'DOCKER_PLATFORMS' => image.platforms }
+    end
     name = format('img-%s', image.tag)
     h[name] = params
   end

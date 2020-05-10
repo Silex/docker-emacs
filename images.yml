@@ -123,11 +123,13 @@
   branch: emacs-25.3
   template: alpine/3.9
   depends: 25.3-alpine-dev
+  platforms: linux/amd64,linux/386
 - tags: [25.3-alpine-dev, 25-alpine-dev]
   version: 25.3
   branch: emacs-25.3
   template: alpine/3.9/dev
   configure: --with-modules
+  platforms: linux/amd64,linux/386
   patches:
     - https://git.alpinelinux.org/aports/plain/community/emacs/gamedir.patch?h=3.7-stable
     - https://git.alpinelinux.org/aports/plain/community/emacs/musl.patch?h=3.7-stable
@@ -148,11 +150,13 @@
   branch: emacs-25.2
   template: alpine/3.9
   depends: 25.2-alpine-dev
+  platforms: linux/amd64,linux/386
 - tags: [25.2-alpine-dev]
   version: 25.2
   branch: emacs-25.2
   template: alpine/3.9/dev
   configure: --with-modules
+  platforms: linux/amd64,linux/386
   patches:
     - https://git.alpinelinux.org/aports/plain/community/emacs/gamedir.patch?h=3.7-stable
     - https://git.alpinelinux.org/aports/plain/community/emacs/musl.patch?h=3.7-stable
@@ -227,8 +231,10 @@
   branch: emacs-23.4
   template: ubuntu/14.04/bootstrap
   depends: 23.4-dev
+  platforms: linux/amd64
 - tags: [23.4-dev, 23-dev]
   version: 23.4
   branch: emacs-23.4
   template: ubuntu/14.04/bootstrap/dev
   configure: --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no
+  platforms: linux/amd64

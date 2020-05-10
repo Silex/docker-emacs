@@ -111,9 +111,13 @@ img-25.3-alpine:
   script: cd 25.3/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.3-alpine -t silex/emacs:25-alpine .
   needs:
   - img-25.3-alpine-dev
+  variables:
+    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.3-alpine-dev:
   stage: dev
   script: cd 25.3/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.3-alpine-dev -t silex/emacs:25-alpine-dev .
+  variables:
+    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.2:
   stage: std
   script: cd 25.2/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.2 .
@@ -127,9 +131,13 @@ img-25.2-alpine:
   script: cd 25.2/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.2-alpine .
   needs:
   - img-25.2-alpine-dev
+  variables:
+    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.2-alpine-dev:
   stage: dev
   script: cd 25.2/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.2-alpine-dev .
+  variables:
+    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.1:
   stage: std
   script: cd 25.1/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.1 .
@@ -183,6 +191,10 @@ img-23.4:
   script: cd 23.4/ubuntu/14.04/bootstrap && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:23.4 -t silex/emacs:23 .
   needs:
   - img-23.4-dev
+  variables:
+    DOCKER_PLATFORMS: linux/amd64
 img-23.4-dev:
   stage: dev
   script: cd 23.4/ubuntu/14.04/bootstrap/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:23.4-dev -t silex/emacs:23-dev .
+  variables:
+    DOCKER_PLATFORMS: linux/amd64
