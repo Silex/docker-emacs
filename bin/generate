@@ -112,6 +112,7 @@ def generate_gitlab(images)
     params = template.deep_clone
     params['stage'] = image.gitlab_stage
     params['script'].gsub!('{{DIRECTORY}}', image.directory)
+    params['script'].gsub!('{{CACHE}}', format('silex/emacs:%s', image.tag))
     params['script'].gsub!('{{TAGS}}', image.tags.map{ |s| format('-t silex/emacs:%s', s) }.join(' '))
     if image.depends
       params['needs'] = [format('img-%s', image.depends)]

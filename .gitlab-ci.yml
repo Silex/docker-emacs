@@ -20,181 +20,181 @@ stages:
 - std
 img-master:
   stage: std
-  script: cd master/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:master .
+  script: cd master/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:master --cache-to type=inline -t silex/emacs:master .
   needs:
   - img-master-dev
 img-master-dev:
   stage: dev
-  script: cd master/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:master-dev .
+  script: cd master/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:master-dev --cache-to type=inline -t silex/emacs:master-dev .
 img-master-alpine:
   stage: std
-  script: cd master/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:master-alpine .
+  script: cd master/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:master-alpine --cache-to type=inline -t silex/emacs:master-alpine .
   needs:
   - img-master-alpine-dev
 img-master-alpine-dev:
   stage: dev
-  script: cd master/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:master-alpine-dev .
+  script: cd master/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:master-alpine-dev --cache-to type=inline -t silex/emacs:master-alpine-dev .
 img-27.0:
   stage: std
-  script: cd 27.0/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:27.0 -t silex/emacs:27 .
+  script: cd 27.0/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:27.0 --cache-to type=inline -t silex/emacs:27.0 -t silex/emacs:27 .
   needs:
   - img-27.0-dev
 img-27.0-dev:
   stage: dev
-  script: cd 27.0/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:27.0-dev -t silex/emacs:27-dev .
+  script: cd 27.0/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:27.0-dev --cache-to type=inline -t silex/emacs:27.0-dev -t silex/emacs:27-dev .
 img-27.0-alpine:
   stage: std
-  script: cd 27.0/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:27.0-alpine -t silex/emacs:27-alpine .
+  script: cd 27.0/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:27.0-alpine --cache-to type=inline -t silex/emacs:27.0-alpine -t silex/emacs:27-alpine .
   needs:
   - img-27.0-alpine-dev
 img-27.0-alpine-dev:
   stage: dev
-  script: cd 27.0/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:27.0-alpine-dev -t silex/emacs:27-alpine-dev .
+  script: cd 27.0/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:27.0-alpine-dev --cache-to type=inline -t silex/emacs:27.0-alpine-dev -t silex/emacs:27-alpine-dev .
 img-26.3:
   stage: std
-  script: cd 26.3/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.3 -t silex/emacs:26 -t silex/emacs:latest .
+  script: cd 26.3/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.3 --cache-to type=inline -t silex/emacs:26.3 -t silex/emacs:26 -t silex/emacs:latest .
   needs:
   - img-26.3-dev
 img-26.3-dev:
   stage: dev
-  script: cd 26.3/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.3-dev -t silex/emacs:26-dev -t silex/emacs:dev .
+  script: cd 26.3/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.3-dev --cache-to type=inline -t silex/emacs:26.3-dev -t silex/emacs:26-dev -t silex/emacs:dev .
 img-26.3-alpine:
   stage: std
-  script: cd 26.3/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.3-alpine -t silex/emacs:26-alpine -t silex/emacs:alpine .
+  script: cd 26.3/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.3-alpine --cache-to type=inline -t silex/emacs:26.3-alpine -t silex/emacs:26-alpine -t silex/emacs:alpine .
   needs:
   - img-26.3-alpine-dev
 img-26.3-alpine-dev:
   stage: dev
-  script: cd 26.3/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.3-alpine-dev -t silex/emacs:26-alpine-dev -t silex/emacs:alpine-dev .
+  script: cd 26.3/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.3-alpine-dev --cache-to type=inline -t silex/emacs:26.3-alpine-dev -t silex/emacs:26-alpine-dev -t silex/emacs:alpine-dev .
 img-26.2:
   stage: std
-  script: cd 26.2/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.2 .
+  script: cd 26.2/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.2 --cache-to type=inline -t silex/emacs:26.2 .
   needs:
   - img-26.2-dev
 img-26.2-dev:
   stage: dev
-  script: cd 26.2/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.2-dev .
+  script: cd 26.2/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.2-dev --cache-to type=inline -t silex/emacs:26.2-dev .
 img-26.2-alpine:
   stage: std
-  script: cd 26.2/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.2-alpine .
+  script: cd 26.2/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.2-alpine --cache-to type=inline -t silex/emacs:26.2-alpine .
   needs:
   - img-26.2-alpine-dev
 img-26.2-alpine-dev:
   stage: dev
-  script: cd 26.2/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.2-alpine-dev .
+  script: cd 26.2/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.2-alpine-dev --cache-to type=inline -t silex/emacs:26.2-alpine-dev .
 img-26.1:
   stage: std
-  script: cd 26.1/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.1 .
+  script: cd 26.1/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.1 --cache-to type=inline -t silex/emacs:26.1 .
   needs:
   - img-26.1-dev
 img-26.1-dev:
   stage: dev
-  script: cd 26.1/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.1-dev .
+  script: cd 26.1/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.1-dev --cache-to type=inline -t silex/emacs:26.1-dev .
 img-26.1-alpine:
   stage: std
-  script: cd 26.1/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.1-alpine .
+  script: cd 26.1/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.1-alpine --cache-to type=inline -t silex/emacs:26.1-alpine .
   needs:
   - img-26.1-alpine-dev
 img-26.1-alpine-dev:
   stage: dev
-  script: cd 26.1/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:26.1-alpine-dev .
+  script: cd 26.1/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:26.1-alpine-dev --cache-to type=inline -t silex/emacs:26.1-alpine-dev .
 img-25.3:
   stage: std
-  script: cd 25.3/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.3 -t silex/emacs:25 .
+  script: cd 25.3/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.3 --cache-to type=inline -t silex/emacs:25.3 -t silex/emacs:25 .
   needs:
   - img-25.3-dev
 img-25.3-dev:
   stage: dev
-  script: cd 25.3/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.3-dev -t silex/emacs:25-dev .
+  script: cd 25.3/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.3-dev --cache-to type=inline -t silex/emacs:25.3-dev -t silex/emacs:25-dev .
 img-25.3-alpine:
   stage: std
-  script: cd 25.3/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.3-alpine -t silex/emacs:25-alpine .
+  script: cd 25.3/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.3-alpine --cache-to type=inline -t silex/emacs:25.3-alpine -t silex/emacs:25-alpine .
   needs:
   - img-25.3-alpine-dev
   variables:
     DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.3-alpine-dev:
   stage: dev
-  script: cd 25.3/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.3-alpine-dev -t silex/emacs:25-alpine-dev .
+  script: cd 25.3/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.3-alpine-dev --cache-to type=inline -t silex/emacs:25.3-alpine-dev -t silex/emacs:25-alpine-dev .
   variables:
     DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.2:
   stage: std
-  script: cd 25.2/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.2 .
+  script: cd 25.2/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.2 --cache-to type=inline -t silex/emacs:25.2 .
   needs:
   - img-25.2-dev
 img-25.2-dev:
   stage: dev
-  script: cd 25.2/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.2-dev .
+  script: cd 25.2/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.2-dev --cache-to type=inline -t silex/emacs:25.2-dev .
 img-25.2-alpine:
   stage: std
-  script: cd 25.2/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.2-alpine .
+  script: cd 25.2/alpine/3.9 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.2-alpine --cache-to type=inline -t silex/emacs:25.2-alpine .
   needs:
   - img-25.2-alpine-dev
   variables:
     DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.2-alpine-dev:
   stage: dev
-  script: cd 25.2/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.2-alpine-dev .
+  script: cd 25.2/alpine/3.9/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.2-alpine-dev --cache-to type=inline -t silex/emacs:25.2-alpine-dev .
   variables:
     DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.1:
   stage: std
-  script: cd 25.1/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.1 .
+  script: cd 25.1/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.1 --cache-to type=inline -t silex/emacs:25.1 .
   needs:
   - img-25.1-dev
 img-25.1-dev:
   stage: dev
-  script: cd 25.1/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:25.1-dev .
+  script: cd 25.1/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:25.1-dev --cache-to type=inline -t silex/emacs:25.1-dev .
 img-24.5:
   stage: std
-  script: cd 24.5/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.5 -t silex/emacs:24 .
+  script: cd 24.5/ubuntu/18.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.5 --cache-to type=inline -t silex/emacs:24.5 -t silex/emacs:24 .
   needs:
   - img-24.5-dev
 img-24.5-dev:
   stage: dev
-  script: cd 24.5/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.5-dev -t silex/emacs:24-dev .
+  script: cd 24.5/ubuntu/18.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.5-dev --cache-to type=inline -t silex/emacs:24.5-dev -t silex/emacs:24-dev .
 img-24.4:
   stage: std
-  script: cd 24.4/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.4 .
+  script: cd 24.4/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.4 --cache-to type=inline -t silex/emacs:24.4 .
   needs:
   - img-24.4-dev
 img-24.4-dev:
   stage: dev
-  script: cd 24.4/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.4-dev .
+  script: cd 24.4/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.4-dev --cache-to type=inline -t silex/emacs:24.4-dev .
 img-24.3:
   stage: std
-  script: cd 24.3/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.3 .
+  script: cd 24.3/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.3 --cache-to type=inline -t silex/emacs:24.3 .
   needs:
   - img-24.3-dev
 img-24.3-dev:
   stage: dev
-  script: cd 24.3/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.3-dev .
+  script: cd 24.3/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.3-dev --cache-to type=inline -t silex/emacs:24.3-dev .
 img-24.2:
   stage: std
-  script: cd 24.2/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.2 .
+  script: cd 24.2/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.2 --cache-to type=inline -t silex/emacs:24.2 .
   needs:
   - img-24.2-dev
 img-24.2-dev:
   stage: dev
-  script: cd 24.2/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.2-dev .
+  script: cd 24.2/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.2-dev --cache-to type=inline -t silex/emacs:24.2-dev .
 img-24.1:
   stage: std
-  script: cd 24.1/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.1 .
+  script: cd 24.1/ubuntu/14.04 && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.1 --cache-to type=inline -t silex/emacs:24.1 .
   needs:
   - img-24.1-dev
 img-24.1-dev:
   stage: dev
-  script: cd 24.1/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:24.1-dev .
+  script: cd 24.1/ubuntu/14.04/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:24.1-dev --cache-to type=inline -t silex/emacs:24.1-dev .
 img-23.4:
   stage: std
-  script: cd 23.4/ubuntu/14.04/bootstrap && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:23.4 -t silex/emacs:23 .
+  script: cd 23.4/ubuntu/14.04/bootstrap && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:23.4 --cache-to type=inline -t silex/emacs:23.4 -t silex/emacs:23 .
   needs:
   - img-23.4-dev
   variables:
     DOCKER_PLATFORMS: linux/amd64
 img-23.4-dev:
   stage: dev
-  script: cd 23.4/ubuntu/14.04/bootstrap/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push -t silex/emacs:23.4-dev -t silex/emacs:23-dev .
+  script: cd 23.4/ubuntu/14.04/bootstrap/dev && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from silex/emacs:23.4-dev --cache-to type=inline -t silex/emacs:23.4-dev -t silex/emacs:23-dev .
   variables:
     DOCKER_PLATFORMS: linux/amd64

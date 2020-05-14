@@ -26,5 +26,5 @@ stages:
 
 template:
   stage: {{STAGE}}
-  script: cd {{DIRECTORY}} && docker buildx build --platform $DOCKER_PLATFORMS --pull --push {{TAGS}} .
+  script: cd {{DIRECTORY}} && docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from {{CACHE}} --cache-to type=inline {{TAGS}} .
   needs: {{NEEDS}}
