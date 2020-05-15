@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+export DOCKER_CLI_EXPERIMENTAL="enabled"
+export DOCKER_BUILDX_BUILDER="emacs-$CI_JOB_NAME-builder"
+
+for i in $(env | egrep ^FILE64 | cut -d= -f1); do
+  export "$(echo $i | sed 's/FILE64_//')=$(base64 -d $(eval echo \$$i))"
+done
+
+eval $(ssh-agent -s)

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ $# -ne 3 ]]; then
+  echo "usage: $0 DIRECTORY CACHE TAGS" 1>&2
+  exit 1
+fi
+
+BUILD_DIRECTORY="$1"
+BUILD_CACHE="$2"
+BUILD_TAGS="$3"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+export PATH="$SCRIPT_DIR:$PATH"
+
+source environment
+setup-ssh
+setup-docker
+
+trap "docker buildx rm $DOCKER_BUILDX_BUILDER" EXIT
+
+cd $BUILD_DIRECTORY
+docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from $BUILD_CACHE --cache-to type=inline $BUILD_TAGS .

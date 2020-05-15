@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# This assumes ssh-agent is up & running
+echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+ssh-keyscan $DOCKER_ARM_HOST >> ~/.ssh/known_hosts
+chmod 644 ~/.ssh/known_hosts
