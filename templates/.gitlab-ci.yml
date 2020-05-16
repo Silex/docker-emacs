@@ -17,5 +17,5 @@ before_script:
 
 template:
   stage: {{STAGE}}
-  script: bin/build "{{DIRECTORY}}" "{{CACHE}}" "{{TAGS}}"
+  script: bin/retry bin/build "{{DIRECTORY}}" "{{CACHE}}" "{{TAGS}}"
   needs: {{NEEDS}}
