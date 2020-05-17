@@ -18,7 +18,7 @@ source environment
 setup-ssh
 setup-docker
 
-trap "docker buildx rm $DOCKER_BUILDX_BUILDER" EXIT
+trap cleanup EXIT
 
 cd $BUILD_DIRECTORY
 docker buildx build --platform $DOCKER_PLATFORMS --pull --push --cache-from $BUILD_CACHE --cache-to type=inline $BUILD_TAGS .
