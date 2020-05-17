@@ -103,13 +103,9 @@ img-25.3-alpine:
   script: bin/retry bin/build "25.3/alpine/3.9" "silex/emacs:25.3-alpine" "-t silex/emacs:25.3-alpine -t silex/emacs:25-alpine"
   needs:
   - img-25.3-alpine-dev
-  variables:
-    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.3-alpine-dev:
   stage: dev
   script: bin/retry bin/build "25.3/alpine/3.9/dev" "silex/emacs:25.3-alpine-dev" "-t silex/emacs:25.3-alpine-dev -t silex/emacs:25-alpine-dev"
-  variables:
-    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.2:
   stage: std
   script: bin/retry bin/build "25.2/ubuntu/18.04" "silex/emacs:25.2" "-t silex/emacs:25.2"
@@ -123,13 +119,9 @@ img-25.2-alpine:
   script: bin/retry bin/build "25.2/alpine/3.9" "silex/emacs:25.2-alpine" "-t silex/emacs:25.2-alpine"
   needs:
   - img-25.2-alpine-dev
-  variables:
-    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.2-alpine-dev:
   stage: dev
   script: bin/retry bin/build "25.2/alpine/3.9/dev" "silex/emacs:25.2-alpine-dev" "-t silex/emacs:25.2-alpine-dev"
-  variables:
-    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-25.1:
   stage: std
   script: bin/retry bin/build "25.1/ubuntu/18.04" "silex/emacs:25.1" "-t silex/emacs:25.1"

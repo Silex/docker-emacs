@@ -46,7 +46,7 @@ RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     {{PATCHES}}
     ./autogen.sh && \
     ./configure{{CONFIGURE}} && \
-    make -j $(nproc) && \
+    make && \
     make install
 
 RUN mkdir -p /root/.emacs.d/elpa/gnupg && \

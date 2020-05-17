@@ -49,7 +49,7 @@ RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
     ./autogen.sh && \
     ./configure CFLAGS=-no-pie --with-modules && \
-    make -j $(nproc) && \
+    make && \
     make install
 
 RUN mkdir -p /root/.emacs.d/elpa/gnupg && \
