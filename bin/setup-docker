@@ -10,12 +10,11 @@ ssh root@$DOCKER_ARM_HOST sysctl kernel.randomize_va_space=0
 setup-docker-buildx "$DOCKER_BUILDX_VERSION"
 ssh root@$DOCKER_ARM_HOST "bash /dev/stdin $DOCKER_BUILDX_VERSION" < $(which setup-docker-buildx)
 
+# Remove old containers
+cleanup
+
 # Login to docker hub
 docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
-
-# Remove old instances
-docker buildx rm $DOCKER_BUILDX_BUILDER || true
-ssh root@$DOCKER_ARM_HOST "docker container rm -vf \$(docker container ls -q --filter name=$DOCKER_BUILDX_BUILDER)" || true
 
 # Create builder
 docker buildx create --name $DOCKER_BUILDX_BUILDER
