@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set +e
+
+if [[ $# -ne 1 ]]; then
+  echo "usage: $0 NAME" 1>&2
+  exit 1
+fi
+
+NAME="$1"
+
+export DOCKER_CLI_EXPERIMENTAL="enabled"
+docker buildx rm $NAME
+docker container rm -vf $(docker container ls -q --filter "name=$NAME")
+
+exit 0

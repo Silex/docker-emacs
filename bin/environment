@@ -11,3 +11,11 @@ done
 
 # SSH agent
 eval $(ssh-agent -s)
+
+# Helpers
+function cleanup
+{
+  remove-containers $DOCKER_BUILDX_BUILDER
+  ssh root@$DOCKER_ARM_HOST "bash /dev/stdin $DOCKER_BUILDX_BUILDER" < $(which remove-containers)
+}
+export -f cleanup

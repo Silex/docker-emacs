@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set +e
-
-docker buildx rm $DOCKER_BUILDX_BUILDER
-docker container rm -vf $(docker container ls -q --filter name=$DOCKER_BUILDX_BUILDER)
-ssh root@$DOCKER_ARM_HOST "docker container rm -vf \$(docker container ls -q --filter name=$DOCKER_BUILDX_BUILDER)"
-
-exit 0

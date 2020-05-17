@@ -8,7 +8,6 @@ ssh root@$DOCKER_ARM_HOST sysctl kernel.randomize_va_space=0
 
 # Ensure buildx is at the correct version
 setup-docker-buildx "$DOCKER_BUILDX_VERSION"
-ssh root@$DOCKER_ARM_HOST "bash /dev/stdin $DOCKER_BUILDX_VERSION" < $(which setup-docker-buildx)
 
 # Remove old containers
 cleanup
