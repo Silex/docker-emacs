@@ -76,6 +76,11 @@ def make_patches_string(urls)
   commands.join
 end
 
+def make_resource_group(image)
+  group = image.version.to_i
+  format('group-%s', group.zero? ? image.version : group)
+end
+
 def generate_dockerfiles(images)
   puts '>>> generating dockerfiles'
   images.each do |image|
@@ -111,6 +116,7 @@ def generate_gitlab(images)
   images.each do |image|
     params = template.deep_clone
     params['stage'] = image.gitlab_stage
+    params['resource_group'] = make_resource_group(image)
     params['script'].gsub!('{{DIRECTORY}}', image.directory)
     params['script'].gsub!('{{CACHE}}', format('silex/emacs:%s', image.tag))
     params['script'].gsub!('{{TAGS}}', image.tags.map{ |s| format('-t silex/emacs:%s', s) }.join(' '))
