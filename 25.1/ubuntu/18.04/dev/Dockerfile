@@ -43,7 +43,7 @@ RUN apt-get update && \
 
 ENV EMACS_BRANCH="emacs-25.1"
 ENV EMACS_VERSION="25.1"
-ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
+ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
 
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \

@@ -37,7 +37,7 @@ RUN apk add --no-cache \
 
 ENV EMACS_BRANCH="emacs-26.2"
 ENV EMACS_VERSION="26.2"
-ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
+ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
 
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \

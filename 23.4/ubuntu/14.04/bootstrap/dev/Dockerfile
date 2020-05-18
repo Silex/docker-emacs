@@ -38,7 +38,7 @@ RUN cd /tmp && \
 
 ENV EMACS_BRANCH="emacs-23.4"
 ENV EMACS_VERSION="23.4"
-ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
+ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
 
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \

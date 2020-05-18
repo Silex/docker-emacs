@@ -37,7 +37,7 @@ RUN apk add --no-cache \
 
 ENV EMACS_BRANCH="{{BRANCH}}"
 ENV EMACS_VERSION="{{VERSION}}"
-ENV EMACS_REPOSITORY="git://git.sv.gnu.org/emacs.git"
+ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
 
 {{CACHE}}
 
