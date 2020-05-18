@@ -7,7 +7,11 @@ sysctl kernel.randomize_va_space=0
 ssh root@$DOCKER_ARM_HOST sysctl kernel.randomize_va_space=0
 
 # Ensure buildx is at the correct version
-setup-docker-buildx "$DOCKER_BUILDX_VERSION"
+BUILDX_URL="https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.linux-amd64"
+BUILDX_PATH="$HOME/.docker/cli-plugins"
+mkdir -p "$BUILDX_PATH"
+wget -qO "$BUILDX_PATH/docker-buildx" "$BUILDX_URL"
+chmod a+x "$BUILDX_PATH/docker-buildx"
 
 # Remove old containers
 cleanup
