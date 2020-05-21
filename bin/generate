@@ -76,11 +76,6 @@ def make_patches_string(urls)
   commands.join
 end
 
-def make_resource_group(image)
-  group = image.version.to_i
-  format('group-%s', group.zero? ? image.version : group)
-end
-
 def generate_dockerfiles(images)
   puts '>>> generating dockerfiles'
   images.each do |image|
@@ -113,10 +108,16 @@ def generate_gitlab(images)
   puts '>>> generating .gitlab-ci.yml'
   h = YAML.load_file('templates/.gitlab-ci.yml')
   template = h.delete('template')
+
+  dev_images = images.reject{ |i| i.gitlab_stage == 'std' }
+  gitlab_groups = dev_images.map.with_index do |image, i|
+    group = i / (dev_images.size / 4.0)
+    [image, format('group-dev%d', group + 1)]
+  end.to_h
+
   images.each do |image|
     params = template.deep_clone
     params['stage'] = image.gitlab_stage
-    params['resource_group'] = make_resource_group(image)
     params['script'].gsub!('{{DIRECTORY}}', image.directory)
     params['script'].gsub!('{{CACHE}}', format('silex/emacs:%s', image.tag))
     params['script'].gsub!('{{TAGS}}', image.tags.map{ |s| format('-t silex/emacs:%s', s) }.join(' '))
@@ -125,11 +126,12 @@ def generate_gitlab(images)
     else
       params.delete('needs')
     end
+    params['resource_group'] = gitlab_groups[image]
     if image.platforms
       params['variables'] = { 'DOCKER_PLATFORMS' => image.platforms }
     end
     name = format('img-%s', image.tag)
-    h[name] = params
+    h[name] = params.compact
   end
   File.write('.gitlab-ci.yml', h.to_yaml(line_width: -1))
 end

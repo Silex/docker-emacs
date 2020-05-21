@@ -13,207 +13,186 @@ before_script:
 img-master:
   stage: std
   script: bin/retry bin/build "master/ubuntu/18.04" "silex/emacs:master" "-t silex/emacs:master"
-  resource_group: group-master
   needs:
   - img-master-dev
 img-master-dev:
   stage: dev
   script: bin/retry bin/build "master/ubuntu/18.04/dev" "silex/emacs:master-dev" "-t silex/emacs:master-dev"
-  resource_group: group-master
+  resource_group: group-dev1
 img-master-alpine:
   stage: std
   script: bin/retry bin/build "master/alpine/3.9" "silex/emacs:master-alpine" "-t silex/emacs:master-alpine"
-  resource_group: group-master
   needs:
   - img-master-alpine-dev
 img-master-alpine-dev:
   stage: dev
   script: bin/retry bin/build "master/alpine/3.9/dev" "silex/emacs:master-alpine-dev" "-t silex/emacs:master-alpine-dev"
-  resource_group: group-master
+  resource_group: group-dev1
 img-27.0:
   stage: std
   script: bin/retry bin/build "27.0/ubuntu/18.04" "silex/emacs:27.0" "-t silex/emacs:27.0 -t silex/emacs:27"
-  resource_group: group-27
   needs:
   - img-27.0-dev
 img-27.0-dev:
   stage: dev
   script: bin/retry bin/build "27.0/ubuntu/18.04/dev" "silex/emacs:27.0-dev" "-t silex/emacs:27.0-dev -t silex/emacs:27-dev"
-  resource_group: group-27
+  resource_group: group-dev1
 img-27.0-alpine:
   stage: std
   script: bin/retry bin/build "27.0/alpine/3.9" "silex/emacs:27.0-alpine" "-t silex/emacs:27.0-alpine -t silex/emacs:27-alpine"
-  resource_group: group-27
   needs:
   - img-27.0-alpine-dev
 img-27.0-alpine-dev:
   stage: dev
   script: bin/retry bin/build "27.0/alpine/3.9/dev" "silex/emacs:27.0-alpine-dev" "-t silex/emacs:27.0-alpine-dev -t silex/emacs:27-alpine-dev"
-  resource_group: group-27
+  resource_group: group-dev1
 img-26.3:
   stage: std
   script: bin/retry bin/build "26.3/ubuntu/18.04" "silex/emacs:26.3" "-t silex/emacs:26.3 -t silex/emacs:26 -t silex/emacs:latest"
-  resource_group: group-26
   needs:
   - img-26.3-dev
 img-26.3-dev:
   stage: dev
   script: bin/retry bin/build "26.3/ubuntu/18.04/dev" "silex/emacs:26.3-dev" "-t silex/emacs:26.3-dev -t silex/emacs:26-dev -t silex/emacs:dev"
-  resource_group: group-26
+  resource_group: group-dev1
 img-26.3-alpine:
   stage: std
   script: bin/retry bin/build "26.3/alpine/3.9" "silex/emacs:26.3-alpine" "-t silex/emacs:26.3-alpine -t silex/emacs:26-alpine -t silex/emacs:alpine"
-  resource_group: group-26
   needs:
   - img-26.3-alpine-dev
 img-26.3-alpine-dev:
   stage: dev
   script: bin/retry bin/build "26.3/alpine/3.9/dev" "silex/emacs:26.3-alpine-dev" "-t silex/emacs:26.3-alpine-dev -t silex/emacs:26-alpine-dev -t silex/emacs:alpine-dev"
-  resource_group: group-26
+  resource_group: group-dev1
 img-26.2:
   stage: std
   script: bin/retry bin/build "26.2/ubuntu/18.04" "silex/emacs:26.2" "-t silex/emacs:26.2"
-  resource_group: group-26
   needs:
   - img-26.2-dev
 img-26.2-dev:
   stage: dev
   script: bin/retry bin/build "26.2/ubuntu/18.04/dev" "silex/emacs:26.2-dev" "-t silex/emacs:26.2-dev"
-  resource_group: group-26
+  resource_group: group-dev2
 img-26.2-alpine:
   stage: std
   script: bin/retry bin/build "26.2/alpine/3.9" "silex/emacs:26.2-alpine" "-t silex/emacs:26.2-alpine"
-  resource_group: group-26
   needs:
   - img-26.2-alpine-dev
 img-26.2-alpine-dev:
   stage: dev
   script: bin/retry bin/build "26.2/alpine/3.9/dev" "silex/emacs:26.2-alpine-dev" "-t silex/emacs:26.2-alpine-dev"
-  resource_group: group-26
+  resource_group: group-dev2
 img-26.1:
   stage: std
   script: bin/retry bin/build "26.1/ubuntu/18.04" "silex/emacs:26.1" "-t silex/emacs:26.1"
-  resource_group: group-26
   needs:
   - img-26.1-dev
 img-26.1-dev:
   stage: dev
   script: bin/retry bin/build "26.1/ubuntu/18.04/dev" "silex/emacs:26.1-dev" "-t silex/emacs:26.1-dev"
-  resource_group: group-26
+  resource_group: group-dev2
 img-26.1-alpine:
   stage: std
   script: bin/retry bin/build "26.1/alpine/3.9" "silex/emacs:26.1-alpine" "-t silex/emacs:26.1-alpine"
-  resource_group: group-26
   needs:
   - img-26.1-alpine-dev
 img-26.1-alpine-dev:
   stage: dev
   script: bin/retry bin/build "26.1/alpine/3.9/dev" "silex/emacs:26.1-alpine-dev" "-t silex/emacs:26.1-alpine-dev"
-  resource_group: group-26
+  resource_group: group-dev2
 img-25.3:
   stage: std
   script: bin/retry bin/build "25.3/ubuntu/18.04" "silex/emacs:25.3" "-t silex/emacs:25.3 -t silex/emacs:25"
-  resource_group: group-25
   needs:
   - img-25.3-dev
 img-25.3-dev:
   stage: dev
   script: bin/retry bin/build "25.3/ubuntu/18.04/dev" "silex/emacs:25.3-dev" "-t silex/emacs:25.3-dev -t silex/emacs:25-dev"
-  resource_group: group-25
+  resource_group: group-dev2
 img-25.3-alpine:
   stage: std
   script: bin/retry bin/build "25.3/alpine/3.9" "silex/emacs:25.3-alpine" "-t silex/emacs:25.3-alpine -t silex/emacs:25-alpine"
-  resource_group: group-25
   needs:
   - img-25.3-alpine-dev
 img-25.3-alpine-dev:
   stage: dev
   script: bin/retry bin/build "25.3/alpine/3.9/dev" "silex/emacs:25.3-alpine-dev" "-t silex/emacs:25.3-alpine-dev -t silex/emacs:25-alpine-dev"
-  resource_group: group-25
+  resource_group: group-dev3
 img-25.2:
   stage: std
   script: bin/retry bin/build "25.2/ubuntu/18.04" "silex/emacs:25.2" "-t silex/emacs:25.2"
-  resource_group: group-25
   needs:
   - img-25.2-dev
 img-25.2-dev:
   stage: dev
   script: bin/retry bin/build "25.2/ubuntu/18.04/dev" "silex/emacs:25.2-dev" "-t silex/emacs:25.2-dev"
-  resource_group: group-25
+  resource_group: group-dev3
 img-25.2-alpine:
   stage: std
   script: bin/retry bin/build "25.2/alpine/3.9" "silex/emacs:25.2-alpine" "-t silex/emacs:25.2-alpine"
-  resource_group: group-25
   needs:
   - img-25.2-alpine-dev
 img-25.2-alpine-dev:
   stage: dev
   script: bin/retry bin/build "25.2/alpine/3.9/dev" "silex/emacs:25.2-alpine-dev" "-t silex/emacs:25.2-alpine-dev"
-  resource_group: group-25
+  resource_group: group-dev3
 img-25.1:
   stage: std
   script: bin/retry bin/build "25.1/ubuntu/18.04" "silex/emacs:25.1" "-t silex/emacs:25.1"
-  resource_group: group-25
   needs:
   - img-25.1-dev
 img-25.1-dev:
   stage: dev
   script: bin/retry bin/build "25.1/ubuntu/18.04/dev" "silex/emacs:25.1-dev" "-t silex/emacs:25.1-dev"
-  resource_group: group-25
+  resource_group: group-dev3
 img-24.5:
   stage: std
   script: bin/retry bin/build "24.5/ubuntu/18.04" "silex/emacs:24.5" "-t silex/emacs:24.5 -t silex/emacs:24"
-  resource_group: group-24
   needs:
   - img-24.5-dev
 img-24.5-dev:
   stage: dev
   script: bin/retry bin/build "24.5/ubuntu/18.04/dev" "silex/emacs:24.5-dev" "-t silex/emacs:24.5-dev -t silex/emacs:24-dev"
-  resource_group: group-24
+  resource_group: group-dev3
 img-24.4:
   stage: std
   script: bin/retry bin/build "24.4/ubuntu/14.04" "silex/emacs:24.4" "-t silex/emacs:24.4"
-  resource_group: group-24
   needs:
   - img-24.4-dev
 img-24.4-dev:
   stage: dev
   script: bin/retry bin/build "24.4/ubuntu/14.04/dev" "silex/emacs:24.4-dev" "-t silex/emacs:24.4-dev"
-  resource_group: group-24
+  resource_group: group-dev4
 img-24.3:
   stage: std
   script: bin/retry bin/build "24.3/ubuntu/14.04" "silex/emacs:24.3" "-t silex/emacs:24.3"
-  resource_group: group-24
   needs:
   - img-24.3-dev
 img-24.3-dev:
   stage: dev
   script: bin/retry bin/build "24.3/ubuntu/14.04/dev" "silex/emacs:24.3-dev" "-t silex/emacs:24.3-dev"
-  resource_group: group-24
+  resource_group: group-dev4
 img-24.2:
   stage: std
   script: bin/retry bin/build "24.2/ubuntu/14.04" "silex/emacs:24.2" "-t silex/emacs:24.2"
-  resource_group: group-24
   needs:
   - img-24.2-dev
 img-24.2-dev:
   stage: dev
   script: bin/retry bin/build "24.2/ubuntu/14.04/dev" "silex/emacs:24.2-dev" "-t silex/emacs:24.2-dev"
-  resource_group: group-24
+  resource_group: group-dev4
 img-24.1:
   stage: std
   script: bin/retry bin/build "24.1/ubuntu/14.04" "silex/emacs:24.1" "-t silex/emacs:24.1"
-  resource_group: group-24
   needs:
   - img-24.1-dev
 img-24.1-dev:
   stage: dev
   script: bin/retry bin/build "24.1/ubuntu/14.04/dev" "silex/emacs:24.1-dev" "-t silex/emacs:24.1-dev"
-  resource_group: group-24
+  resource_group: group-dev4
 img-23.4:
   stage: std
   script: bin/retry bin/build "23.4/ubuntu/14.04/bootstrap" "silex/emacs:23.4" "-t silex/emacs:23.4 -t silex/emacs:23"
-  resource_group: group-23
   needs:
   - img-23.4-dev
   variables:
@@ -221,6 +200,6 @@ img-23.4:
 img-23.4-dev:
   stage: dev
   script: bin/retry bin/build "23.4/ubuntu/14.04/bootstrap/dev" "silex/emacs:23.4-dev" "-t silex/emacs:23.4-dev -t silex/emacs:23-dev"
-  resource_group: group-23
+  resource_group: group-dev4
   variables:
     DOCKER_PLATFORMS: linux/amd64
