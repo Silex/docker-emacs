@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'pty'
 require 'yaml'
-require 'find'
 require 'ostruct'
 require 'optparse'
 require 'fileutils'
@@ -59,13 +57,6 @@ class Image < OpenStruct
   def gitlab_stage
     depends ? 'std' : 'dev'
   end
-end
-
-def generate(options)
-  images = Image.load(options[:source])
-  generate_dockerfiles(images)
-  generate_readme(images)
-  generate_gitlab(images)
 end
 
 def make_patches_string(urls)
@@ -136,22 +127,24 @@ def generate_gitlab(images)
   File.write('.gitlab-ci.yml', h.to_yaml(line_width: -1))
 end
 
+def generate(source)
+  images = Image.load(source)
+  generate_dockerfiles(images)
+  generate_readme(images)
+  generate_gitlab(images)
+end
+
 begin
-  options = { source: 'images.yml' }
   parser = OptionParser.new do |opts|
-    opts.banner = 'Usage: generate'
+    opts.banner = 'Usage: generate [SOURCE=images.yml]'
     opts.separator ''
     opts.separator 'Generate the Dockerfiles, README and gitlab files.'
-    opts.separator ''
-    opts.separator 'Options:'
-    opts.on('--source FILE', format('Sets the images source (default %s)', options[:source])) do |source|
-      options[:source] = source
-    end
   end
   parser.parse!
+  source = ARGV.empty? ? 'images.yml' : ARGV.first
 
   Dir.chdir(File.join(File.dirname(__FILE__), '..')) do
-    generate(options)
+    generate(source)
   end
 rescue OptionParser::ParseError => e
   $stderr.puts e.message
