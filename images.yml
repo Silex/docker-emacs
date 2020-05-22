@@ -167,7 +167,7 @@
   version: 25.1
   branch: emacs-25.1
   template: ubuntu/18.04/dev
-  configure: CFLAGS=-no-pie --with-modules
+  configure: CFLAGS="-no-pie" --with-modules
 
 - tags: [24.5, 24]
   version: 24.5
@@ -178,7 +178,7 @@
   version: 24.5
   branch: emacs-24.5
   template: ubuntu/18.04/dev
-  configure: CFLAGS=-no-pie
+  configure: CFLAGS="-no-pie"
 
 - tags: [24.4]
   version: 24.4
