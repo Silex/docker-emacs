@@ -37,7 +37,7 @@ RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     curl -sSLOJ "https://raw.githubusercontent.com/Silex/docker-emacs/master/templates/patches/0001-Fix-warning-preventing-build-on-ubuntu-14.04.patch" && \
     git apply *.patch && \
     ./autogen.sh && \
-    ./configure && \
+    ./configure --build="$(dpkg-architecture | grep DEB_BUILD_GNU_TYPE | cut -d= -f2)" && \
     make && \
     make install
 

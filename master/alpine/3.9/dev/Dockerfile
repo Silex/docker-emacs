@@ -44,7 +44,7 @@ ADD https://git.sv.gnu.org/git/emacs.git/refs/heads/master /tmp/cache
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
     ./autogen.sh && \
-    ./configure --with-modules && \
+    ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" --with-modules && \
     make && \
     make install
 

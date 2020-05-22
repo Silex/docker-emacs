@@ -51,7 +51,7 @@ RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
     {{PATCHES}}
     ./autogen.sh && \
-    ./configure{{CONFIGURE}} && \
+    ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" {{CONFIGURE}} && \
     make && \
     make install
 

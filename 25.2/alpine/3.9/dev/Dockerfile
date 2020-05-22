@@ -46,7 +46,7 @@ RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     curl -sSLOJ "https://git.alpinelinux.org/aports/plain/community/emacs/noaslr-dump.patch?h=3.7-stable" && \
     git apply *.patch && \
     ./autogen.sh && \
-    ./configure --with-modules && \
+    ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" --with-modules && \
     make && \
     make install
 

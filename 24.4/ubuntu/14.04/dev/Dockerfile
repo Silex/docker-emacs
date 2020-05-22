@@ -35,7 +35,7 @@ ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
     ./autogen.sh && \
-    ./configure && \
+    ./configure --build="$(dpkg-architecture | grep DEB_BUILD_GNU_TYPE | cut -d= -f2)" && \
     make && \
     make install
 
