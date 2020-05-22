@@ -106,18 +106,18 @@ def generate_gitlab(images)
     [image, format('group-dev%d', group + 1)]
   end.to_h
 
+  gitlab_needs = images.select(&:depends).map do |image|
+    [image, [format('img-%s', image.depends)]]
+  end.to_h
+
   images.each do |image|
     params = template.deep_clone
     params['stage'] = image.gitlab_stage
     params['script'].gsub!('{{DIRECTORY}}', image.directory)
     params['script'].gsub!('{{CACHE}}', format('silex/emacs:%s', image.tag))
     params['script'].gsub!('{{TAGS}}', image.tags.map{ |s| format('-t silex/emacs:%s', s) }.join(' '))
-    if image.depends
-      params['needs'] = [format('img-%s', image.depends)]
-    else
-      params.delete('needs')
-    end
     params['resource_group'] = gitlab_groups[image]
+    params['needs'] = gitlab_needs[image]
     if image.platforms
       params['variables'] = { 'DOCKER_PLATFORMS' => image.platforms }
     end
