@@ -196,10 +196,10 @@ img-23.4:
   needs:
   - img-23.4-dev
   variables:
-    DOCKER_PLATFORMS: linux/amd64
+    DOCKER_PLATFORMS: linux/amd64,linux/386
 img-23.4-dev:
   stage: dev
   script: bin/retry bin/build "23.4/ubuntu/14.04/bootstrap/dev" "silex/emacs:23.4-dev" "-t silex/emacs:23.4-dev -t silex/emacs:23-dev"
   resource_group: group-dev4
   variables:
-    DOCKER_PLATFORMS: linux/amd64
+    DOCKER_PLATFORMS: linux/amd64,linux/386

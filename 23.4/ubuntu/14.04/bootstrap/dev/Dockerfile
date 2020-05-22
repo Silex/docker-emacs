@@ -42,7 +42,7 @@ ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
 
 RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
     cd /opt/emacs && \
-    ./configure --build="$(dpkg-architecture | grep DEB_BUILD_GNU_TYPE | cut -d= -f2)" --with-crt-dir=/usr/lib/x86_64-linux-gnu --with-x-toolkit=no && \
+    ./configure --build="$(dpkg-architecture | grep DEB_BUILD_GNU_TYPE | cut -d= -f2)" --with-crt-dir="/usr/lib/$(dpkg-architecture | grep DEB_BUILD_MULTIARCH | cut -d= -f2)" --with-x-toolkit="no" && \
     make bootstrap && \
     make && \
     make install
