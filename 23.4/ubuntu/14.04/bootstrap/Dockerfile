@@ -19,6 +19,7 @@ RUN apt-get update && \
             libsm6 \
             libtiff5 \
             libx11-6 \
+            libxft2 \
             libxpm4 \
             openssh-client \
             texinfo \
