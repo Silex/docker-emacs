@@ -36,11 +36,7 @@ RUN cd /tmp && \
     make install && \
     rm -rf texinfo*
 
-ENV EMACS_BRANCH="emacs-23.4"
-ENV EMACS_VERSION="23.4"
-ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
-
-RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
+RUN git clone --depth 1 --branch emacs-23.4 git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \
     ./configure --build="$(dpkg-architecture | grep DEB_BUILD_GNU_TYPE | cut -d= -f2)" --with-crt-dir="/usr/lib/$(dpkg-architecture | grep DEB_BUILD_MULTIARCH | cut -d= -f2)" --with-x-toolkit="no" && \
     make bootstrap && \

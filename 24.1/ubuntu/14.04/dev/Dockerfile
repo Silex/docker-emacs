@@ -28,11 +28,7 @@ RUN apt-get update && \
             texinfo \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-24.1"
-ENV EMACS_VERSION="24.1"
-ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
-
-RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
+RUN git clone --depth 1 --branch emacs-24.1 git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \
     curl -sSLOJ "https://raw.githubusercontent.com/Silex/docker-emacs/master/templates/patches/0001-Fix-warning-preventing-build-on-ubuntu-14.04.patch" && \
     git apply *.patch && \

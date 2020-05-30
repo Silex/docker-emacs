@@ -19,9 +19,6 @@ RUN apk add --no-cache \
         openssh-client \
         tiff
 
-ENV EMACS_BRANCH="{{BRANCH}}"
-ENV EMACS_VERSION="{{VERSION}}"
-
 COPY --from=0 /root/.emacs.d /root/.emacs.d
 COPY --from=0 /usr/local /usr/local
 

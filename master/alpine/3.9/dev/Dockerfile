@@ -35,13 +35,9 @@ RUN apk add --no-cache \
         texinfo \
         tiff-dev
 
-ENV EMACS_BRANCH="master"
-ENV EMACS_VERSION="master"
-ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
-
 ADD https://git.sv.gnu.org/git/emacs.git/refs/heads/master /tmp/cache
 
-RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
+RUN git clone --depth 1 --branch master git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \
     ./autogen.sh && \
     ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" --with-modules && \

@@ -35,11 +35,7 @@ RUN apk add --no-cache \
         texinfo \
         tiff-dev
 
-ENV EMACS_BRANCH="emacs-25.3"
-ENV EMACS_VERSION="25.3"
-ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
-
-RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
+RUN git clone --depth 1 --branch emacs-25.3 git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \
     curl -sSLOJ "https://git.alpinelinux.org/aports/plain/community/emacs/gamedir.patch?h=3.7-stable" && \
     curl -sSLOJ "https://git.alpinelinux.org/aports/plain/community/emacs/musl.patch?h=3.7-stable" && \

@@ -25,9 +25,6 @@ RUN apt-get update && \
             texinfo \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="{{BRANCH}}"
-ENV EMACS_VERSION="{{VERSION}}"
-
 COPY --from=0 /root/.emacs.d /root/.emacs.d
 COPY --from=0 /usr/local /usr/local
 

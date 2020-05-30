@@ -41,11 +41,7 @@ RUN apt-get update && \
             zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ENV EMACS_BRANCH="emacs-27.0.91"
-ENV EMACS_VERSION="27.0"
-ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
-
-RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
+RUN git clone --depth 1 --branch emacs-27.0.91 git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \
     ./autogen.sh && \
     ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" --with-modules && \

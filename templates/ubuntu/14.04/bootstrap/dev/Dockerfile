@@ -36,13 +36,9 @@ RUN cd /tmp && \
     make install && \
     rm -rf texinfo*
 
-ENV EMACS_BRANCH="{{BRANCH}}"
-ENV EMACS_VERSION="{{VERSION}}"
-ENV EMACS_REPOSITORY="https://git.sv.gnu.org/git/emacs.git"
-
 {{CACHE}}
 
-RUN git clone --depth 1 --branch $EMACS_BRANCH $EMACS_REPOSITORY /opt/emacs && \
+RUN git clone --depth 1 --branch {{BRANCH}} git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \
     {{PATCHES}}
     ./configure --build="$(dpkg-architecture | grep DEB_BUILD_GNU_TYPE | cut -d= -f2)" {{CONFIGURE}} && \
