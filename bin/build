@@ -24,3 +24,5 @@ cd "$BUILD_DIRECTORY"
 for tag in $BUILD_TAGS; do
   docker buildx build --platform="$DOCKER_PLATFORMS" --pull --push --cache-from="$BUILD_CACHE" --cache-to="type=inline" --tag="$tag" .
 done
+
+docker run --rm "$BUILD_CACHE" emacs --version
