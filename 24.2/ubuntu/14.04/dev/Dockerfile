@@ -26,6 +26,7 @@ RUN apt-get update && \
             openssh-client \
             python \
             texinfo \
+            wget \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone --depth 1 --branch emacs-24.2 git://git.sv.gnu.org/emacs.git /opt/emacs && \

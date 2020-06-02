@@ -37,6 +37,7 @@ RUN apt-get update && \
             openssh-client \
             python \
             texinfo \
+            wget \
             xaw3dg-dev \
             zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*

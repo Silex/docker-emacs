@@ -26,6 +26,7 @@ RUN apt-get update && \
             openssh-client \
             python \
             texinfo \
+            wget \
     && rm -rf /var/lib/apt/lists/*
 
 {{CACHE}}

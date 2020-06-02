@@ -33,7 +33,8 @@ RUN apk add --no-cache \
         paxmark \
         python \
         texinfo \
-        tiff-dev
+        tiff-dev \
+        wget
 
 {{CACHE}}
 

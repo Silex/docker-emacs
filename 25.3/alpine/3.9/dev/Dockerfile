@@ -33,7 +33,8 @@ RUN apk add --no-cache \
         paxmark \
         python \
         texinfo \
-        tiff-dev
+        tiff-dev \
+        wget
 
 RUN git clone --depth 1 --branch emacs-25.3 git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \

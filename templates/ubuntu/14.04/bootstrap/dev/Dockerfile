@@ -25,6 +25,7 @@ RUN apt-get update && \
             libxpm-dev \
             openssh-client \
             python \
+            wget \
     && rm -rf /var/lib/apt/lists/*
 
 RUN cd /tmp && \

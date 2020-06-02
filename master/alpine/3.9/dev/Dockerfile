@@ -33,7 +33,8 @@ RUN apk add --no-cache \
         paxmark \
         python \
         texinfo \
-        tiff-dev
+        tiff-dev \
+        wget
 
 ADD https://git.sv.gnu.org/git/emacs.git/refs/heads/master /tmp/cache
 
