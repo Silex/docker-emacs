@@ -14,9 +14,11 @@ variables:
 
 before_script:
   - apk add --no-cache bash
+  - export PATH="$(pwd)/bin:$PATH"
+  - source environment
 
 template:
   stage: {{STAGE}}
-  script: bin/retry bin/build "{{DIRECTORY}}" "{{TAGS}}"
+  script: retry build "{{DIRECTORY}}" "{{TAGS}}"
   resource_group: {{RESOURCE_GROUP}}
   needs: {{NEEDS}}

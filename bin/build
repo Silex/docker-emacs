@@ -10,19 +10,49 @@ fi
 BUILD_DIRECTORY="$1"
 BUILD_TAGS="$2"
 BUILD_CACHE="$(echo "$BUILD_TAGS" | cut -d' ' -f1)"
+DOCKER_BUILDX_BUILDER="emacs-$CI_JOB_NAME-builder"
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-export PATH="$SCRIPT_DIR:$PATH"
+function cleanup
+{
+  remove-containers $DOCKER_BUILDX_BUILDER
+  ssh root@$DOCKER_ARM_HOST "bash /dev/stdin $DOCKER_BUILDX_BUILDER" < $(which remove-containers)
+}
 
-source environment
-setup-ssh
-setup-docker
+# Ensure ASLR is disabled
+sysctl kernel.randomize_va_space=0
+ssh root@$DOCKER_ARM_HOST sysctl kernel.randomize_va_space=0
 
+# Login to docker hub
+docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
+
+# Ensure buildx is at the correct version
+BUILDX_URL="https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.linux-amd64"
+BUILDX_PATH="$HOME/.docker/cli-plugins"
+mkdir -p "$BUILDX_PATH"
+wget -qO "$BUILDX_PATH/docker-buildx" "$BUILDX_URL"
+chmod a+x "$BUILDX_PATH/docker-buildx"
+
+# Remove old containers
+cleanup
 trap cleanup EXIT
 
-cd "$BUILD_DIRECTORY"
+# Create builder
+docker buildx create --name $DOCKER_BUILDX_BUILDER
+docker buildx create --append --name $DOCKER_BUILDX_BUILDER ssh://root@$DOCKER_ARM_HOST
+docker buildx inspect --bootstrap $DOCKER_BUILDX_BUILDER
+docker buildx use $DOCKER_BUILDX_BUILDER
+
+# Build tags
 for tag in $BUILD_TAGS; do
-  docker buildx build --platform="$DOCKER_PLATFORMS" --pull --push --cache-from="$BUILD_CACHE" --cache-to="type=inline" --tag="$tag" .
+  docker buildx build \
+         --platform="$DOCKER_PLATFORMS" \
+         --pull \
+         --push \
+         --cache-from="$BUILD_CACHE" \
+         --cache-to="type=inline" \
+         --tag="$tag" \
+         "$BUILD_DIRECTORY"
 done
 
+# Test the built image works
 docker run --rm "$BUILD_CACHE" emacs --version
