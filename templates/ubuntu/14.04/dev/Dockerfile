@@ -9,6 +9,7 @@ RUN apt-get update && \
             git \
             gnupg \
             imagemagick \
+            iputils-ping \
             ispell \
             libcanberra-gtk-module \
             libdbus-1-dev \

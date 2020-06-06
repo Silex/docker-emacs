@@ -11,6 +11,7 @@ RUN apt-get update && \
             git \
             gnupg \
             imagemagick \
+            iputils-ping \
             ispell \
             libacl1-dev \
             libasound2-dev \
