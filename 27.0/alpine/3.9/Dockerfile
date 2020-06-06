@@ -11,11 +11,11 @@ RUN apk add --no-cache \
         giflib \
         gnupg \
         gtk+3.0 \
+        jansson \
         lcms2 \
         libcanberra-gtk3 \
         librsvg \
         libxpm \
-        jansson \
         openssh-client \
         tiff
 

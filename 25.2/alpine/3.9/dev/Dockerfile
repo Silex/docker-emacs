@@ -19,6 +19,7 @@ RUN apk add --no-cache \
         gnupg \
         gnutls-dev \
         gtk+3.0-dev \
+        jansson-dev \
         lcms2-dev \
         libcanberra-gtk3 \
         libjpeg-turbo-dev \
@@ -26,7 +27,6 @@ RUN apk add --no-cache \
         librsvg-dev \
         libxaw-dev \
         libxml2-dev \
-        jansson-dev \
         ncurses-dev \
         openssh-client \
         pango-dev \

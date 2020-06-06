@@ -16,7 +16,6 @@ RUN apt-get update && \
             libacl1-dev \
             libasound2-dev \
             libcanberra-gtk3-module \
-            liblcms2-dev \
             libdbus-1-dev \
             libgif-dev \
             libgnutls28-dev \
@@ -24,6 +23,7 @@ RUN apt-get update && \
             libgtk-3-dev \
             libjansson-dev \
             libjpeg-dev \
+            liblcms2-dev \
             liblockfile-dev \
             libm17n-dev \
             libmagick++-6.q16-dev \

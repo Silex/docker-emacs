@@ -11,13 +11,13 @@ RUN apt-get update && \
             libacl1 \
             libasound2 \
             libcanberra-gtk3-module \
-            liblcms2-2 \
             libdbus-1-3 \
             libgif7 \
             libgnutls30 \
             libgtk-3-0 \
             libjansson4 \
             libjpeg8 \
+            liblcms2-2 \
             libm17n-0 \
             libpng16-16 \
             librsvg2-2 \
