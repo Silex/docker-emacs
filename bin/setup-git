@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+GIT_REPOSITORIES='/srv/git'
+EMACS_DIRECTORY="$GIT_REPOSITORIES/emacs.git"
+
+which git >/dev/null || (apt update -qq && apt install -y git)
+
+mkdir -p "$GIT_REPOSITORIES"
+
+if [[ ! -d "$EMACS_DIRECTORY" ]]; then
+  git clone --mirror git://git.sv.gnu.org/emacs.git "$EMACS_DIRECTORY"
+fi
+
+git --git-dir="$EMACS_DIRECTORY" remote update
+
+git daemon --base-path="$GIT_REPOSITORIES" --export-all --init-timeout=10 --timeout=3600 --max-connections=256 --reuseaddr --detach
