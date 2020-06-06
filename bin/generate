@@ -101,8 +101,8 @@ def generate_gitlab(images)
 
   dev_images = images.reject{ |i| i.gitlab_stage == 'std' }
   gitlab_groups = dev_images.map.with_index do |image, i|
-    group = i / (dev_images.size / 4.0)
-    [image, format('group-dev%d', group + 1)]
+    group = i / (dev_images.size / 8.0)
+    [image, format('group-dev-%d', group + 1)]
   end.to_h
 
   gitlab_needs = images.select(&:depends).map do |image|
