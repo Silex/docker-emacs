@@ -48,7 +48,7 @@ They are very welcome! The basic workflow is as follow:
 
 - Modify `images.yml`.
 - Modify files inside the `/templates` directory.
-- Run `bin/images generate` to spread the changes everywhere.
+- Run `bin/generate` to spread the changes everywhere.
 
 # Thanks
 
