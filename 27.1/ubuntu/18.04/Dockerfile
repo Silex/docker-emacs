@@ -1,4 +1,4 @@
-FROM silex/emacs:27.0-dev
+FROM silex/emacs:27.1-dev
 FROM ubuntu:18.04
 
 RUN apt-get update && \

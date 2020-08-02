@@ -43,7 +43,7 @@ RUN apt-get update && \
             zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --depth 1 --branch emacs-27.0.91 git://git.sv.gnu.org/emacs.git /opt/emacs && \
+RUN git clone --depth 1 --branch emacs-27.1-rc1 git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \
     ./autogen.sh && \
     ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" --with-modules && \

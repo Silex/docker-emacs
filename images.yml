@@ -22,24 +22,24 @@
   configure: --with-modules
   cache: https://git.sv.gnu.org/git/emacs.git/refs/heads/master
 
-- tags: [27.0, 27]
-  version: 27.0
-  branch: emacs-27.0.91
+- tags: [27.1, 27]
+  version: 27.1
+  branch: emacs-27.1-rc1
   template: ubuntu/18.04
-  depends: 27.0-dev
-- tags: [27.0-dev, 27-dev]
-  version: 27.0
-  branch: emacs-27.0.91
+  depends: 27.1-dev
+- tags: [27.1-dev, 27-dev]
+  version: 27.1
+  branch: emacs-27.1-rc1
   template: ubuntu/18.04/dev
   configure: --with-modules
-- tags: [27.0-alpine, 27-alpine]
-  version: 27.0
-  branch: emacs-27.0.91
+- tags: [27.1-alpine, 27-alpine]
+  version: 27.1
+  branch: emacs-27.1-rc1
   template: alpine/3.9
-  depends: 27.0-alpine-dev
-- tags: [27.0-alpine-dev, 27-alpine-dev]
-  version: 27.0
-  branch: emacs-27.0.91
+  depends: 27.1-alpine-dev
+- tags: [27.1-alpine-dev, 27-alpine-dev]
+  version: 27.1
+  branch: emacs-27.1-rc1
   template: alpine/3.9/dev
   configure: --with-modules
 

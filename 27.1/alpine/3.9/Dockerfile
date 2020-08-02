@@ -1,4 +1,4 @@
-FROM silex/emacs:27.0-alpine-dev
+FROM silex/emacs:27.1-alpine-dev
 FROM alpine:3.9
 
 RUN apk add --no-cache \

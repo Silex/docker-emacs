@@ -39,23 +39,23 @@ img-master-alpine-dev:
   stage: dev
   script: retry build "master/alpine/3.9/dev" "silex/emacs:master-alpine-dev"
   resource_group: group-dev-1
-img-27.0:
+img-27.1:
   stage: std
-  script: retry build "27.0/ubuntu/18.04" "silex/emacs:27.0 silex/emacs:27"
+  script: retry build "27.1/ubuntu/18.04" "silex/emacs:27.1 silex/emacs:27"
   needs:
-  - img-27.0-dev
-img-27.0-dev:
+  - img-27.1-dev
+img-27.1-dev:
   stage: dev
-  script: retry build "27.0/ubuntu/18.04/dev" "silex/emacs:27.0-dev silex/emacs:27-dev"
+  script: retry build "27.1/ubuntu/18.04/dev" "silex/emacs:27.1-dev silex/emacs:27-dev"
   resource_group: group-dev-1
-img-27.0-alpine:
+img-27.1-alpine:
   stage: std
-  script: retry build "27.0/alpine/3.9" "silex/emacs:27.0-alpine silex/emacs:27-alpine"
+  script: retry build "27.1/alpine/3.9" "silex/emacs:27.1-alpine silex/emacs:27-alpine"
   needs:
-  - img-27.0-alpine-dev
-img-27.0-alpine-dev:
+  - img-27.1-alpine-dev
+img-27.1-alpine-dev:
   stage: dev
-  script: retry build "27.0/alpine/3.9/dev" "silex/emacs:27.0-alpine-dev silex/emacs:27-alpine-dev"
+  script: retry build "27.1/alpine/3.9/dev" "silex/emacs:27.1-alpine-dev silex/emacs:27-alpine-dev"
   resource_group: group-dev-2
 img-26.3:
   stage: std
