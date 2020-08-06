@@ -24,22 +24,22 @@
 
 - tags: [27.1, 27]
   version: 27.1
-  branch: emacs-27.1-rc1
+  branch: emacs-27.1-rc2
   template: ubuntu/18.04
   depends: 27.1-dev
 - tags: [27.1-dev, 27-dev]
   version: 27.1
-  branch: emacs-27.1-rc1
+  branch: emacs-27.1-rc2
   template: ubuntu/18.04/dev
   configure: --with-modules
 - tags: [27.1-alpine, 27-alpine]
   version: 27.1
-  branch: emacs-27.1-rc1
+  branch: emacs-27.1-rc2
   template: alpine/3.9
   depends: 27.1-alpine-dev
 - tags: [27.1-alpine-dev, 27-alpine-dev]
   version: 27.1
-  branch: emacs-27.1-rc1
+  branch: emacs-27.1-rc2
   template: alpine/3.9/dev
   configure: --with-modules
 

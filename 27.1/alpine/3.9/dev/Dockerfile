@@ -36,7 +36,7 @@ RUN apk add --no-cache \
         tiff-dev \
         wget
 
-RUN git clone --depth 1 --branch emacs-27.1-rc1 git://git.sv.gnu.org/emacs.git /opt/emacs && \
+RUN git clone --depth 1 --branch emacs-27.1-rc2 git://git.sv.gnu.org/emacs.git /opt/emacs && \
     cd /opt/emacs && \
     ./autogen.sh && \
     ./configure --build="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" --with-modules && \
