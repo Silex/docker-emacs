@@ -22,43 +22,43 @@
   configure: --with-modules
   cache: https://git.sv.gnu.org/git/emacs.git/refs/heads/master
 
-- tags: [27.1, 27]
+- tags: [27.1, 27, latest]
   version: 27.1
-  branch: emacs-27.1-rc2
+  branch: emacs-27.1
   template: ubuntu/18.04
   depends: 27.1-dev
-- tags: [27.1-dev, 27-dev]
+- tags: [27.1-dev, 27-dev, dev]
   version: 27.1
-  branch: emacs-27.1-rc2
+  branch: emacs-27.1
   template: ubuntu/18.04/dev
   configure: --with-modules
-- tags: [27.1-alpine, 27-alpine]
+- tags: [27.1-alpine, 27-alpine, alpine]
   version: 27.1
-  branch: emacs-27.1-rc2
+  branch: emacs-27.1
   template: alpine/3.9
   depends: 27.1-alpine-dev
-- tags: [27.1-alpine-dev, 27-alpine-dev]
+- tags: [27.1-alpine-dev, 27-alpine-dev, alpine-dev]
   version: 27.1
-  branch: emacs-27.1-rc2
+  branch: emacs-27.1
   template: alpine/3.9/dev
   configure: --with-modules
 
-- tags: [26.3, 26, latest]
+- tags: [26.3, 26]
   version: 26.3
   branch: emacs-26.3
   template: ubuntu/18.04
   depends: 26.3-dev
-- tags: [26.3-dev, 26-dev, dev]
+- tags: [26.3-dev, 26-dev]
   version: 26.3
   branch: emacs-26.3
   template: ubuntu/18.04/dev
   configure: --with-modules
-- tags: [26.3-alpine, 26-alpine, alpine]
+- tags: [26.3-alpine, 26-alpine]
   version: 26.3
   branch: emacs-26.3
   template: alpine/3.9
   depends: 26.3-alpine-dev
-- tags: [26.3-alpine-dev, 26-alpine-dev, alpine-dev]
+- tags: [26.3-alpine-dev, 26-alpine-dev]
   version: 26.3
   branch: emacs-26.3
   template: alpine/3.9/dev

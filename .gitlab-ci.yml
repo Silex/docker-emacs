@@ -41,39 +41,39 @@ img-master-alpine-dev:
   resource_group: group-dev-1
 img-27.1:
   stage: std
-  script: retry build "27.1/ubuntu/18.04" "silex/emacs:27.1 silex/emacs:27"
+  script: retry build "27.1/ubuntu/18.04" "silex/emacs:27.1 silex/emacs:27 silex/emacs:latest"
   needs:
   - img-27.1-dev
 img-27.1-dev:
   stage: dev
-  script: retry build "27.1/ubuntu/18.04/dev" "silex/emacs:27.1-dev silex/emacs:27-dev"
+  script: retry build "27.1/ubuntu/18.04/dev" "silex/emacs:27.1-dev silex/emacs:27-dev silex/emacs:dev"
   resource_group: group-dev-1
 img-27.1-alpine:
   stage: std
-  script: retry build "27.1/alpine/3.9" "silex/emacs:27.1-alpine silex/emacs:27-alpine"
+  script: retry build "27.1/alpine/3.9" "silex/emacs:27.1-alpine silex/emacs:27-alpine silex/emacs:alpine"
   needs:
   - img-27.1-alpine-dev
 img-27.1-alpine-dev:
   stage: dev
-  script: retry build "27.1/alpine/3.9/dev" "silex/emacs:27.1-alpine-dev silex/emacs:27-alpine-dev"
+  script: retry build "27.1/alpine/3.9/dev" "silex/emacs:27.1-alpine-dev silex/emacs:27-alpine-dev silex/emacs:alpine-dev"
   resource_group: group-dev-2
 img-26.3:
   stage: std
-  script: retry build "26.3/ubuntu/18.04" "silex/emacs:26.3 silex/emacs:26 silex/emacs:latest"
+  script: retry build "26.3/ubuntu/18.04" "silex/emacs:26.3 silex/emacs:26"
   needs:
   - img-26.3-dev
 img-26.3-dev:
   stage: dev
-  script: retry build "26.3/ubuntu/18.04/dev" "silex/emacs:26.3-dev silex/emacs:26-dev silex/emacs:dev"
+  script: retry build "26.3/ubuntu/18.04/dev" "silex/emacs:26.3-dev silex/emacs:26-dev"
   resource_group: group-dev-2
 img-26.3-alpine:
   stage: std
-  script: retry build "26.3/alpine/3.9" "silex/emacs:26.3-alpine silex/emacs:26-alpine silex/emacs:alpine"
+  script: retry build "26.3/alpine/3.9" "silex/emacs:26.3-alpine silex/emacs:26-alpine"
   needs:
   - img-26.3-alpine-dev
 img-26.3-alpine-dev:
   stage: dev
-  script: retry build "26.3/alpine/3.9/dev" "silex/emacs:26.3-alpine-dev silex/emacs:26-alpine-dev silex/emacs:alpine-dev"
+  script: retry build "26.3/alpine/3.9/dev" "silex/emacs:26.3-alpine-dev silex/emacs:26-alpine-dev"
   resource_group: group-dev-2
 img-26.2:
   stage: std
