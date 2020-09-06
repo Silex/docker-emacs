@@ -54,5 +54,6 @@ ENV PATH="/root/.cask/bin:$PATH"
 
 RUN curl -fsSL https://raw.github.com/doublep/eldev/master/webinstall/eldev | sh
 ENV PATH="/root/.eldev/bin:$PATH"
+RUN eldev version
 
 CMD ["emacs"]
