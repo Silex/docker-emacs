@@ -9,7 +9,7 @@ stages:
 - teardown
 variables:
   DOCKER_PLATFORMS: linux/amd64,linux/386,linux/arm/v7,linux/arm64/v8
-  DOCKER_BUILDX_VERSION: 0.4.1
+  DOCKER_BUILDX_VERSION: 0.4.2
 before_script:
 - apk add --no-cache bash
 - export PATH="$(pwd)/bin:$PATH"
