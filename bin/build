@@ -43,11 +43,12 @@ docker buildx inspect --bootstrap $DOCKER_BUILDX_BUILDER
 docker buildx use $DOCKER_BUILDX_BUILDER
 
 # Build tags
+push=''
+[[ "$CI_COMMIT_BRANCH" = "master" ]] && push='--push'
 for tag in $BUILD_TAGS; do
   docker buildx build \
          --platform="$DOCKER_PLATFORMS" \
-         --pull \
-         --push \
+         --pull $push \
          --cache-from="$BUILD_CACHE" \
          --cache-to="type=inline" \
          --tag="$tag" \
