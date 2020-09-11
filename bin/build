@@ -57,4 +57,4 @@ for tag in $BUILD_TAGS; do
 done
 
 # Test the built image works
-docker run --rm "$BUILD_CACHE" emacs --version
+[[ "$CI_COMMIT_BRANCH" = "master" ]] && docker run --rm "$BUILD_CACHE" emacs --version
