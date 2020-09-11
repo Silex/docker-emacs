@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 HTTPS_SERVER='git.sv.gnu.org'
 

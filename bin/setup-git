@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 GIT_REPOSITORIES='/srv/git'
 EMACS_DIRECTORY="$GIT_REPOSITORIES/emacs.git"

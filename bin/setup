@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 teardown
 ssh root@$DOCKER_ARM_HOST 'bash -s' < $(which setup-git)
