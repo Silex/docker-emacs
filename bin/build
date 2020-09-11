@@ -23,7 +23,7 @@ sysctl kernel.randomize_va_space=0
 ssh root@$DOCKER_ARM_HOST sysctl kernel.randomize_va_space=0
 
 # Login to docker hub
-docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
+base64 -d $FILE64_DOCKER_PASSWORD | docker login -u "$(base64 -d $FILE64_DOCKER_USER)" --password-stdin
 
 # Ensure buildx is at the correct version
 BUILDX_URL="https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.linux-amd64"

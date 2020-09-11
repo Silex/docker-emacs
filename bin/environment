@@ -3,12 +3,10 @@
 set -euo pipefail
 
 export DOCKER_CLI_EXPERIMENTAL='enabled'
-for i in $(env | egrep ^FILE64 | cut -d= -f1); do
-  export "$(echo $i | sed 's/FILE64_//')=$(base64 -d $(eval echo \$$i))"
-done
+export DOCKER_ARM_HOST="$(base64 -d $FILE64_DOCKER_ARM_HOST)"
 
 eval $(ssh-agent -s)
-echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+base64 -d $FILE64_SSH_PRIVATE_KEY | tr -d '\r' | ssh-add -
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 ssh-keyscan $DOCKER_ARM_HOST >> ~/.ssh/known_hosts
