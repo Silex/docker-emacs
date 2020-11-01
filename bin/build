@@ -58,3 +58,5 @@ done
 
 # Test the built image works
 [[ "$CI_COMMIT_BRANCH" = "master" ]] && docker run --rm "$BUILD_CACHE" emacs --version
+
+exit 0
