@@ -55,7 +55,16 @@ class Image < OpenStruct
   end
 
   def gitlab_stage
-    depends ? 'std' : 'dev'
+    case depends
+      when nil
+        'stage1'
+      when /dev/
+        'stage2'
+      when /ci/
+        'stage4'
+      else
+        'stage3'
+    end
   end
 end
 
@@ -70,7 +79,6 @@ end
 def generate_dockerfiles(images)
   puts '>>> generating dockerfiles'
   images.each do |image|
-    FileUtils.rm_rf(image.directory)
     FileUtils.mkdir_p(image.directory)
     content = File.read(File.join('templates', image.template, 'Dockerfile'))
     content.gsub!('{{DEPENDS}}', image.depends.to_s)

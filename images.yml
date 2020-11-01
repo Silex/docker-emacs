@@ -1,7 +1,6 @@
 ---
 - tags: [master]
   version: master
-  branch: master
   template: ubuntu/18.04
   depends: master-dev
 - tags: [master-dev]
@@ -10,9 +9,25 @@
   template: ubuntu/18.04/dev
   configure: --with-modules
   cache: https://git.sv.gnu.org/git/emacs.git/refs/heads/master
+- tags: [master-ci]
+  version: master
+  template: ubuntu/18.04/ci
+  depends: master
+- tags: [master-ci-cask]
+  version: master
+  template: ubuntu/18.04/ci/cask
+  depends: master-ci
+- tags: [master-ci-eldev]
+  version: master
+  template: ubuntu/18.04/ci/eldev
+  depends: master-ci
+- tags: [master-ci-keg]
+  version: master
+  template: ubuntu/18.04/ci/keg
+  depends: master-ci
+
 - tags: [master-alpine]
   version: master
-  branch: master
   template: alpine/3.9
   depends: master-alpine-dev
 - tags: [master-alpine-dev]
@@ -21,10 +36,25 @@
   template: alpine/3.9/dev
   configure: --with-modules
   cache: https://git.sv.gnu.org/git/emacs.git/refs/heads/master
+- tags: [master-alpine-ci]
+  version: master
+  template: alpine/3.9/ci
+  depends: master-alpine
+- tags: [master-alpine-ci-cask]
+  version: master
+  template: alpine/3.9/ci/cask
+  depends: master-alpine-ci
+- tags: [master-alpine-ci-eldev]
+  version: master
+  template: alpine/3.9/ci/eldev
+  depends: master-alpine-ci
+- tags: [master-alpine-ci-keg]
+  version: master
+  template: alpine/3.9/ci/keg
+  depends: master-alpine-ci
 
 - tags: [27.1, 27, latest]
   version: 27.1
-  branch: emacs-27.1
   template: ubuntu/18.04
   depends: 27.1-dev
 - tags: [27.1-dev, 27-dev, dev]
@@ -32,9 +62,25 @@
   branch: emacs-27.1
   template: ubuntu/18.04/dev
   configure: --with-modules
+- tags: [27.1-ci, 27-ci, ci]
+  version: 27.1
+  template: ubuntu/18.04/ci
+  depends: 27.1
+- tags: [27.1-ci-cask, 27-ci-cask, cask]
+  version: 27.1
+  template: ubuntu/18.04/ci/cask
+  depends: 27.1-ci
+- tags: [27.1-ci-eldev, 27-ci-eldev, eldev]
+  version: 27.1
+  template: ubuntu/18.04/ci/eldev
+  depends: 27.1-ci
+- tags: [27.1-ci-keg, 27-ci-keg, keg]
+  version: 27.1
+  template: ubuntu/18.04/ci/keg
+  depends: 27.1-ci
+
 - tags: [27.1-alpine, 27-alpine, alpine]
   version: 27.1
-  branch: emacs-27.1
   template: alpine/3.9
   depends: 27.1-alpine-dev
 - tags: [27.1-alpine-dev, 27-alpine-dev, alpine-dev]
@@ -42,10 +88,25 @@
   branch: emacs-27.1
   template: alpine/3.9/dev
   configure: --with-modules
+- tags: [27.1-alpine-ci, 27-alpine-ci, alpine-ci]
+  version: 27.1
+  template: alpine/3.9/ci
+  depends: 27.1-alpine
+- tags: [27.1-alpine-ci-cask, 27-alpine-ci-cask, alpine-ci-cask]
+  version: 27.1
+  template: alpine/3.9/ci/cask
+  depends: 27.1-alpine-ci
+- tags: [27.1-alpine-ci-eldev, 27-alpine-ci-eldev, alpine-ci-eldev]
+  version: 27.1
+  template: alpine/3.9/ci/eldev
+  depends: 27.1-alpine-ci
+- tags: [27.1-alpine-ci-keg, 27-alpine-ci-keg, alpine-ci-keg]
+  version: 27.1
+  template: alpine/3.9/ci/keg
+  depends: 27.1-alpine-ci
 
 - tags: [26.3, 26]
   version: 26.3
-  branch: emacs-26.3
   template: ubuntu/18.04
   depends: 26.3-dev
 - tags: [26.3-dev, 26-dev]
@@ -53,9 +114,25 @@
   branch: emacs-26.3
   template: ubuntu/18.04/dev
   configure: --with-modules
+- tags: [26.3-ci, 26-ci]
+  version: 26.3
+  template: ubuntu/18.04/ci
+  depends: 26.3
+- tags: [26.3-ci-cask, 26-ci-cask]
+  version: 26.3
+  template: ubuntu/18.04/ci/cask
+  depends: 26.3-ci
+- tags: [26.3-ci-eldev, 26-ci-eldev]
+  version: 26.3
+  template: ubuntu/18.04/ci/eldev
+  depends: 26.3-ci
+- tags: [26.3-ci-keg, 26-ci-keg]
+  version: 26.3
+  template: ubuntu/18.04/ci/keg
+  depends: 26.3-ci
+
 - tags: [26.3-alpine, 26-alpine]
   version: 26.3
-  branch: emacs-26.3
   template: alpine/3.9
   depends: 26.3-alpine-dev
 - tags: [26.3-alpine-dev, 26-alpine-dev]
@@ -63,10 +140,25 @@
   branch: emacs-26.3
   template: alpine/3.9/dev
   configure: --with-modules
+- tags: [26.3-alpine-ci, 26-alpine-ci]
+  version: 26.3
+  template: alpine/3.9/ci
+  depends: 26.3-alpine
+- tags: [26.3-alpine-ci-cask, 26-alpine-ci-cask]
+  version: 26.3
+  template: alpine/3.9/ci/cask
+  depends: 26.3-alpine-ci
+- tags: [26.3-alpine-ci-eldev, 26-alpine-ci-eldev]
+  version: 26.3
+  template: alpine/3.9/ci/eldev
+  depends: 26.3-alpine-ci
+- tags: [26.3-alpine-ci-keg, 26-alpine-ci-keg]
+  version: 26.3
+  template: alpine/3.9/ci/keg
+  depends: 26.3-alpine-ci
 
 - tags: [26.2]
   version: 26.2
-  branch: emacs-26.2
   template: ubuntu/18.04
   depends: 26.2-dev
 - tags: [26.2-dev]
@@ -74,9 +166,25 @@
   branch: emacs-26.2
   template: ubuntu/18.04/dev
   configure: --with-modules
+- tags: [26.2-ci]
+  version: 26.2
+  template: ubuntu/18.04/ci
+  depends: 26.2
+- tags: [26.2-ci-cask]
+  version: 26.2
+  template: ubuntu/18.04/ci/cask
+  depends: 26.2-ci
+- tags: [26.2-ci-eldev]
+  version: 26.2
+  template: ubuntu/18.04/ci/eldev
+  depends: 26.2-ci
+- tags: [26.2-ci-keg]
+  version: 26.2
+  template: ubuntu/18.04/ci/keg
+  depends: 26.2-ci
+
 - tags: [26.2-alpine]
   version: 26.2
-  branch: emacs-26.2
   template: alpine/3.9
   depends: 26.2-alpine-dev
 - tags: [26.2-alpine-dev]
@@ -84,10 +192,25 @@
   branch: emacs-26.2
   template: alpine/3.9/dev
   configure: --with-modules
+- tags: [26.2-alpine-ci]
+  version: 26.2
+  template: alpine/3.9/ci
+  depends: 26.2-alpine
+- tags: [26.2-alpine-ci-cask]
+  version: 26.2
+  template: alpine/3.9/ci/cask
+  depends: 26.2-alpine-ci
+- tags: [26.2-alpine-ci-eldev]
+  version: 26.2
+  template: alpine/3.9/ci/eldev
+  depends: 26.2-alpine-ci
+- tags: [26.2-alpine-ci-keg]
+  version: 26.2
+  template: alpine/3.9/ci/keg
+  depends: 26.2-alpine-ci
 
 - tags: [26.1]
   version: 26.1
-  branch: emacs-26.1
   template: ubuntu/18.04
   depends: 26.1-dev
 - tags: [26.1-dev]
@@ -95,9 +218,25 @@
   branch: emacs-26.1
   template: ubuntu/18.04/dev
   configure: --with-modules
+- tags: [26.1-ci]
+  version: 26.1
+  template: ubuntu/18.04/ci
+  depends: 26.1
+- tags: [26.1-ci-cask]
+  version: 26.1
+  template: ubuntu/18.04/ci/cask
+  depends: 26.1-ci
+- tags: [26.1-ci-eldev]
+  version: 26.1
+  template: ubuntu/18.04/ci/eldev
+  depends: 26.1-ci
+- tags: [26.1-ci-keg]
+  version: 26.1
+  template: ubuntu/18.04/ci/keg
+  depends: 26.1-ci
+
 - tags: [26.1-alpine]
   version: 26.1
-  branch: emacs-26.1
   template: alpine/3.9
   depends: 26.1-alpine-dev
 - tags: [26.1-alpine-dev]
@@ -105,10 +244,25 @@
   branch: emacs-26.1
   template: alpine/3.9/dev
   configure: --with-modules
+- tags: [26.1-alpine-ci]
+  version: 26.1
+  template: alpine/3.9/ci
+  depends: 26.1-alpine
+- tags: [26.1-alpine-ci-cask]
+  version: 26.1
+  template: alpine/3.9/ci/cask
+  depends: 26.1-alpine-ci
+- tags: [26.1-alpine-ci-eldev]
+  version: 26.1
+  template: alpine/3.9/ci/eldev
+  depends: 26.1-alpine-ci
+- tags: [26.1-alpine-ci-keg]
+  version: 26.1
+  template: alpine/3.9/ci/keg
+  depends: 26.1-alpine-ci
 
 - tags: [25.3, 25]
   version: 25.3
-  branch: emacs-25.3
   template: ubuntu/18.04
   depends: 25.3-dev
 - tags: [25.3-dev, 25-dev]
@@ -116,9 +270,25 @@
   branch: emacs-25.3
   template: ubuntu/18.04/dev
   configure: --with-modules
+- tags: [25.3-ci, 25-ci]
+  version: 25.3
+  template: ubuntu/18.04/ci
+  depends: 25.3
+- tags: [25.3-ci-cask, 25-ci-cask]
+  version: 25.3
+  template: ubuntu/18.04/ci/cask
+  depends: 25.3-ci
+- tags: [25.3-ci-eldev, 25-ci-eldev]
+  version: 25.3
+  template: ubuntu/18.04/ci/eldev
+  depends: 25.3-ci
+- tags: [25.3-ci-keg, 25-ci-keg]
+  version: 25.3
+  template: ubuntu/18.04/ci/keg
+  depends: 25.3-ci
+
 - tags: [25.3-alpine, 25-alpine]
   version: 25.3
-  branch: emacs-25.3
   template: alpine/3.9
   depends: 25.3-alpine-dev
 - tags: [25.3-alpine-dev, 25-alpine-dev]
@@ -130,10 +300,25 @@
     - https://git.alpinelinux.org/aports/plain/community/emacs/gamedir.patch?h=3.7-stable
     - https://git.alpinelinux.org/aports/plain/community/emacs/musl.patch?h=3.7-stable
     - https://git.alpinelinux.org/aports/plain/community/emacs/noaslr-dump.patch?h=3.7-stable
+- tags: [25.3-alpine-ci]
+  version: 25.3
+  template: alpine/3.9/ci
+  depends: 25.3-alpine
+- tags: [25.3-alpine-ci-cask]
+  version: 25.3
+  template: alpine/3.9/ci/cask
+  depends: 25.3-alpine-ci
+- tags: [25.3-alpine-ci-eldev]
+  version: 25.3
+  template: alpine/3.9/ci/eldev
+  depends: 25.3-alpine-ci
+- tags: [25.3-alpine-ci-keg]
+  version: 25.3
+  template: alpine/3.9/ci/keg
+  depends: 25.3-alpine-ci
 
 - tags: [25.2]
   version: 25.2
-  branch: emacs-25.2
   template: ubuntu/18.04
   depends: 25.2-dev
 - tags: [25.2-dev]
@@ -141,9 +326,25 @@
   branch: emacs-25.2
   template: ubuntu/18.04/dev
   configure: --with-modules
+- tags: [25.2-ci]
+  version: 25.2
+  template: ubuntu/18.04/ci
+  depends: 25.2
+- tags: [25.2-ci-cask]
+  version: 25.2
+  template: ubuntu/18.04/ci/cask
+  depends: 25.2-ci
+- tags: [25.2-ci-eldev]
+  version: 25.2
+  template: ubuntu/18.04/ci/eldev
+  depends: 25.2-ci
+- tags: [25.2-ci-keg]
+  version: 25.2
+  template: ubuntu/18.04/ci/keg
+  depends: 25.2-ci
+
 - tags: [25.2-alpine]
   version: 25.2
-  branch: emacs-25.2
   template: alpine/3.9
   depends: 25.2-alpine-dev
 - tags: [25.2-alpine-dev]
@@ -155,10 +356,25 @@
     - https://git.alpinelinux.org/aports/plain/community/emacs/gamedir.patch?h=3.7-stable
     - https://git.alpinelinux.org/aports/plain/community/emacs/musl.patch?h=3.7-stable
     - https://git.alpinelinux.org/aports/plain/community/emacs/noaslr-dump.patch?h=3.7-stable
+- tags: [25.2-alpine-ci]
+  version: 25.2
+  template: alpine/3.9/ci
+  depends: 25.2-alpine
+- tags: [25.2-alpine-ci-cask]
+  version: 25.2
+  template: alpine/3.9/ci/cask
+  depends: 25.2-alpine-ci
+- tags: [25.2-alpine-ci-eldev]
+  version: 25.2
+  template: alpine/3.9/ci/eldev
+  depends: 25.2-alpine-ci
+- tags: [25.2-alpine-ci-keg]
+  version: 25.2
+  template: alpine/3.9/ci/keg
+  depends: 25.2-alpine-ci
 
 - tags: [25.1]
   version: 25.1
-  branch: emacs-25.1
   template: ubuntu/18.04
   depends: 25.1-dev
 - tags: [25.1-dev]
@@ -166,10 +382,25 @@
   branch: emacs-25.1
   template: ubuntu/18.04/dev
   configure: CFLAGS="-no-pie" --with-modules
+- tags: [25.1-ci]
+  version: 25.1
+  template: ubuntu/18.04/ci
+  depends: 25.1
+- tags: [25.1-ci-cask]
+  version: 25.1
+  template: ubuntu/18.04/ci/cask
+  depends: 25.1-ci
+- tags: [25.1-ci-eldev]
+  version: 25.1
+  template: ubuntu/18.04/ci/eldev
+  depends: 25.1-ci
+- tags: [25.1-ci-keg]
+  version: 25.1
+  template: ubuntu/18.04/ci/keg
+  depends: 25.1-ci
 
 - tags: [24.5, 24]
   version: 24.5
-  branch: emacs-24.5
   template: ubuntu/18.04
   depends: 24.5-dev
 - tags: [24.5-dev, 24-dev]
@@ -177,40 +408,92 @@
   branch: emacs-24.5
   template: ubuntu/18.04/dev
   configure: CFLAGS="-no-pie"
+- tags: [24.5-ci, 24-ci]
+  version: 24.5
+  template: ubuntu/18.04/ci
+  depends: 24.5
+- tags: [24.5-ci-cask, 24-ci-cask]
+  version: 24.5
+  template: ubuntu/18.04/ci/cask
+  depends: 24.5-ci
+- tags: [24.5-ci-eldev, 24-ci-eldev]
+  version: 24.5
+  template: ubuntu/18.04/ci/eldev
+  depends: 24.5-ci
+- tags: [24.5-ci-keg, 24-ci-keg]
+  version: 24.5
+  template: ubuntu/18.04/ci/keg
+  depends: 24.5-ci
 
 - tags: [24.4]
   version: 24.4
-  branch: emacs-24.4
   template: ubuntu/14.04
   depends: 24.4-dev
 - tags: [24.4-dev]
   version: 24.4
   branch: emacs-24.4
   template: ubuntu/14.04/dev
+- tags: [24.4-ci]
+  version: 24.4
+  template: ubuntu/14.04/ci
+  depends: 24.4
+- tags: [24.4-ci-cask]
+  version: 24.4
+  template: ubuntu/14.04/ci/cask
+  depends: 24.4-ci
+- tags: [24.4-ci-eldev]
+  version: 24.4
+  template: ubuntu/14.04/ci/eldev
+  depends: 24.4-ci
+- tags: [24.4-ci-keg]
+  version: 24.4
+  template: ubuntu/14.04/ci/keg
+  depends: 24.4-ci
 
 - tags: [24.3]
   version: 24.3
-  branch: emacs-24.3
   template: ubuntu/14.04
   depends: 24.3-dev
 - tags: [24.3-dev]
   version: 24.3
   branch: emacs-24.3
   template: ubuntu/14.04/dev
+- tags: [24.3-ci]
+  version: 24.3
+  template: ubuntu/14.04/ci
+  depends: 24.3
+- tags: [24.3-ci-cask]
+  version: 24.3
+  template: ubuntu/14.04/ci/cask
+  depends: 24.3-ci
+- tags: [24.3-ci-keg]
+  version: 24.3
+  template: ubuntu/14.04/ci/keg
+  depends: 24.3-ci
 
 - tags: [24.2]
   version: 24.2
-  branch: emacs-24.2
   template: ubuntu/14.04
   depends: 24.2-dev
 - tags: [24.2-dev]
   version: 24.2
   branch: emacs-24.2
   template: ubuntu/14.04/dev
+- tags: [24.2-ci]
+  version: 24.2
+  template: ubuntu/14.04/ci
+  depends: 24.2
+- tags: [24.2-ci-cask]
+  version: 24.2
+  template: ubuntu/14.04/ci/cask
+  depends: 24.2-ci
+- tags: [24.2-ci-keg]
+  version: 24.2
+  template: ubuntu/14.04/ci/keg
+  depends: 24.2-ci
 
 - tags: [24.1]
   version: 24.1
-  branch: emacs-24.1
   template: ubuntu/14.04
   depends: 24.1-dev
 - tags: [24.1-dev]
@@ -219,10 +502,21 @@
   template: ubuntu/14.04/dev
   patches:
     - https://raw.githubusercontent.com/Silex/docker-emacs/master/templates/patches/0001-Fix-warning-preventing-build-on-ubuntu-14.04.patch
+- tags: [24.1-ci]
+  version: 24.1
+  template: ubuntu/14.04/ci
+  depends: 24.1
+- tags: [24.1-ci-cask]
+  version: 24.1
+  template: ubuntu/14.04/ci/cask
+  depends: 24.1-ci
+- tags: [24.1-ci-keg]
+  version: 24.1
+  template: ubuntu/14.04/ci/keg
+  depends: 24.1-ci
 
 - tags: [23.4, 23]
   version: 23.4
-  branch: emacs-23.4
   template: ubuntu/14.04/bootstrap
   depends: 23.4-dev
   platforms: linux/amd64,linux/386
@@ -231,4 +525,9 @@
   branch: emacs-23.4
   template: ubuntu/14.04/bootstrap/dev
   configure: --with-crt-dir="/usr/lib/$(dpkg-architecture | grep DEB_BUILD_MULTIARCH | cut -d= -f2)" --with-x-toolkit="no"
+  platforms: linux/amd64,linux/386
+- tags: [23.4-ci, 23-ci]
+  version: 23.4
+  template: ubuntu/14.04/bootstrap/ci
+  depends: 23.4
   platforms: linux/amd64,linux/386

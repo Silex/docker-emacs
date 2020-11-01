@@ -4,13 +4,22 @@
 
 Run Emacs in docker containers!
 
-This project provides different docker images:
+# Images
 
-- The main images (~500MB) only contain the runtime dependencies for Emacs to run.
-- The `-dev` variants (~1400MB) also contain the build dependencies, the Emacs source (in `/opt/emacs`), and additional
-  tools such as [Cask](https://cask.readthedocs.io), [git](https://git-scm.com) and [Python](https://www.python.org).
-- The `-alpine` variants (~200MB) follow the same logic as the main images but are based on
-  [Alpine Linux](https://alpinelinux.org).
+| OS                                | Tag                      | Size (MB) | Inherits from | Contents                                                              |
+|-----------------------------------|--------------------------|-----------|---------------|-----------------------------------------------------------------------|
+| [Ubuntu](https://ubuntu.com)      | $version                 |       450 |               | Emacs, curl, gnupg & imagemagick                                      |
+| [Ubuntu](https://ubuntu.com)      | $version-dev             |      1400 | $version      | All build dependencies & source in `/opt/emacs`                       |
+| [Ubuntu](https://ubuntu.com)      | $version-ci              |       480 | $version      | [git](https://git-scm.com) & make                                     |
+| [Ubuntu](https://ubuntu.com)      | $version-ci-cask         |       520 | $version-ci   | [Cask](https://caskreadthedocs.io) & [Python](https://www.python.org) |
+| [Ubuntu](https://ubuntu.com)      | $version-ci-eldev        |       480 | $version-ci   | [eldev](https://github.com/doublep/eldev)                             |
+| [Ubuntu](https://ubuntu.com)      | $version-ci-keg          |       480 | $version-ci   | [keg](https://github.com/conao3/kegel)                                |
+| [Alpine](https://alpinelinux.org) | $version-alpine          |       220 |               | Emacs, curl, gnupg & imagemagick                                      |
+| [Alpine](https://alpinelinux.org) | $version-alpine-dev      |      1200 | $version      | All build dependencies & source in `/opt/emacs`                       |
+| [Alpine](https://alpinelinux.org) | $version-alpine-ci       |       240 | $version      | [git](https://git-scm.com) & make                                     |
+| [Alpine](https://alpinelinux.org) | $version-alpine-ci-cask  |       280 | $version-ci   | [Cask](https://caskreadthedocs.io) & [Python](https://www.python.org) |
+| [Alpine](https://alpinelinux.org) | $version-alpine-ci-eldev |       240 | $version-ci   | [eldev](https://github.com/doublep/eldev)                             |
+| [Alpine](https://alpinelinux.org) | $version-alpine-ci-keg   |       240 | $version-ci   | [keg](https://github.com/conao3/kegel)                                |
 
 # Tags
 
