@@ -31,7 +31,6 @@ RUN apk add --no-cache \
         openssh-client \
         pango-dev \
         paxmark \
-        python \
         texinfo \
         tiff-dev \
         wget
@@ -54,8 +53,5 @@ RUN mkdir -p /root/.emacs.d/elpa/gnupg && \
           --recv-keys 066DAFCB81E42C40 \
       && break || sleep 15; \
     done
-
-RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-ENV PATH="/root/.cask/bin:$PATH"
 
 CMD ["emacs"]

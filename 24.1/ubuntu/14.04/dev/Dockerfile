@@ -25,7 +25,6 @@ RUN apt-get update && \
             libx11-dev \
             libxpm-dev \
             openssh-client \
-            python \
             texinfo \
             wget \
     && rm -rf /var/lib/apt/lists/*
@@ -47,8 +46,5 @@ RUN mkdir -p /root/.emacs.d/elpa/gnupg && \
           --recv-keys 066DAFCB81E42C40 \
       && break || sleep 15; \
     done
-
-RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-ENV PATH="/root/.cask/bin:$PATH"
 
 CMD ["emacs"]

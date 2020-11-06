@@ -36,7 +36,6 @@ RUN apt-get update && \
             libxaw7-dev \
             libxml2-dev \
             openssh-client \
-            python \
             texinfo \
             wget \
             xaw3dg-dev \
@@ -60,12 +59,5 @@ RUN mkdir -p /root/.emacs.d/elpa/gnupg && \
           --recv-keys 066DAFCB81E42C40 \
       && break || sleep 15; \
     done
-
-RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-ENV PATH="/root/.cask/bin:$PATH"
-
-RUN curl -fsSL https://raw.github.com/doublep/eldev/master/webinstall/eldev | sh
-ENV PATH="/root/.eldev/bin:$PATH"
-RUN eldev version
 
 CMD ["emacs"]

@@ -25,7 +25,6 @@ RUN apt-get update && \
             libx11-dev \
             libxpm-dev \
             openssh-client \
-            python \
             wget \
     && rm -rf /var/lib/apt/lists/*
 
