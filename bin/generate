@@ -78,6 +78,7 @@ end
 
 def generate_dockerfiles(images)
   puts '>>> generating dockerfiles'
+  images.map(&:directory).uniq.each{ |path| FileUtils.rm_rf(path) }
   images.each do |image|
     FileUtils.mkdir_p(image.directory)
     content = File.read(File.join('templates', image.template, 'Dockerfile'))
