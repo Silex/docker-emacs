@@ -549,12 +549,6 @@ img-24.5-ci:
   resource_group: group-dev-7
   needs:
   - img-24.5
-img-24.5-ci-cask:
-  stage: stage4
-  script: retry build "24.5/ubuntu/18.04/ci/cask" "silex/emacs:24.5-ci-cask silex/emacs:24-ci-cask"
-  resource_group: group-dev-7
-  needs:
-  - img-24.5-ci
 img-24.5-ci-eldev:
   stage: stage4
   script: retry build "24.5/ubuntu/18.04/ci/eldev" "silex/emacs:24.5-ci-eldev silex/emacs:24-ci-eldev"
@@ -583,12 +577,6 @@ img-24.4-ci:
   resource_group: group-dev-7
   needs:
   - img-24.4
-img-24.4-ci-cask:
-  stage: stage4
-  script: retry build "24.4/ubuntu/14.04/ci/cask" "silex/emacs:24.4-ci-cask"
-  resource_group: group-dev-7
-  needs:
-  - img-24.4-ci
 img-24.4-ci-eldev:
   stage: stage4
   script: retry build "24.4/ubuntu/14.04/ci/eldev" "silex/emacs:24.4-ci-eldev"
@@ -617,12 +605,6 @@ img-24.3-ci:
   resource_group: group-dev-7
   needs:
   - img-24.3
-img-24.3-ci-cask:
-  stage: stage4
-  script: retry build "24.3/ubuntu/14.04/ci/cask" "silex/emacs:24.3-ci-cask"
-  resource_group: group-dev-8
-  needs:
-  - img-24.3-ci
 img-24.3-ci-keg:
   stage: stage4
   script: retry build "24.3/ubuntu/14.04/ci/keg" "silex/emacs:24.3-ci-keg"
@@ -645,12 +627,6 @@ img-24.2-ci:
   resource_group: group-dev-8
   needs:
   - img-24.2
-img-24.2-ci-cask:
-  stage: stage4
-  script: retry build "24.2/ubuntu/14.04/ci/cask" "silex/emacs:24.2-ci-cask"
-  resource_group: group-dev-8
-  needs:
-  - img-24.2-ci
 img-24.2-ci-keg:
   stage: stage4
   script: retry build "24.2/ubuntu/14.04/ci/keg" "silex/emacs:24.2-ci-keg"
@@ -673,12 +649,6 @@ img-24.1-ci:
   resource_group: group-dev-8
   needs:
   - img-24.1
-img-24.1-ci-cask:
-  stage: stage4
-  script: retry build "24.1/ubuntu/14.04/ci/cask" "silex/emacs:24.1-ci-cask"
-  resource_group: group-dev-8
-  needs:
-  - img-24.1-ci
 img-24.1-ci-keg:
   stage: stage4
   script: retry build "24.1/ubuntu/14.04/ci/keg" "silex/emacs:24.1-ci-keg"

@@ -412,10 +412,6 @@
   version: 24.5
   template: ubuntu/18.04/ci
   depends: 24.5
-- tags: [24.5-ci-cask, 24-ci-cask]
-  version: 24.5
-  template: ubuntu/18.04/ci/cask
-  depends: 24.5-ci
 - tags: [24.5-ci-eldev, 24-ci-eldev]
   version: 24.5
   template: ubuntu/18.04/ci/eldev
@@ -437,10 +433,6 @@
   version: 24.4
   template: ubuntu/14.04/ci
   depends: 24.4
-- tags: [24.4-ci-cask]
-  version: 24.4
-  template: ubuntu/14.04/ci/cask
-  depends: 24.4-ci
 - tags: [24.4-ci-eldev]
   version: 24.4
   template: ubuntu/14.04/ci/eldev
@@ -462,10 +454,6 @@
   version: 24.3
   template: ubuntu/14.04/ci
   depends: 24.3
-- tags: [24.3-ci-cask]
-  version: 24.3
-  template: ubuntu/14.04/ci/cask
-  depends: 24.3-ci
 - tags: [24.3-ci-keg]
   version: 24.3
   template: ubuntu/14.04/ci/keg
@@ -483,10 +471,6 @@
   version: 24.2
   template: ubuntu/14.04/ci
   depends: 24.2
-- tags: [24.2-ci-cask]
-  version: 24.2
-  template: ubuntu/14.04/ci/cask
-  depends: 24.2-ci
 - tags: [24.2-ci-keg]
   version: 24.2
   template: ubuntu/14.04/ci/keg
@@ -506,10 +490,6 @@
   version: 24.1
   template: ubuntu/14.04/ci
   depends: 24.1
-- tags: [24.1-ci-cask]
-  version: 24.1
-  template: ubuntu/14.04/ci/cask
-  depends: 24.1-ci
 - tags: [24.1-ci-keg]
   version: 24.1
   template: ubuntu/14.04/ci/keg
