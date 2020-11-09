@@ -108,10 +108,10 @@ def generate_gitlab(images)
   h = YAML.load_file('templates/.gitlab-ci.yml')
   template = h.delete('template')
 
-  dev_images = images.reject{ |i| i.gitlab_stage == 'std' }
-  gitlab_groups = dev_images.map.with_index do |image, i|
-    group = i / (dev_images.size / 8.0)
-    [image, format('group-dev-%d', group + 1)]
+  gitlab_groups = images.map do |image, i|
+    group = image.version.to_i
+    group = image.version if group == 0
+    [image, format('group-%s', group)]
   end.to_h
 
   gitlab_needs = images.select(&:depends).map do |image|
