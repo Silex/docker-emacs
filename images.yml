@@ -53,54 +53,106 @@
   template: alpine/3.9/ci/keg
   depends: master-alpine-ci
 
-- tags: [27.1, 27, latest]
+- tags: [27.2, 27, latest]
+  version: 27.2
+  template: ubuntu/18.04
+  depends: 27.2-dev
+- tags: [27.2-dev, 27-dev, dev]
+  version: 27.2
+  branch: emacs-27.2
+  template: ubuntu/18.04/dev
+  configure: --with-modules
+- tags: [27.2-ci, 27-ci, ci]
+  version: 27.2
+  template: ubuntu/18.04/ci
+  depends: 27.2
+- tags: [27.2-ci-cask, 27-ci-cask, cask]
+  version: 27.2
+  template: ubuntu/18.04/ci/cask
+  depends: 27.2-ci
+- tags: [27.2-ci-eldev, 27-ci-eldev, eldev]
+  version: 27.2
+  template: ubuntu/18.04/ci/eldev
+  depends: 27.2-ci
+- tags: [27.2-ci-keg, 27-ci-keg, keg]
+  version: 27.2
+  template: ubuntu/18.04/ci/keg
+  depends: 27.2-ci
+
+- tags: [27.2-alpine, 27-alpine, alpine]
+  version: 27.2
+  template: alpine/3.9
+  depends: 27.2-alpine-dev
+- tags: [27.2-alpine-dev, 27-alpine-dev, alpine-dev]
+  version: 27.2
+  branch: emacs-27.2
+  template: alpine/3.9/dev
+  configure: --with-modules
+- tags: [27.2-alpine-ci, 27-alpine-ci, alpine-ci]
+  version: 27.2
+  template: alpine/3.9/ci
+  depends: 27.2-alpine
+- tags: [27.2-alpine-ci-cask, 27-alpine-ci-cask, alpine-ci-cask]
+  version: 27.2
+  template: alpine/3.9/ci/cask
+  depends: 27.2-alpine-ci
+- tags: [27.2-alpine-ci-eldev, 27-alpine-ci-eldev, alpine-ci-eldev]
+  version: 27.2
+  template: alpine/3.9/ci/eldev
+  depends: 27.2-alpine-ci
+- tags: [27.2-alpine-ci-keg, 27-alpine-ci-keg, alpine-ci-keg]
+  version: 27.2
+  template: alpine/3.9/ci/keg
+  depends: 27.2-alpine-ci
+
+- tags: [27.1]
   version: 27.1
   template: ubuntu/18.04
   depends: 27.1-dev
-- tags: [27.1-dev, 27-dev, dev]
+- tags: [27.1-dev]
   version: 27.1
   branch: emacs-27.1
   template: ubuntu/18.04/dev
   configure: --with-modules
-- tags: [27.1-ci, 27-ci, ci]
+- tags: [27.1-ci]
   version: 27.1
   template: ubuntu/18.04/ci
   depends: 27.1
-- tags: [27.1-ci-cask, 27-ci-cask, cask]
+- tags: [27.1-ci-cask]
   version: 27.1
   template: ubuntu/18.04/ci/cask
   depends: 27.1-ci
-- tags: [27.1-ci-eldev, 27-ci-eldev, eldev]
+- tags: [27.1-ci-eldev]
   version: 27.1
   template: ubuntu/18.04/ci/eldev
   depends: 27.1-ci
-- tags: [27.1-ci-keg, 27-ci-keg, keg]
+- tags: [27.1-ci-keg]
   version: 27.1
   template: ubuntu/18.04/ci/keg
   depends: 27.1-ci
 
-- tags: [27.1-alpine, 27-alpine, alpine]
+- tags: [27.1-alpine]
   version: 27.1
   template: alpine/3.9
   depends: 27.1-alpine-dev
-- tags: [27.1-alpine-dev, 27-alpine-dev, alpine-dev]
+- tags: [27.1-alpine-dev]
   version: 27.1
   branch: emacs-27.1
   template: alpine/3.9/dev
   configure: --with-modules
-- tags: [27.1-alpine-ci, 27-alpine-ci, alpine-ci]
+- tags: [27.1-alpine-ci]
   version: 27.1
   template: alpine/3.9/ci
   depends: 27.1-alpine
-- tags: [27.1-alpine-ci-cask, 27-alpine-ci-cask, alpine-ci-cask]
+- tags: [27.1-alpine-ci-cask]
   version: 27.1
   template: alpine/3.9/ci/cask
   depends: 27.1-alpine-ci
-- tags: [27.1-alpine-ci-eldev, 27-alpine-ci-eldev, alpine-ci-eldev]
+- tags: [27.1-alpine-ci-eldev]
   version: 27.1
   template: alpine/3.9/ci/eldev
   depends: 27.1-alpine-ci
-- tags: [27.1-alpine-ci-keg, 27-alpine-ci-keg, alpine-ci-keg]
+- tags: [27.1-alpine-ci-keg]
   version: 27.1
   template: alpine/3.9/ci/keg
   depends: 27.1-alpine-ci
