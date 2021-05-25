@@ -52,7 +52,6 @@ for tag in $BUILD_TAGS; do
          --cache-from="$BUILD_CACHE" \
          --cache-to="type=inline" \
          --tag="$tag" \
-         --add-host "git.sv.gnu.org:$DOCKER_ARM_HOST" \
          "$BUILD_DIRECTORY"
 done
 

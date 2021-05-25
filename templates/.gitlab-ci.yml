@@ -5,30 +5,18 @@ services:
   - docker:dind
 
 stages:
-  - setup
   - stage1
   - stage2
   - stage3
-  - stage4
-  - teardown
 
 variables:
-  DOCKER_PLATFORMS: linux/amd64,linux/386,linux/arm/v7,linux/arm64/v8
+  DOCKER_PLATFORMS: linux/amd64,linux/arm64/v8
   DOCKER_BUILDX_VERSION: 0.4.2
 
 before_script:
   - apk add --no-cache bash
   - export PATH="$(pwd)/bin:$PATH"
   - source environment
-
-setup:
-  stage: setup
-  script: setup
-
-teardown:
-  stage: teardown
-  script: teardown
-  when: always
 
 template:
   stage: {{STAGE}}

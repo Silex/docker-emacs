@@ -3,345 +3,335 @@ image: docker:stable
 services:
 - docker:dind
 stages:
-- setup
 - stage1
 - stage2
 - stage3
-- stage4
-- teardown
 variables:
-  DOCKER_PLATFORMS: linux/amd64,linux/386,linux/arm/v7,linux/arm64/v8
+  DOCKER_PLATFORMS: linux/amd64,linux/arm64/v8
   DOCKER_BUILDX_VERSION: 0.4.2
 before_script:
 - apk add --no-cache bash
 - export PATH="$(pwd)/bin:$PATH"
 - source environment
-setup:
-  stage: setup
-  script: setup
-teardown:
-  stage: teardown
-  script: teardown
-  when: always
 img-master:
+  stage: stage1
+  script: retry build "master/debian" "silex/emacs:master"
+  resource_group: group-master
+img-master-dev:
   stage: stage2
-  script: retry build "master/ubuntu/18.04" "silex/emacs:master"
+  script: retry build "master/debian/dev" "silex/emacs:master-dev"
   resource_group: group-master
   needs:
-  - img-master-dev
-img-master-dev:
-  stage: stage1
-  script: retry build "master/ubuntu/18.04/dev" "silex/emacs:master-dev"
-  resource_group: group-master
+  - img-master
 img-master-ci:
-  stage: stage3
-  script: retry build "master/ubuntu/18.04/ci" "silex/emacs:master-ci"
+  stage: stage2
+  script: retry build "master/debian/ci" "silex/emacs:master-ci"
   resource_group: group-master
   needs:
   - img-master
 img-master-ci-cask:
-  stage: stage4
-  script: retry build "master/ubuntu/18.04/ci/cask" "silex/emacs:master-ci-cask"
+  stage: stage3
+  script: retry build "master/debian/ci/cask" "silex/emacs:master-ci-cask"
   resource_group: group-master
   needs:
   - img-master-ci
 img-master-ci-eldev:
-  stage: stage4
-  script: retry build "master/ubuntu/18.04/ci/eldev" "silex/emacs:master-ci-eldev"
+  stage: stage3
+  script: retry build "master/debian/ci/eldev" "silex/emacs:master-ci-eldev"
   resource_group: group-master
   needs:
   - img-master-ci
 img-master-ci-keg:
-  stage: stage4
-  script: retry build "master/ubuntu/18.04/ci/keg" "silex/emacs:master-ci-keg"
+  stage: stage3
+  script: retry build "master/debian/ci/keg" "silex/emacs:master-ci-keg"
   resource_group: group-master
   needs:
   - img-master-ci
 img-master-alpine:
+  stage: stage1
+  script: retry build "master/alpine" "silex/emacs:master-alpine"
+  resource_group: group-master
+img-master-alpine-dev:
   stage: stage2
-  script: retry build "master/alpine/3.9" "silex/emacs:master-alpine"
+  script: retry build "master/alpine/dev" "silex/emacs:master-alpine-dev"
   resource_group: group-master
   needs:
-  - img-master-alpine-dev
-img-master-alpine-dev:
-  stage: stage1
-  script: retry build "master/alpine/3.9/dev" "silex/emacs:master-alpine-dev"
-  resource_group: group-master
+  - img-master-alpine
 img-master-alpine-ci:
-  stage: stage3
-  script: retry build "master/alpine/3.9/ci" "silex/emacs:master-alpine-ci"
+  stage: stage2
+  script: retry build "master/alpine/ci" "silex/emacs:master-alpine-ci"
   resource_group: group-master
   needs:
   - img-master-alpine
 img-master-alpine-ci-cask:
-  stage: stage4
-  script: retry build "master/alpine/3.9/ci/cask" "silex/emacs:master-alpine-ci-cask"
+  stage: stage3
+  script: retry build "master/alpine/ci/cask" "silex/emacs:master-alpine-ci-cask"
   resource_group: group-master
   needs:
   - img-master-alpine-ci
 img-master-alpine-ci-eldev:
-  stage: stage4
-  script: retry build "master/alpine/3.9/ci/eldev" "silex/emacs:master-alpine-ci-eldev"
+  stage: stage3
+  script: retry build "master/alpine/ci/eldev" "silex/emacs:master-alpine-ci-eldev"
   resource_group: group-master
   needs:
   - img-master-alpine-ci
 img-master-alpine-ci-keg:
-  stage: stage4
-  script: retry build "master/alpine/3.9/ci/keg" "silex/emacs:master-alpine-ci-keg"
+  stage: stage3
+  script: retry build "master/alpine/ci/keg" "silex/emacs:master-alpine-ci-keg"
   resource_group: group-master
   needs:
   - img-master-alpine-ci
 img-27.2:
+  stage: stage1
+  script: retry build "27.2/debian" "silex/emacs:27.2 silex/emacs:27 silex/emacs:latest"
+  resource_group: group-27
+img-27.2-dev:
   stage: stage2
-  script: retry build "27.2/ubuntu/18.04" "silex/emacs:27.2 silex/emacs:27 silex/emacs:latest"
+  script: retry build "27.2/debian/dev" "silex/emacs:27.2-dev silex/emacs:27-dev silex/emacs:dev"
   resource_group: group-27
   needs:
-  - img-27.2-dev
-img-27.2-dev:
-  stage: stage1
-  script: retry build "27.2/ubuntu/18.04/dev" "silex/emacs:27.2-dev silex/emacs:27-dev silex/emacs:dev"
-  resource_group: group-27
+  - img-27.2
 img-27.2-ci:
-  stage: stage3
-  script: retry build "27.2/ubuntu/18.04/ci" "silex/emacs:27.2-ci silex/emacs:27-ci silex/emacs:ci"
+  stage: stage2
+  script: retry build "27.2/debian/ci" "silex/emacs:27.2-ci silex/emacs:27-ci silex/emacs:ci"
   resource_group: group-27
   needs:
   - img-27.2
 img-27.2-ci-cask:
-  stage: stage4
-  script: retry build "27.2/ubuntu/18.04/ci/cask" "silex/emacs:27.2-ci-cask silex/emacs:27-ci-cask silex/emacs:cask"
+  stage: stage3
+  script: retry build "27.2/debian/ci/cask" "silex/emacs:27.2-ci-cask silex/emacs:27-ci-cask silex/emacs:cask"
   resource_group: group-27
   needs:
   - img-27.2-ci
 img-27.2-ci-eldev:
-  stage: stage4
-  script: retry build "27.2/ubuntu/18.04/ci/eldev" "silex/emacs:27.2-ci-eldev silex/emacs:27-ci-eldev silex/emacs:eldev"
+  stage: stage3
+  script: retry build "27.2/debian/ci/eldev" "silex/emacs:27.2-ci-eldev silex/emacs:27-ci-eldev silex/emacs:eldev"
   resource_group: group-27
   needs:
   - img-27.2-ci
 img-27.2-ci-keg:
-  stage: stage4
-  script: retry build "27.2/ubuntu/18.04/ci/keg" "silex/emacs:27.2-ci-keg silex/emacs:27-ci-keg silex/emacs:keg"
+  stage: stage3
+  script: retry build "27.2/debian/ci/keg" "silex/emacs:27.2-ci-keg silex/emacs:27-ci-keg silex/emacs:keg"
   resource_group: group-27
   needs:
   - img-27.2-ci
 img-27.2-alpine:
+  stage: stage1
+  script: retry build "27.2/alpine" "silex/emacs:27.2-alpine silex/emacs:27-alpine silex/emacs:alpine"
+  resource_group: group-27
+img-27.2-alpine-dev:
   stage: stage2
-  script: retry build "27.2/alpine/3.9" "silex/emacs:27.2-alpine silex/emacs:27-alpine silex/emacs:alpine"
+  script: retry build "27.2/alpine/dev" "silex/emacs:27.2-alpine-dev silex/emacs:27-alpine-dev silex/emacs:alpine-dev"
   resource_group: group-27
   needs:
-  - img-27.2-alpine-dev
-img-27.2-alpine-dev:
-  stage: stage1
-  script: retry build "27.2/alpine/3.9/dev" "silex/emacs:27.2-alpine-dev silex/emacs:27-alpine-dev silex/emacs:alpine-dev"
-  resource_group: group-27
+  - img-27.2-alpine
 img-27.2-alpine-ci:
-  stage: stage3
-  script: retry build "27.2/alpine/3.9/ci" "silex/emacs:27.2-alpine-ci silex/emacs:27-alpine-ci silex/emacs:alpine-ci"
+  stage: stage2
+  script: retry build "27.2/alpine/ci" "silex/emacs:27.2-alpine-ci silex/emacs:27-alpine-ci silex/emacs:alpine-ci"
   resource_group: group-27
   needs:
   - img-27.2-alpine
 img-27.2-alpine-ci-cask:
-  stage: stage4
-  script: retry build "27.2/alpine/3.9/ci/cask" "silex/emacs:27.2-alpine-ci-cask silex/emacs:27-alpine-ci-cask silex/emacs:alpine-ci-cask"
+  stage: stage3
+  script: retry build "27.2/alpine/ci/cask" "silex/emacs:27.2-alpine-ci-cask silex/emacs:27-alpine-ci-cask silex/emacs:alpine-ci-cask"
   resource_group: group-27
   needs:
   - img-27.2-alpine-ci
 img-27.2-alpine-ci-eldev:
-  stage: stage4
-  script: retry build "27.2/alpine/3.9/ci/eldev" "silex/emacs:27.2-alpine-ci-eldev silex/emacs:27-alpine-ci-eldev silex/emacs:alpine-ci-eldev"
+  stage: stage3
+  script: retry build "27.2/alpine/ci/eldev" "silex/emacs:27.2-alpine-ci-eldev silex/emacs:27-alpine-ci-eldev silex/emacs:alpine-ci-eldev"
   resource_group: group-27
   needs:
   - img-27.2-alpine-ci
 img-27.2-alpine-ci-keg:
-  stage: stage4
-  script: retry build "27.2/alpine/3.9/ci/keg" "silex/emacs:27.2-alpine-ci-keg silex/emacs:27-alpine-ci-keg silex/emacs:alpine-ci-keg"
+  stage: stage3
+  script: retry build "27.2/alpine/ci/keg" "silex/emacs:27.2-alpine-ci-keg silex/emacs:27-alpine-ci-keg silex/emacs:alpine-ci-keg"
   resource_group: group-27
   needs:
   - img-27.2-alpine-ci
 img-26.3:
+  stage: stage1
+  script: retry build "26.3/debian" "silex/emacs:26.3 silex/emacs:26"
+  resource_group: group-26
+img-26.3-dev:
   stage: stage2
-  script: retry build "26.3/ubuntu/18.04" "silex/emacs:26.3 silex/emacs:26"
+  script: retry build "26.3/debian/dev" "silex/emacs:26.3-dev silex/emacs:26-dev"
   resource_group: group-26
   needs:
-  - img-26.3-dev
-img-26.3-dev:
-  stage: stage1
-  script: retry build "26.3/ubuntu/18.04/dev" "silex/emacs:26.3-dev silex/emacs:26-dev"
-  resource_group: group-26
+  - img-26.3
 img-26.3-ci:
-  stage: stage3
-  script: retry build "26.3/ubuntu/18.04/ci" "silex/emacs:26.3-ci silex/emacs:26-ci"
+  stage: stage2
+  script: retry build "26.3/debian/ci" "silex/emacs:26.3-ci silex/emacs:26-ci"
   resource_group: group-26
   needs:
   - img-26.3
 img-26.3-ci-cask:
-  stage: stage4
-  script: retry build "26.3/ubuntu/18.04/ci/cask" "silex/emacs:26.3-ci-cask silex/emacs:26-ci-cask"
+  stage: stage3
+  script: retry build "26.3/debian/ci/cask" "silex/emacs:26.3-ci-cask silex/emacs:26-ci-cask"
   resource_group: group-26
   needs:
   - img-26.3-ci
 img-26.3-ci-eldev:
-  stage: stage4
-  script: retry build "26.3/ubuntu/18.04/ci/eldev" "silex/emacs:26.3-ci-eldev silex/emacs:26-ci-eldev"
+  stage: stage3
+  script: retry build "26.3/debian/ci/eldev" "silex/emacs:26.3-ci-eldev silex/emacs:26-ci-eldev"
   resource_group: group-26
   needs:
   - img-26.3-ci
 img-26.3-ci-keg:
-  stage: stage4
-  script: retry build "26.3/ubuntu/18.04/ci/keg" "silex/emacs:26.3-ci-keg silex/emacs:26-ci-keg"
+  stage: stage3
+  script: retry build "26.3/debian/ci/keg" "silex/emacs:26.3-ci-keg silex/emacs:26-ci-keg"
   resource_group: group-26
   needs:
   - img-26.3-ci
 img-26.3-alpine:
+  stage: stage1
+  script: retry build "26.3/alpine" "silex/emacs:26.3-alpine silex/emacs:26-alpine"
+  resource_group: group-26
+img-26.3-alpine-dev:
   stage: stage2
-  script: retry build "26.3/alpine/3.9" "silex/emacs:26.3-alpine silex/emacs:26-alpine"
+  script: retry build "26.3/alpine/dev" "silex/emacs:26.3-alpine-dev silex/emacs:26-alpine-dev"
   resource_group: group-26
   needs:
-  - img-26.3-alpine-dev
-img-26.3-alpine-dev:
-  stage: stage1
-  script: retry build "26.3/alpine/3.9/dev" "silex/emacs:26.3-alpine-dev silex/emacs:26-alpine-dev"
-  resource_group: group-26
+  - img-26.3-alpine
 img-26.3-alpine-ci:
-  stage: stage3
-  script: retry build "26.3/alpine/3.9/ci" "silex/emacs:26.3-alpine-ci silex/emacs:26-alpine-ci"
+  stage: stage2
+  script: retry build "26.3/alpine/ci" "silex/emacs:26.3-alpine-ci silex/emacs:26-alpine-ci"
   resource_group: group-26
   needs:
   - img-26.3-alpine
 img-26.3-alpine-ci-cask:
-  stage: stage4
-  script: retry build "26.3/alpine/3.9/ci/cask" "silex/emacs:26.3-alpine-ci-cask silex/emacs:26-alpine-ci-cask"
+  stage: stage3
+  script: retry build "26.3/alpine/ci/cask" "silex/emacs:26.3-alpine-ci-cask silex/emacs:26-alpine-ci-cask"
   resource_group: group-26
   needs:
   - img-26.3-alpine-ci
 img-26.3-alpine-ci-eldev:
-  stage: stage4
-  script: retry build "26.3/alpine/3.9/ci/eldev" "silex/emacs:26.3-alpine-ci-eldev silex/emacs:26-alpine-ci-eldev"
+  stage: stage3
+  script: retry build "26.3/alpine/ci/eldev" "silex/emacs:26.3-alpine-ci-eldev silex/emacs:26-alpine-ci-eldev"
   resource_group: group-26
   needs:
   - img-26.3-alpine-ci
 img-26.3-alpine-ci-keg:
-  stage: stage4
-  script: retry build "26.3/alpine/3.9/ci/keg" "silex/emacs:26.3-alpine-ci-keg silex/emacs:26-alpine-ci-keg"
+  stage: stage3
+  script: retry build "26.3/alpine/ci/keg" "silex/emacs:26.3-alpine-ci-keg silex/emacs:26-alpine-ci-keg"
   resource_group: group-26
   needs:
   - img-26.3-alpine-ci
 img-25.3:
+  stage: stage1
+  script: retry build "25.3/debian" "silex/emacs:25.3 silex/emacs:25"
+  resource_group: group-25
+img-25.3-dev:
   stage: stage2
-  script: retry build "25.3/ubuntu/18.04" "silex/emacs:25.3 silex/emacs:25"
+  script: retry build "25.3/debian/dev" "silex/emacs:25.3-dev silex/emacs:25-dev"
   resource_group: group-25
   needs:
-  - img-25.3-dev
-img-25.3-dev:
-  stage: stage1
-  script: retry build "25.3/ubuntu/18.04/dev" "silex/emacs:25.3-dev silex/emacs:25-dev"
-  resource_group: group-25
+  - img-25.3
 img-25.3-ci:
-  stage: stage3
-  script: retry build "25.3/ubuntu/18.04/ci" "silex/emacs:25.3-ci silex/emacs:25-ci"
+  stage: stage2
+  script: retry build "25.3/debian/ci" "silex/emacs:25.3-ci silex/emacs:25-ci"
   resource_group: group-25
   needs:
   - img-25.3
 img-25.3-ci-cask:
-  stage: stage4
-  script: retry build "25.3/ubuntu/18.04/ci/cask" "silex/emacs:25.3-ci-cask silex/emacs:25-ci-cask"
+  stage: stage3
+  script: retry build "25.3/debian/ci/cask" "silex/emacs:25.3-ci-cask silex/emacs:25-ci-cask"
   resource_group: group-25
   needs:
   - img-25.3-ci
 img-25.3-ci-eldev:
-  stage: stage4
-  script: retry build "25.3/ubuntu/18.04/ci/eldev" "silex/emacs:25.3-ci-eldev silex/emacs:25-ci-eldev"
+  stage: stage3
+  script: retry build "25.3/debian/ci/eldev" "silex/emacs:25.3-ci-eldev silex/emacs:25-ci-eldev"
   resource_group: group-25
   needs:
   - img-25.3-ci
 img-25.3-ci-keg:
-  stage: stage4
-  script: retry build "25.3/ubuntu/18.04/ci/keg" "silex/emacs:25.3-ci-keg silex/emacs:25-ci-keg"
+  stage: stage3
+  script: retry build "25.3/debian/ci/keg" "silex/emacs:25.3-ci-keg silex/emacs:25-ci-keg"
   resource_group: group-25
   needs:
   - img-25.3-ci
 img-25.3-alpine:
+  stage: stage1
+  script: retry build "25.3/alpine" "silex/emacs:25.3-alpine silex/emacs:25-alpine"
+  resource_group: group-25
+img-25.3-alpine-dev:
   stage: stage2
-  script: retry build "25.3/alpine/3.9" "silex/emacs:25.3-alpine silex/emacs:25-alpine"
+  script: retry build "25.3/alpine/dev" "silex/emacs:25.3-alpine-dev silex/emacs:25-alpine-dev"
   resource_group: group-25
   needs:
-  - img-25.3-alpine-dev
-img-25.3-alpine-dev:
-  stage: stage1
-  script: retry build "25.3/alpine/3.9/dev" "silex/emacs:25.3-alpine-dev silex/emacs:25-alpine-dev"
-  resource_group: group-25
+  - img-25.3-alpine
 img-25.3-alpine-ci:
-  stage: stage3
-  script: retry build "25.3/alpine/3.9/ci" "silex/emacs:25.3-alpine-ci"
+  stage: stage2
+  script: retry build "25.3/alpine/ci" "silex/emacs:25.3-alpine-ci"
   resource_group: group-25
   needs:
   - img-25.3-alpine
 img-25.3-alpine-ci-cask:
-  stage: stage4
-  script: retry build "25.3/alpine/3.9/ci/cask" "silex/emacs:25.3-alpine-ci-cask"
+  stage: stage3
+  script: retry build "25.3/alpine/ci/cask" "silex/emacs:25.3-alpine-ci-cask"
   resource_group: group-25
   needs:
   - img-25.3-alpine-ci
 img-25.3-alpine-ci-eldev:
-  stage: stage4
-  script: retry build "25.3/alpine/3.9/ci/eldev" "silex/emacs:25.3-alpine-ci-eldev"
+  stage: stage3
+  script: retry build "25.3/alpine/ci/eldev" "silex/emacs:25.3-alpine-ci-eldev"
   resource_group: group-25
   needs:
   - img-25.3-alpine-ci
 img-25.3-alpine-ci-keg:
-  stage: stage4
-  script: retry build "25.3/alpine/3.9/ci/keg" "silex/emacs:25.3-alpine-ci-keg"
+  stage: stage3
+  script: retry build "25.3/alpine/ci/keg" "silex/emacs:25.3-alpine-ci-keg"
   resource_group: group-25
   needs:
   - img-25.3-alpine-ci
 img-24.5:
+  stage: stage1
+  script: retry build "24.5/debian" "silex/emacs:24.5 silex/emacs:24"
+  resource_group: group-24
+img-24.5-dev:
   stage: stage2
-  script: retry build "24.5/ubuntu/18.04" "silex/emacs:24.5 silex/emacs:24"
+  script: retry build "24.5/debian/dev" "silex/emacs:24.5-dev silex/emacs:24-dev"
   resource_group: group-24
   needs:
-  - img-24.5-dev
-img-24.5-dev:
-  stage: stage1
-  script: retry build "24.5/ubuntu/18.04/dev" "silex/emacs:24.5-dev silex/emacs:24-dev"
-  resource_group: group-24
+  - img-24.5
 img-24.5-ci:
-  stage: stage3
-  script: retry build "24.5/ubuntu/18.04/ci" "silex/emacs:24.5-ci silex/emacs:24-ci"
+  stage: stage2
+  script: retry build "24.5/debian/ci" "silex/emacs:24.5-ci silex/emacs:24-ci"
   resource_group: group-24
   needs:
   - img-24.5
 img-24.5-ci-eldev:
-  stage: stage4
-  script: retry build "24.5/ubuntu/18.04/ci/eldev" "silex/emacs:24.5-ci-eldev silex/emacs:24-ci-eldev"
+  stage: stage3
+  script: retry build "24.5/debian/ci/eldev" "silex/emacs:24.5-ci-eldev silex/emacs:24-ci-eldev"
   resource_group: group-24
   needs:
   - img-24.5-ci
 img-24.5-ci-keg:
-  stage: stage4
-  script: retry build "24.5/ubuntu/18.04/ci/keg" "silex/emacs:24.5-ci-keg silex/emacs:24-ci-keg"
+  stage: stage3
+  script: retry build "24.5/debian/ci/keg" "silex/emacs:24.5-ci-keg silex/emacs:24-ci-keg"
   resource_group: group-24
   needs:
   - img-24.5-ci
 img-23.4:
-  stage: stage2
-  script: retry build "23.4/ubuntu/14.04/bootstrap" "silex/emacs:23.4 silex/emacs:23"
-  resource_group: group-23
-  needs:
-  - img-23.4-dev
-  variables:
-    DOCKER_PLATFORMS: linux/amd64,linux/386
-img-23.4-dev:
   stage: stage1
-  script: retry build "23.4/ubuntu/14.04/bootstrap/dev" "silex/emacs:23.4-dev silex/emacs:23-dev"
+  script: retry build "23.4/debian" "silex/emacs:23.4 silex/emacs:23"
   resource_group: group-23
   variables:
-    DOCKER_PLATFORMS: linux/amd64,linux/386
-img-23.4-ci:
-  stage: stage3
-  script: retry build "23.4/ubuntu/14.04/bootstrap/ci" "silex/emacs:23.4-ci silex/emacs:23-ci"
+    DOCKER_PLATFORMS: linux/amd64
+img-23.4-dev:
+  stage: stage2
+  script: retry build "23.4/debian" "silex/emacs:23.4-dev silex/emacs:23-dev"
   resource_group: group-23
   needs:
   - img-23.4
   variables:
-    DOCKER_PLATFORMS: linux/amd64,linux/386
+    DOCKER_PLATFORMS: linux/amd64
+img-23.4-ci:
+  stage: stage2
+  script: retry build "23.4/debian" "silex/emacs:23.4-ci silex/emacs:23-ci"
+  resource_group: group-23
+  needs:
+  - img-23.4
+  variables:
+    DOCKER_PLATFORMS: linux/amd64

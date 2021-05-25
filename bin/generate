@@ -41,6 +41,11 @@ class Image < OpenStruct
     super.to_s
   end
 
+  def nix_version
+    return 'emacs-snapshot' if version == 'master'
+    format('emacs-%s', version.gsub('.', '-'))
+  end
+
   def directory
     File.join(version, template)
   end
@@ -58,12 +63,10 @@ class Image < OpenStruct
     case depends
       when nil
         'stage1'
-      when /dev/
-        'stage2'
       when /ci/
-        'stage4'
-      else
         'stage3'
+      else
+        'stage2'
     end
   end
 end
@@ -83,10 +86,9 @@ def generate_dockerfiles(images)
     FileUtils.mkdir_p(image.directory)
     content = File.read(File.join('templates', image.template, 'Dockerfile'))
     content.gsub!('{{DEPENDS}}', image.depends.to_s)
+    content.gsub!('{{NIX-VERSION}}', image.nix_version.to_s)
     content.gsub!('{{BRANCH}}', image.branch.to_s)
     content.gsub!(/\n{{CACHE}}\n/, image.cache ? format("\nADD %s /tmp/cache\n", image.cache) : '')
-    content.gsub!(/ *{{PATCHES}}\n/, make_patches_string(image.patches))
-    content.gsub!(' {{CONFIGURE}}', image.configure ? format(' %s', image.configure) : '')
     File.write(image.dockerfile, content)
   end
 end

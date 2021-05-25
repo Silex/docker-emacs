@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -euxo pipefail
-
-teardown
-ssh root@$DOCKER_ARM_HOST 'bash -s' < $(which setup-git)
-ssh root@$DOCKER_ARM_HOST 'bash -s' < $(which setup-https)
