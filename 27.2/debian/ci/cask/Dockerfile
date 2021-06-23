@@ -1,8 +1,8 @@
 FROM silex/emacs:27.2-ci
 
 RUN apt-get update && \
-    apt-get install -y python && \
+    apt-get install -y python3 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+RUN git clone https://github.com/cask/cask /root/.cask
 ENV PATH="/root/.cask/bin:$PATH"
