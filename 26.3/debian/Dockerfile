@@ -6,6 +6,13 @@ RUN cd /nix-emacs/nix/store && ln -s *emacs* emacs
 
 FROM debian
 
+RUN apt-get update && \
+    apt-get install -y \
+            curl \
+            gnupg \
+            openssh-client \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=0 /nix-emacs/nix/store /nix/store
 ENV PATH="/nix/store/emacs/bin:$PATH"
 

@@ -6,6 +6,11 @@ RUN cd /nix-emacs/nix/store && ln -s *emacs* emacs
 
 FROM alpine
 
+RUN apk add --no-cache \
+            curl \
+            gnupg \
+            openssh-client
+
 COPY --from=0 /nix-emacs/nix/store /nix/store
 ENV PATH="/nix/store/emacs/bin:$PATH"
 
