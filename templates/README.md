@@ -8,12 +8,12 @@ Run Emacs in docker containers!
 
 | OS                                | Tag                      | Size (MB) | Inherits from      | Contents                                                              |
 |-----------------------------------|--------------------------|-----------|--------------------|-----------------------------------------------------------------------|
-| [Ubuntu](https://ubuntu.com)      | $version                 |       450 |                    | Emacs, curl, gnupg & imagemagick                                      |
-| [Ubuntu](https://ubuntu.com)      | $version-dev             |      1400 | $version           | All build dependencies & source in `/opt/emacs`                       |
-| [Ubuntu](https://ubuntu.com)      | $version-ci              |       480 | $version           | [git](https://git-scm.com) & make                                     |
-| [Ubuntu](https://ubuntu.com)      | $version-ci-cask         |       520 | $version-ci        | [Cask](https://caskreadthedocs.io) & [Python](https://www.python.org) |
-| [Ubuntu](https://ubuntu.com)      | $version-ci-eldev        |       480 | $version-ci        | [eldev](https://github.com/doublep/eldev)                             |
-| [Ubuntu](https://ubuntu.com)      | $version-ci-keg          |       480 | $version-ci        | [keg](https://github.com/conao3/kegel)                                |
+| [Debian](https://debian.org)      | $version                 |       450 |                    | Emacs, curl, gnupg & imagemagick                                      |
+| [Debian](https://debian.org)      | $version-dev             |      1400 | $version           | All build dependencies & source in `/opt/emacs`                       |
+| [Debian](https://debian.org)      | $version-ci              |       480 | $version           | [git](https://git-scm.com) & make                                     |
+| [Debian](https://debian.org)      | $version-ci-cask         |       520 | $version-ci        | [Cask](https://caskreadthedocs.io) & [Python](https://www.python.org) |
+| [Debian](https://debian.org)      | $version-ci-eldev        |       480 | $version-ci        | [eldev](https://github.com/doublep/eldev)                             |
+| [Debian](https://debian.org)      | $version-ci-keg          |       480 | $version-ci        | [keg](https://github.com/conao3/kegel)                                |
 | [Alpine](https://alpinelinux.org) | $version-alpine          |       220 |                    | Emacs, curl, gnupg & imagemagick                                      |
 | [Alpine](https://alpinelinux.org) | $version-alpine-dev      |      1200 | $version-alpine    | All build dependencies & source in `/opt/emacs`                       |
 | [Alpine](https://alpinelinux.org) | $version-alpine-ci       |       240 | $version-alpine    | [git](https://git-scm.com) & make                                     |

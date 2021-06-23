@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-set -euxo pipefail
-
-HTTPS_SERVER='git.sv.gnu.org'
-
-which socat >/dev/null || (apt update -qq && apt install -y socat)
-nohup socat tcp-l:443,fork,reuseaddr tcp:$HTTPS_SERVER:443 >/dev/null 2>&1 &
