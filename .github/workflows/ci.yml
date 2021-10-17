@@ -1,0 +1,951 @@
+---
+name: CI
+'on':
+  push:
+    branches:
+    - master
+    paths-ignore:
+    - "**.md"
+jobs:
+  img-master:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master
+  img-master-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-dev
+  img-master-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-ci
+  img-master-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-ci-cask
+  img-master-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-ci-eldev
+  img-master-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-ci-keg
+  img-master-alpine:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-alpine
+  img-master-alpine-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-alpine-dev
+  img-master-alpine-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-alpine-ci
+  img-master-alpine-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-alpine-ci-cask
+  img-master-alpine-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-alpine-ci-eldev
+  img-master-alpine-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-master-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-alpine-ci-keg
+  img-27-2:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: '27.2'
+  img-27-2-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-dev
+  img-27-2-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-ci
+  img-27-2-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-ci-cask
+  img-27-2-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-ci-eldev
+  img-27-2-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-ci-keg
+  img-27-2-alpine:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-alpine
+  img-27-2-alpine-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-alpine-dev
+  img-27-2-alpine-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-alpine-ci
+  img-27-2-alpine-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-alpine-ci-cask
+  img-27-2-alpine-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-alpine-ci-eldev
+  img-27-2-alpine-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-27-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-alpine-ci-keg
+  img-26-3:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: '26.3'
+  img-26-3-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-dev
+  img-26-3-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-ci
+  img-26-3-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-ci-cask
+  img-26-3-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-ci-eldev
+  img-26-3-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-ci-keg
+  img-26-3-alpine:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-alpine
+  img-26-3-alpine-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-alpine-dev
+  img-26-3-alpine-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-alpine-ci
+  img-26-3-alpine-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-alpine-ci-cask
+  img-26-3-alpine-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-alpine-ci-eldev
+  img-26-3-alpine-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-26-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-alpine-ci-keg
+  img-25-3:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: '25.3'
+  img-25-3-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-dev
+  img-25-3-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-ci
+  img-25-3-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-ci-cask
+  img-25-3-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-ci-eldev
+  img-25-3-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-ci-keg
+  img-25-3-alpine:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-alpine
+  img-25-3-alpine-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-alpine-dev
+  img-25-3-alpine-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-alpine-ci
+  img-25-3-alpine-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-alpine-ci-cask
+  img-25-3-alpine-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-alpine-ci-eldev
+  img-25-3-alpine-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-25-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 25.3-alpine-ci-keg
+  img-24-5:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: '24.5'
+  img-24-5-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-24-5
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 24.5-dev
+  img-24-5-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-24-5
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 24.5-ci
+  img-24-5-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-24-5-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 24.5-ci-eldev
+  img-24-5-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-24-5-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 24.5-ci-keg
+  img-23-4:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: '23.4'
+  img-23-4-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-23-4
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 23.4-dev
+  img-23-4-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-23-4
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
+        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 23.4-ci

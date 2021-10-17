@@ -1,4 +1,4 @@
-[![pipeline status](https://gitlab.com/Silex777/docker-emacs/badges/master/pipeline.svg)](https://gitlab.com/Silex777/docker-emacs/-/commits/master)
+![status](https://github.com/Silex/docker-emacs/actions/workflows/ci.yml/badge.svg)
 
 # Description
 

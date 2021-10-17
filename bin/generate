@@ -19,6 +19,10 @@ class String
   def backquotify
     format('`%s`', self)
   end
+
+  def blank?
+    self.strip.empty?
+  end
 end
 
 class Image < OpenStruct
@@ -41,6 +45,11 @@ class Image < OpenStruct
     super.to_s
   end
 
+  def depends
+    # Ensure depends is a string
+    super.to_s
+  end
+
   def nix_version
     return 'emacs-snapshot' if version == 'master'
     format('emacs-%s', version.gsub('.', '-'))
@@ -57,17 +66,6 @@ class Image < OpenStruct
   def tags
     # Ensure tags are strings
     super.map(&:to_s)
-  end
-
-  def gitlab_stage
-    case depends
-      when nil
-        'stage1'
-      when /ci/
-        'stage3'
-      else
-        'stage2'
-    end
   end
 end
 
@@ -105,42 +103,32 @@ def generate_readme(images)
   File.write('README.md', content)
 end
 
-def generate_gitlab(images)
-  puts '>>> generating .gitlab-ci.yml'
-  h = YAML.load_file('templates/.gitlab-ci.yml')
-  template = h.delete('template')
+def generate_github(images)
+  path = '.github/workflows/ci.yml'
+  puts format('>>> generating %s', path)
+  h = YAML.load_file(format('templates/%s', path))
+  template = h['jobs'].delete('template')
 
-  gitlab_groups = images.map do |image, i|
-    group = image.version.to_i
-    group = image.version if group == 0
-    [image, format('group-%s', group)]
-  end.to_h
-
-  gitlab_needs = images.select(&:depends).map do |image|
-    [image, [format('img-%s', image.depends)]]
+  needs = images.reject{ |i| i.depends.blank? }.map do |image|
+    [image, format('img-%s', image.depends.gsub(/[^\w-]/i, '-'))]
   end.to_h
 
   images.each do |image|
     params = template.deep_clone
-    params['stage'] = image.gitlab_stage
-    params['script'].gsub!('{{DIRECTORY}}', image.directory)
-    params['script'].gsub!('{{TAGS}}', image.tags.map{ |s| format('silex/emacs:%s', s) }.join(' '))
-    params['resource_group'] = gitlab_groups[image]
-    params['needs'] = gitlab_needs[image]
-    if image.platforms
-      params['variables'] = { 'DOCKER_PLATFORMS' => image.platforms }
-    end
-    name = format('img-%s', image.tag)
-    h[name] = params.compact
+    params['needs'] = needs[image]
+    params['steps'].last['with']['emacs'] = image.tag
+    name = format('img-%s', image.tag.gsub(/[^\w-]/i, '-'))
+    h['jobs'][name] = params.compact
   end
-  File.write('.gitlab-ci.yml', h.to_yaml(line_width: -1))
+
+  File.write(path, h.to_yaml(line_width: -1))
 end
 
 def generate(source)
   images = Image.load(source)
   generate_dockerfiles(images)
   generate_readme(images)
-  generate_gitlab(images)
+  generate_github(images)
 end
 
 begin
