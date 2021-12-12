@@ -5,7 +5,7 @@ RUN nix-env -iA emacs-27-2 -f https://github.com/silex/nix-emacs-ci/archive/mast
 RUN nix copy --no-require-sigs --to /nix-emacs $(type -p emacs)
 RUN cd /nix-emacs/nix/store && ln -s *emacs* emacs
 
-FROM alpine
+FROM alpine:3.14
 
 RUN apk add --no-cache \
             curl \

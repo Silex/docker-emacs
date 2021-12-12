@@ -7,7 +7,7 @@ RUN nix-env -iA {{NIX-VERSION}} -f https://github.com/silex/nix-emacs-ci/archive
 RUN nix copy --no-require-sigs --to /nix-emacs $(type -p emacs)
 RUN cd /nix-emacs/nix/store && ln -s *emacs* emacs
 
-FROM alpine
+FROM alpine:3.14
 
 RUN apk add --no-cache \
             curl \
