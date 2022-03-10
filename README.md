@@ -95,6 +95,8 @@ xhost +local:root # WARN: this comes with security issues
 docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix silex/emacs
 ```
 
+Alternatively, you can also use the [x11docker](https://github.com/mviereck/x11docker) tool, which has lots of features and options.
+
 # Alternatives
 
 - [flycheck/emacs-cask](https://hub.docker.com/r/flycheck/emacs-cask): collection of docker images containing a
