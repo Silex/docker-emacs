@@ -6,6 +6,8 @@ name: CI
       - master
     paths-ignore:
       - '**.md'
+  schedule:
+    - cron: 0 */6 * * *
 
 jobs:
   template:
