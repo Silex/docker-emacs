@@ -121,7 +121,9 @@ def generate_github(images)
     h['jobs'][name] = params.compact
   end
 
-  File.write(path, h.to_yaml(line_width: -1))
+  data = h.to_yaml(line_width: -1)
+  data.gsub!(/true:/, 'on:')
+  File.write(path, data)
 end
 
 def generate(source)
