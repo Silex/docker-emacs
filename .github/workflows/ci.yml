@@ -7,7 +7,7 @@ on:
     paths-ignore:
     - "**.md"
   schedule:
-  - cron: 0 */6 * * *
+  - cron: 0 */12 * * *
 jobs:
   img-master:
     runs-on:
