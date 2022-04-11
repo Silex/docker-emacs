@@ -51,52 +51,102 @@
   template: alpine/ci/keg
   depends: master-alpine-ci
 
-- tags: [27.2, 27, latest]
+- tags: [28.1, 28, latest]
+  version: 28.1
+  template: debian
+- tags: [28.1-dev, 28-dev, dev]
+  version: 28.1
+  branch: emacs-28.1
+  template: debian/dev
+  depends: 28.1
+- tags: [28.1-ci, 28-ci, ci]
+  version: 28.1
+  template: debian/ci
+  depends: 28.1
+- tags: [28.1-ci-cask, 28-ci-cask, cask]
+  version: 28.1
+  template: debian/ci/cask
+  depends: 28.1-ci
+- tags: [28.1-ci-eldev, 28-ci-eldev, eldev]
+  version: 28.1
+  template: debian/ci/eldev
+  depends: 28.1-ci
+- tags: [28.1-ci-keg, 28-ci-keg, keg]
+  version: 28.1
+  template: debian/ci/keg
+  depends: 28.1-ci
+
+- tags: [28.1-alpine, 28-alpine, alpine]
+  version: 28.1
+  template: alpine
+- tags: [28.1-alpine-dev, 28-alpine-dev, alpine-dev]
+  version: 28.1
+  branch: emacs-28.1
+  template: alpine/dev
+  depends: 28.1-alpine
+- tags: [28.1-alpine-ci, 28-alpine-ci, alpine-ci]
+  version: 28.1
+  template: alpine/ci
+  depends: 28.1-alpine
+- tags: [28.1-alpine-ci-cask, 28-alpine-ci-cask, alpine-ci-cask]
+  version: 28.1
+  template: alpine/ci/cask
+  depends: 28.1-alpine-ci
+- tags: [28.1-alpine-ci-eldev, 28-alpine-ci-eldev, alpine-ci-eldev]
+  version: 28.1
+  template: alpine/ci/eldev
+  depends: 28.1-alpine-ci
+- tags: [28.1-alpine-ci-keg, 28-alpine-ci-keg, alpine-ci-keg]
+  version: 28.1
+  template: alpine/ci/keg
+  depends: 28.1-alpine-ci
+
+- tags: [27.2, 27]
   version: 27.2
   template: debian
-- tags: [27.2-dev, 27-dev, dev]
+- tags: [27.2-dev, 27-dev]
   version: 27.2
   branch: emacs-27.2
   template: debian/dev
   depends: 27.2
-- tags: [27.2-ci, 27-ci, ci]
+- tags: [27.2-ci, 27-ci]
   version: 27.2
   template: debian/ci
   depends: 27.2
-- tags: [27.2-ci-cask, 27-ci-cask, cask]
+- tags: [27.2-ci-cask, 27-ci-cask]
   version: 27.2
   template: debian/ci/cask
   depends: 27.2-ci
-- tags: [27.2-ci-eldev, 27-ci-eldev, eldev]
+- tags: [27.2-ci-eldev, 27-ci-eldev]
   version: 27.2
   template: debian/ci/eldev
   depends: 27.2-ci
-- tags: [27.2-ci-keg, 27-ci-keg, keg]
+- tags: [27.2-ci-keg, 27-ci-keg]
   version: 27.2
   template: debian/ci/keg
   depends: 27.2-ci
 
-- tags: [27.2-alpine, 27-alpine, alpine]
+- tags: [27.2-alpine, 27-alpine]
   version: 27.2
   template: alpine
-- tags: [27.2-alpine-dev, 27-alpine-dev, alpine-dev]
+- tags: [27.2-alpine-dev, 27-alpine-dev]
   version: 27.2
   branch: emacs-27.2
   template: alpine/dev
   depends: 27.2-alpine
-- tags: [27.2-alpine-ci, 27-alpine-ci, alpine-ci]
+- tags: [27.2-alpine-ci, 27-alpine-ci]
   version: 27.2
   template: alpine/ci
   depends: 27.2-alpine
-- tags: [27.2-alpine-ci-cask, 27-alpine-ci-cask, alpine-ci-cask]
+- tags: [27.2-alpine-ci-cask, 27-alpine-ci-cask]
   version: 27.2
   template: alpine/ci/cask
   depends: 27.2-alpine-ci
-- tags: [27.2-alpine-ci-eldev, 27-alpine-ci-eldev, alpine-ci-eldev]
+- tags: [27.2-alpine-ci-eldev, 27-alpine-ci-eldev]
   version: 27.2
   template: alpine/ci/eldev
   depends: 27.2-alpine-ci
-- tags: [27.2-alpine-ci-keg, 27-alpine-ci-keg, alpine-ci-keg]
+- tags: [27.2-alpine-ci-keg, 27-alpine-ci-keg]
   version: 27.2
   template: alpine/ci/keg
   depends: 27.2-alpine-ci
