@@ -22,8 +22,6 @@ jobs:
       - name: Build
         uses: ./.github/actions/build
         with:
-          docker_arm_host: ${{ secrets.DOCKER_ARM_HOST }}
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
           emacs:

@@ -23,8 +23,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master
@@ -40,8 +38,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-dev
@@ -57,8 +53,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci
@@ -74,8 +68,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci-cask
@@ -91,8 +83,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci-eldev
@@ -108,8 +98,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci-keg
@@ -124,8 +112,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine
@@ -141,8 +127,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-dev
@@ -158,8 +142,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci
@@ -175,8 +157,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-cask
@@ -192,8 +172,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-eldev
@@ -209,8 +187,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-keg
@@ -225,8 +201,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '28.1'
@@ -242,8 +216,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-dev
@@ -259,8 +231,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci
@@ -276,8 +246,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci-cask
@@ -293,8 +261,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci-eldev
@@ -310,8 +276,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci-keg
@@ -326,8 +290,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine
@@ -343,8 +305,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-dev
@@ -360,8 +320,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci
@@ -377,8 +335,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci-cask
@@ -394,8 +350,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci-eldev
@@ -411,8 +365,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci-keg
@@ -427,8 +379,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '27.2'
@@ -444,8 +394,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-dev
@@ -461,8 +409,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci
@@ -478,8 +424,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci-cask
@@ -495,8 +439,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci-eldev
@@ -512,8 +454,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci-keg
@@ -528,8 +468,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine
@@ -545,8 +483,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-dev
@@ -562,8 +498,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci
@@ -579,8 +513,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci-cask
@@ -596,8 +528,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci-eldev
@@ -613,8 +543,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci-keg
@@ -629,8 +557,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '26.3'
@@ -646,8 +572,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-dev
@@ -663,8 +587,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci
@@ -680,8 +602,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci-cask
@@ -697,8 +617,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci-eldev
@@ -714,8 +632,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci-keg
@@ -730,8 +646,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine
@@ -747,8 +661,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-dev
@@ -764,8 +676,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci
@@ -781,8 +691,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci-cask
@@ -798,8 +706,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci-eldev
@@ -815,8 +721,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci-keg
@@ -831,8 +735,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '25.3'
@@ -848,8 +750,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-dev
@@ -865,8 +765,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-ci
@@ -882,8 +780,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-ci-cask
@@ -899,8 +795,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-ci-eldev
@@ -916,8 +810,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-ci-keg
@@ -932,8 +824,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine
@@ -949,8 +839,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-dev
@@ -966,8 +854,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-ci
@@ -983,8 +869,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-ci-cask
@@ -1000,8 +884,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-ci-eldev
@@ -1017,8 +899,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-ci-keg
@@ -1033,8 +913,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '24.5'
@@ -1050,8 +928,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-dev
@@ -1067,8 +943,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-ci
@@ -1084,8 +958,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-ci-eldev
@@ -1101,8 +973,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-ci-keg
@@ -1117,8 +987,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '23.4'
@@ -1134,8 +1002,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 23.4-dev
@@ -1151,8 +1017,6 @@ jobs:
     - name: Build
       uses: "./.github/actions/build"
       with:
-        docker_arm_host: "${{ secrets.DOCKER_ARM_HOST }}"
-        ssh_private_key: "${{ secrets.SSH_PRIVATE_KEY }}"
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 23.4-ci

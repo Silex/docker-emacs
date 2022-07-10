@@ -1,8 +1,4 @@
 inputs:
-  docker_arm_host:
-    required: true
-  ssh_private_key:
-    required: true
   dockerhub_username:
     required: true
   dockerhub_token:
@@ -16,15 +12,6 @@ runs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Prepare SSH agent
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ inputs.ssh_private_key }}
-
-    - name: Prepare ARM host
-      shell: bash
-      run: ssh-keyscan ${{ inputs.docker_arm_host }} >> ~/.ssh/known_hosts
-
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
@@ -35,12 +22,6 @@ runs:
       id: buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Add ARM builder
-      shell: bash
-      run: |
-        docker buildx create --append --name ${{ steps.buildx.outputs.name }} ssh://root@${{ inputs.docker_arm_host }}
-        docker buildx inspect --bootstrap ${{ steps.buildx.outputs.name }}
-
     - name: Set environment
       shell: bash
       run: |
@@ -50,16 +31,13 @@ runs:
         version=$(yq ".[] | select(.tags[0] == \"$VERSION\") | .version" images.yml)
         cache=$(yq ".[] | select(.tags[0] == \"$VERSION\") | .tags[0]" images.yml)
         template=$(yq ".[] | select(.tags[0] == \"$VERSION\") | .template" images.yml)
-        platforms=$(yq ".[] | select(.tags[0] == \"$VERSION\") | .platforms // \"linux/amd64, linux/arm64\"" images.yml)
         echo "image_tags=silex/emacs:$tags" >> $GITHUB_ENV
         echo "image_cache=silex/emacs:$cache" >> $GITHUB_ENV
         echo "image_context=$version/$template" >> $GITHUB_ENV
-        echo "image_platforms=$platforms" >> $GITHUB_ENV
 
     - name: Build
       uses: docker/build-push-action@v2
       with:
-        platforms: ${{ env.image_platforms }}
         pull: true
         push: ${{ github.ref == 'refs/heads/master' }}
         cache-from: ${{ env.image_cache }}
