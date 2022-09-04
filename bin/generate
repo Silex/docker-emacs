@@ -42,12 +42,12 @@ class Image < OpenStruct
 
   def version
     # Ensure version is a string
-    super.to_s
+    self['version'].to_s
   end
 
   def depends
     # Ensure depends is a string
-    super.to_s
+    self['depends'].to_s
   end
 
   def nix_version
@@ -65,7 +65,7 @@ class Image < OpenStruct
 
   def tags
     # Ensure tags are strings
-    super.map(&:to_s)
+    self['tags'].map(&:to_s)
   end
 end
 
