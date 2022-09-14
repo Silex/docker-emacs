@@ -190,6 +190,184 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-keg
+  img-28-2:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: '28.2'
+  img-28-2-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-dev
+  img-28-2-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-ci
+  img-28-2-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-ci-cask
+  img-28-2-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-ci-eldev
+  img-28-2-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-ci-keg
+  img-28-2-alpine:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-alpine
+  img-28-2-alpine-dev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-alpine-dev
+  img-28-2-alpine-ci:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-alpine-ci
+  img-28-2-alpine-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-alpine-ci-cask
+  img-28-2-alpine-ci-eldev:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-alpine-ci-eldev
+  img-28-2-alpine-ci-keg:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-28-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-alpine-ci-keg
   img-28-1:
     runs-on:
     - self-hosted
