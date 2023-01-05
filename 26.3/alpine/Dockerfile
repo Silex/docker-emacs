@@ -1,6 +1,6 @@
 FROM silex/nix
 
-ADD https://api.github.com/repos/purcell/nix-emacs-ci/commits?per_page=1 /tmp/cache
+ADD https://api.github.com/repos/purcell/nix-emacs-ci/git/refs/heads/master /tmp/cache
 RUN nix-env -iA emacs-26-3 -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
 RUN nix copy --no-require-sigs --to /nix-emacs $(type -p emacs)
 RUN cd /nix-emacs/nix/store && ln -s *emacs* emacs
