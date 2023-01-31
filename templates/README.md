@@ -25,20 +25,9 @@ Run Emacs in docker containers!
 
 # Usage
 
-## Console
-
 ``` shell
 docker run -it --rm silex/emacs
 ```
-
-## GUI
-
-``` shell
-xhost +local:root # WARN: this comes with security issues
-docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix silex/emacs
-```
-
-Alternatively, you can also use the [x11docker](https://github.com/mviereck/x11docker) tool, which has lots of features and options.
 
 # Alternatives
 
