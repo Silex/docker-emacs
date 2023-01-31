@@ -42,6 +42,7 @@ RUN apt-get update && \
             zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
+ADD https://api.github.com/repos/emacs-mirror/emacs/git/refs/heads/master /tmp/cache
 RUN cd /opt && \
     curl -fsSL https://github.com/emacs-mirror/emacs/tarball/emacs-24.5 | \
     tar xz && \

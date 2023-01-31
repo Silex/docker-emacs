@@ -86,7 +86,6 @@ def generate_dockerfiles(images)
     content.gsub!('{{DEPENDS}}', image.depends.to_s)
     content.gsub!('{{NIX-VERSION}}', image.nix_version.to_s)
     content.gsub!('{{BRANCH}}', image.branch.to_s)
-    content.gsub!(/\n{{CACHE}}\n/, image.cache ? format("\nADD %s /tmp/cache\n", image.cache) : '')
     File.write(image.dockerfile, content)
   end
 end

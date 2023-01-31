@@ -2,7 +2,6 @@
 - tags: [master]
   version: master
   template: debian
-  cache: https://git.savannah.gnu.org/git/emacs.git/refs/heads/master
 - tags: [master-dev]
   version: master
   branch: master
@@ -28,7 +27,6 @@
 - tags: [master-alpine]
   version: master
   template: alpine
-  cache: https://git.savannah.gnu.org/git/emacs.git/refs/heads/master
 - tags: [master-alpine-dev]
   version: master
   branch: master

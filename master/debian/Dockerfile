@@ -1,7 +1,5 @@
 FROM nixos/nix
 
-ADD https://git.savannah.gnu.org/git/emacs.git/refs/heads/master /tmp/cache
-
 ADD https://api.github.com/repos/purcell/nix-emacs-ci/git/refs/heads/master /tmp/cache
 RUN nix-env -iA cachix -f https://cachix.org/api/v1/install
 RUN cachix use emacs-ci
