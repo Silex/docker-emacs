@@ -2,11 +2,6 @@
 - tags: [master]
   version: master
   template: debian
-- tags: [master-dev]
-  version: master
-  branch: master
-  template: debian/dev
-  depends: master
 - tags: [master-ci]
   version: master
   template: debian/ci
@@ -27,11 +22,6 @@
 - tags: [master-alpine]
   version: master
   template: alpine
-- tags: [master-alpine-dev]
-  version: master
-  branch: master
-  template: alpine/dev
-  depends: master-alpine
 - tags: [master-alpine-ci]
   version: master
   template: alpine/ci
@@ -52,11 +42,6 @@
 - tags: [28.2, 28, latest]
   version: 28.2
   template: debian
-- tags: [28.2-dev, 28-dev, dev]
-  version: 28.2
-  branch: emacs-28.2
-  template: debian/dev
-  depends: 28.2
 - tags: [28.2-ci, 28-ci, ci]
   version: 28.2
   template: debian/ci
@@ -77,11 +62,6 @@
 - tags: [28.2-alpine, 28-alpine, alpine]
   version: 28.2
   template: alpine
-- tags: [28.2-alpine-dev, 28-alpine-dev, alpine-dev]
-  version: 28.2
-  branch: emacs-28.2
-  template: alpine/dev
-  depends: 28.2-alpine
 - tags: [28.2-alpine-ci, 28-alpine-ci, alpine-ci]
   version: 28.2
   template: alpine/ci
@@ -102,11 +82,6 @@
 - tags: [28.1]
   version: 28.1
   template: debian
-- tags: [28.1-dev]
-  version: 28.1
-  branch: emacs-28.1
-  template: debian/dev
-  depends: 28.1
 - tags: [28.1-ci]
   version: 28.1
   template: debian/ci
@@ -127,11 +102,6 @@
 - tags: [28.1-alpine]
   version: 28.1
   template: alpine
-- tags: [28.1-alpine-dev]
-  version: 28.1
-  branch: emacs-28.1
-  template: alpine/dev
-  depends: 28.1-alpine
 - tags: [28.1-alpine-ci]
   version: 28.1
   template: alpine/ci
@@ -152,11 +122,6 @@
 - tags: [27.2, 27]
   version: 27.2
   template: debian
-- tags: [27.2-dev, 27-dev]
-  version: 27.2
-  branch: emacs-27.2
-  template: debian/dev
-  depends: 27.2
 - tags: [27.2-ci, 27-ci]
   version: 27.2
   template: debian/ci
@@ -177,11 +142,6 @@
 - tags: [27.2-alpine, 27-alpine]
   version: 27.2
   template: alpine
-- tags: [27.2-alpine-dev, 27-alpine-dev]
-  version: 27.2
-  branch: emacs-27.2
-  template: alpine/dev
-  depends: 27.2-alpine
 - tags: [27.2-alpine-ci, 27-alpine-ci]
   version: 27.2
   template: alpine/ci
@@ -202,11 +162,6 @@
 - tags: [26.3, 26]
   version: 26.3
   template: debian
-- tags: [26.3-dev, 26-dev]
-  version: 26.3
-  branch: emacs-26.3
-  template: debian/dev
-  depends: 26.3
 - tags: [26.3-ci, 26-ci]
   version: 26.3
   template: debian/ci
@@ -227,11 +182,6 @@
 - tags: [26.3-alpine, 26-alpine]
   version: 26.3
   template: alpine
-- tags: [26.3-alpine-dev, 26-alpine-dev]
-  version: 26.3
-  branch: emacs-26.3
-  template: alpine/dev
-  depends: 26.3-alpine
 - tags: [26.3-alpine-ci, 26-alpine-ci]
   version: 26.3
   template: alpine/ci
@@ -252,11 +202,6 @@
 - tags: [25.3, 25]
   version: 25.3
   template: debian
-- tags: [25.3-dev, 25-dev]
-  version: 25.3
-  branch: emacs-25.3
-  template: debian/dev
-  depends: 25.3
 - tags: [25.3-ci, 25-ci]
   version: 25.3
   template: debian/ci
@@ -277,11 +222,6 @@
 - tags: [25.3-alpine, 25-alpine]
   version: 25.3
   template: alpine
-- tags: [25.3-alpine-dev, 25-alpine-dev]
-  version: 25.3
-  branch: emacs-25.3
-  template: alpine/dev
-  depends: 25.3-alpine
 - tags: [25.3-alpine-ci]
   version: 25.3
   template: alpine/ci
@@ -302,11 +242,6 @@
 - tags: [24.5, 24]
   version: 24.5
   template: debian
-- tags: [24.5-dev, 24-dev]
-  version: 24.5
-  branch: emacs-24.5
-  template: debian/dev
-  depends: 24.5
 - tags: [24.5-ci, 24-ci]
   version: 24.5
   template: debian/ci
@@ -323,11 +258,6 @@
 - tags: [23.4, 23]
   version: 23.4
   template: debian
-- tags: [23.4-dev, 23-dev]
-  version: 23.4
-  branch: emacs-23.4
-  template: debian
-  depends: 23.4
 - tags: [23.4-ci, 23-ci]
   version: 23.4
   template: debian
