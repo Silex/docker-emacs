@@ -79,46 +79,6 @@
   template: alpine/ci/keg
   depends: 28.2-alpine-ci
 
-- tags: [28.1]
-  version: 28.1
-  template: debian
-- tags: [28.1-ci]
-  version: 28.1
-  template: debian/ci
-  depends: 28.1
-- tags: [28.1-ci-cask]
-  version: 28.1
-  template: debian/ci/cask
-  depends: 28.1-ci
-- tags: [28.1-ci-eldev]
-  version: 28.1
-  template: debian/ci/eldev
-  depends: 28.1-ci
-- tags: [28.1-ci-keg]
-  version: 28.1
-  template: debian/ci/keg
-  depends: 28.1-ci
-
-- tags: [28.1-alpine]
-  version: 28.1
-  template: alpine
-- tags: [28.1-alpine-ci]
-  version: 28.1
-  template: alpine/ci
-  depends: 28.1-alpine
-- tags: [28.1-alpine-ci-cask]
-  version: 28.1
-  template: alpine/ci/cask
-  depends: 28.1-alpine-ci
-- tags: [28.1-alpine-ci-eldev]
-  version: 28.1
-  template: alpine/ci/eldev
-  depends: 28.1-alpine-ci
-- tags: [28.1-alpine-ci-keg]
-  version: 28.1
-  template: alpine/ci/keg
-  depends: 28.1-alpine-ci
-
 - tags: [27.2, 27]
   version: 27.2
   template: debian
