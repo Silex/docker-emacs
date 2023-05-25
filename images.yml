@@ -446,6 +446,10 @@
   version: 24.5
   template: debian/ci
   depends: 24.5
+- tags: [24.5-ci-cask, 24-ci-cask]
+  version: 24.5
+  template: debian/ci/cask
+  depends: 24.5-ci
 - tags: [24.5-ci-eldev, 24-ci-eldev]
   version: 24.5
   template: debian/ci/eldev

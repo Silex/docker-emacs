@@ -1669,6 +1669,21 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-ci
+  img-24-5-ci-cask:
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    needs: img-24-5-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 24.5-ci-cask
   img-24-5-ci-eldev:
     runs-on:
     - self-hosted

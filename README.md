@@ -135,6 +135,7 @@ Wraps [nix-emacs-ci](https://github.com/purcell/nix-emacs-ci) in docker images.
 - [`25.1-alpine-ci-keg`](https://github.com/Silex/docker-emacs/blob/master/25.1/alpine/ci/keg/Dockerfile)
 - [`24.5`, `24`](https://github.com/Silex/docker-emacs/blob/master/24.5/debian/Dockerfile)
 - [`24.5-ci`, `24-ci`](https://github.com/Silex/docker-emacs/blob/master/24.5/debian/ci/Dockerfile)
+- [`24.5-ci-cask`, `24-ci-cask`](https://github.com/Silex/docker-emacs/blob/master/24.5/debian/ci/cask/Dockerfile)
 - [`24.5-ci-eldev`, `24-ci-eldev`](https://github.com/Silex/docker-emacs/blob/master/24.5/debian/ci/eldev/Dockerfile)
 - [`24.5-ci-keg`, `24-ci-keg`](https://github.com/Silex/docker-emacs/blob/master/24.5/debian/ci/keg/Dockerfile)
 - [`24.4`](https://github.com/Silex/docker-emacs/blob/master/24.4/debian/Dockerfile)
