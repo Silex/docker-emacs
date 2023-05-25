@@ -13,10 +13,7 @@ on:
   - cron: 0 0 * * *
 jobs:
   img-master:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -27,10 +24,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master
   img-master-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-master
     steps:
     - name: Checkout
@@ -42,10 +36,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci
   img-master-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-master-ci
     steps:
     - name: Checkout
@@ -57,10 +48,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci-cask
   img-master-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-master-ci
     steps:
     - name: Checkout
@@ -72,10 +60,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci-eldev
   img-master-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-master-ci
     steps:
     - name: Checkout
@@ -87,10 +72,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci-keg
   img-master-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -101,10 +83,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine
   img-master-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-master-alpine
     steps:
     - name: Checkout
@@ -116,10 +95,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci
   img-master-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-master-alpine-ci
     steps:
     - name: Checkout
@@ -131,10 +107,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-cask
   img-master-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-master-alpine-ci
     steps:
     - name: Checkout
@@ -146,10 +119,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-eldev
   img-master-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-master-alpine-ci
     steps:
     - name: Checkout
@@ -161,10 +131,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-keg
   img-28-2:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -175,10 +142,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '28.2'
   img-28-2-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-2
     steps:
     - name: Checkout
@@ -190,10 +154,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-ci
   img-28-2-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-2-ci
     steps:
     - name: Checkout
@@ -205,10 +166,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-ci-cask
   img-28-2-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-2-ci
     steps:
     - name: Checkout
@@ -220,10 +178,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-ci-eldev
   img-28-2-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-2-ci
     steps:
     - name: Checkout
@@ -235,10 +190,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-ci-keg
   img-28-2-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -249,10 +201,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-alpine
   img-28-2-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-2-alpine
     steps:
     - name: Checkout
@@ -264,10 +213,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-alpine-ci
   img-28-2-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-2-alpine-ci
     steps:
     - name: Checkout
@@ -279,10 +225,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-alpine-ci-cask
   img-28-2-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-2-alpine-ci
     steps:
     - name: Checkout
@@ -294,10 +237,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-alpine-ci-eldev
   img-28-2-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-2-alpine-ci
     steps:
     - name: Checkout
@@ -309,10 +249,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-alpine-ci-keg
   img-28-1:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -323,10 +260,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '28.1'
   img-28-1-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-1
     steps:
     - name: Checkout
@@ -338,10 +272,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci
   img-28-1-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-1-ci
     steps:
     - name: Checkout
@@ -353,10 +284,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci-cask
   img-28-1-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-1-ci
     steps:
     - name: Checkout
@@ -368,10 +296,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci-eldev
   img-28-1-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-1-ci
     steps:
     - name: Checkout
@@ -383,10 +308,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci-keg
   img-28-1-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -397,10 +319,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine
   img-28-1-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-1-alpine
     steps:
     - name: Checkout
@@ -412,10 +331,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci
   img-28-1-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-1-alpine-ci
     steps:
     - name: Checkout
@@ -427,10 +343,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci-cask
   img-28-1-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-1-alpine-ci
     steps:
     - name: Checkout
@@ -442,10 +355,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci-eldev
   img-28-1-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-28-1-alpine-ci
     steps:
     - name: Checkout
@@ -457,10 +367,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci-keg
   img-27-2:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -471,10 +378,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '27.2'
   img-27-2-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-2
     steps:
     - name: Checkout
@@ -486,10 +390,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci
   img-27-2-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-2-ci
     steps:
     - name: Checkout
@@ -501,10 +402,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci-cask
   img-27-2-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-2-ci
     steps:
     - name: Checkout
@@ -516,10 +414,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci-eldev
   img-27-2-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-2-ci
     steps:
     - name: Checkout
@@ -531,10 +426,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci-keg
   img-27-2-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -545,10 +437,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine
   img-27-2-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-2-alpine
     steps:
     - name: Checkout
@@ -560,10 +449,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci
   img-27-2-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-2-alpine-ci
     steps:
     - name: Checkout
@@ -575,10 +461,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci-cask
   img-27-2-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-2-alpine-ci
     steps:
     - name: Checkout
@@ -590,10 +473,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci-eldev
   img-27-2-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-2-alpine-ci
     steps:
     - name: Checkout
@@ -605,10 +485,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci-keg
   img-27-1:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -619,10 +496,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '27.1'
   img-27-1-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-1
     steps:
     - name: Checkout
@@ -634,10 +508,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-ci
   img-27-1-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-1-ci
     steps:
     - name: Checkout
@@ -649,10 +520,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-ci-cask
   img-27-1-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-1-ci
     steps:
     - name: Checkout
@@ -664,10 +532,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-ci-eldev
   img-27-1-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-1-ci
     steps:
     - name: Checkout
@@ -679,10 +544,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-ci-keg
   img-27-1-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -693,10 +555,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-alpine
   img-27-1-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-1-alpine
     steps:
     - name: Checkout
@@ -708,10 +567,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-alpine-ci
   img-27-1-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-1-alpine-ci
     steps:
     - name: Checkout
@@ -723,10 +579,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-alpine-ci-cask
   img-27-1-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-1-alpine-ci
     steps:
     - name: Checkout
@@ -738,10 +591,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-alpine-ci-eldev
   img-27-1-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-27-1-alpine-ci
     steps:
     - name: Checkout
@@ -753,10 +603,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-alpine-ci-keg
   img-26-3:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -767,10 +614,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '26.3'
   img-26-3-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-3
     steps:
     - name: Checkout
@@ -782,10 +626,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci
   img-26-3-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-3-ci
     steps:
     - name: Checkout
@@ -797,10 +638,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci-cask
   img-26-3-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-3-ci
     steps:
     - name: Checkout
@@ -812,10 +650,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci-eldev
   img-26-3-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-3-ci
     steps:
     - name: Checkout
@@ -827,10 +662,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci-keg
   img-26-3-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -841,10 +673,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine
   img-26-3-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-3-alpine
     steps:
     - name: Checkout
@@ -856,10 +685,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci
   img-26-3-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-3-alpine-ci
     steps:
     - name: Checkout
@@ -871,10 +697,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci-cask
   img-26-3-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-3-alpine-ci
     steps:
     - name: Checkout
@@ -886,10 +709,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci-eldev
   img-26-3-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-3-alpine-ci
     steps:
     - name: Checkout
@@ -901,10 +721,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci-keg
   img-26-2:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -915,10 +732,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '26.2'
   img-26-2-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-2
     steps:
     - name: Checkout
@@ -930,10 +744,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-ci
   img-26-2-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-2-ci
     steps:
     - name: Checkout
@@ -945,10 +756,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-ci-cask
   img-26-2-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-2-ci
     steps:
     - name: Checkout
@@ -960,10 +768,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-ci-eldev
   img-26-2-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-2-ci
     steps:
     - name: Checkout
@@ -975,10 +780,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-ci-keg
   img-26-2-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -989,10 +791,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-alpine
   img-26-2-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-2-alpine
     steps:
     - name: Checkout
@@ -1004,10 +803,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-alpine-ci
   img-26-2-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-2-alpine-ci
     steps:
     - name: Checkout
@@ -1019,10 +815,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-alpine-ci-cask
   img-26-2-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-2-alpine-ci
     steps:
     - name: Checkout
@@ -1034,10 +827,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-alpine-ci-eldev
   img-26-2-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-2-alpine-ci
     steps:
     - name: Checkout
@@ -1049,10 +839,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-alpine-ci-keg
   img-26-1:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1063,10 +850,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '26.1'
   img-26-1-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-1
     steps:
     - name: Checkout
@@ -1078,10 +862,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-ci
   img-26-1-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-1-ci
     steps:
     - name: Checkout
@@ -1093,10 +874,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-ci-cask
   img-26-1-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-1-ci
     steps:
     - name: Checkout
@@ -1108,10 +886,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-ci-eldev
   img-26-1-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-1-ci
     steps:
     - name: Checkout
@@ -1123,10 +898,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-ci-keg
   img-26-1-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1137,10 +909,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-alpine
   img-26-1-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-1-alpine
     steps:
     - name: Checkout
@@ -1152,10 +921,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-alpine-ci
   img-26-1-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-1-alpine-ci
     steps:
     - name: Checkout
@@ -1167,10 +933,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-alpine-ci-cask
   img-26-1-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-1-alpine-ci
     steps:
     - name: Checkout
@@ -1182,10 +945,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-alpine-ci-eldev
   img-26-1-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-26-1-alpine-ci
     steps:
     - name: Checkout
@@ -1197,10 +957,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-alpine-ci-keg
   img-25-3:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1211,10 +968,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '25.3'
   img-25-3-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-3
     steps:
     - name: Checkout
@@ -1226,10 +980,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-ci
   img-25-3-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-3-ci
     steps:
     - name: Checkout
@@ -1241,10 +992,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-ci-cask
   img-25-3-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-3-ci
     steps:
     - name: Checkout
@@ -1256,10 +1004,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-ci-eldev
   img-25-3-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-3-ci
     steps:
     - name: Checkout
@@ -1271,10 +1016,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-ci-keg
   img-25-3-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1285,10 +1027,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine
   img-25-3-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-3-alpine
     steps:
     - name: Checkout
@@ -1300,10 +1039,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-ci
   img-25-3-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-3-alpine-ci
     steps:
     - name: Checkout
@@ -1315,10 +1051,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-ci-cask
   img-25-3-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-3-alpine-ci
     steps:
     - name: Checkout
@@ -1330,10 +1063,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-ci-eldev
   img-25-3-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-3-alpine-ci
     steps:
     - name: Checkout
@@ -1345,10 +1075,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.3-alpine-ci-keg
   img-25-2:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1359,10 +1086,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '25.2'
   img-25-2-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-2
     steps:
     - name: Checkout
@@ -1374,10 +1098,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-ci
   img-25-2-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-2-ci
     steps:
     - name: Checkout
@@ -1389,10 +1110,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-ci-cask
   img-25-2-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-2-ci
     steps:
     - name: Checkout
@@ -1404,10 +1122,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-ci-eldev
   img-25-2-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-2-ci
     steps:
     - name: Checkout
@@ -1419,10 +1134,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-ci-keg
   img-25-2-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1433,10 +1145,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-alpine
   img-25-2-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-2-alpine
     steps:
     - name: Checkout
@@ -1448,10 +1157,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-alpine-ci
   img-25-2-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-2-alpine-ci
     steps:
     - name: Checkout
@@ -1463,10 +1169,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-alpine-ci-cask
   img-25-2-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-2-alpine-ci
     steps:
     - name: Checkout
@@ -1478,10 +1181,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-alpine-ci-eldev
   img-25-2-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-2-alpine-ci
     steps:
     - name: Checkout
@@ -1493,10 +1193,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.2-alpine-ci-keg
   img-25-1:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1507,10 +1204,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '25.1'
   img-25-1-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-1
     steps:
     - name: Checkout
@@ -1522,10 +1216,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-ci
   img-25-1-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-1-ci
     steps:
     - name: Checkout
@@ -1537,10 +1228,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-ci-cask
   img-25-1-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-1-ci
     steps:
     - name: Checkout
@@ -1552,10 +1240,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-ci-eldev
   img-25-1-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-1-ci
     steps:
     - name: Checkout
@@ -1567,10 +1252,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-ci-keg
   img-25-1-alpine:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1581,10 +1263,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-alpine
   img-25-1-alpine-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-1-alpine
     steps:
     - name: Checkout
@@ -1596,10 +1275,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-alpine-ci
   img-25-1-alpine-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-1-alpine-ci
     steps:
     - name: Checkout
@@ -1611,10 +1287,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-alpine-ci-cask
   img-25-1-alpine-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-1-alpine-ci
     steps:
     - name: Checkout
@@ -1626,10 +1299,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-alpine-ci-eldev
   img-25-1-alpine-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-25-1-alpine-ci
     steps:
     - name: Checkout
@@ -1641,10 +1311,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 25.1-alpine-ci-keg
   img-24-5:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1655,10 +1322,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '24.5'
   img-24-5-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-5
     steps:
     - name: Checkout
@@ -1670,10 +1334,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-ci
   img-24-5-ci-cask:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-5-ci
     steps:
     - name: Checkout
@@ -1685,10 +1346,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-ci-cask
   img-24-5-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-5-ci
     steps:
     - name: Checkout
@@ -1700,10 +1358,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-ci-eldev
   img-24-5-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-5-ci
     steps:
     - name: Checkout
@@ -1715,10 +1370,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.5-ci-keg
   img-24-4:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1729,10 +1381,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '24.4'
   img-24-4-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-4
     steps:
     - name: Checkout
@@ -1744,10 +1393,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.4-ci
   img-24-4-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-4-ci
     steps:
     - name: Checkout
@@ -1759,10 +1405,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.4-ci-eldev
   img-24-4-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-4-ci
     steps:
     - name: Checkout
@@ -1774,10 +1417,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.4-ci-keg
   img-24-3:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1788,10 +1428,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '24.3'
   img-24-3-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-3
     steps:
     - name: Checkout
@@ -1803,10 +1440,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.3-ci
   img-24-3-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-3-ci
     steps:
     - name: Checkout
@@ -1818,10 +1452,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.3-ci-keg
   img-24-2:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1832,10 +1463,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '24.2'
   img-24-2-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-2
     steps:
     - name: Checkout
@@ -1847,10 +1475,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.2-ci
   img-24-2-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-2-ci
     steps:
     - name: Checkout
@@ -1862,10 +1487,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.2-ci-keg
   img-24-1:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1876,10 +1498,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '24.1'
   img-24-1-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-1
     steps:
     - name: Checkout
@@ -1891,10 +1510,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.1-ci
   img-24-1-ci-keg:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-24-1-ci
     steps:
     - name: Checkout
@@ -1906,10 +1522,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.1-ci-keg
   img-23-4:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -1920,10 +1533,7 @@ jobs:
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: '23.4'
   img-23-4-ci:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
+    runs-on: ubuntu-latest
     needs: img-23-4
     steps:
     - name: Checkout
