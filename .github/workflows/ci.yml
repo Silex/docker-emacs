@@ -1787,21 +1787,6 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.3-ci
-  img-24-3-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
-    needs: img-24-3-ci
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Build
-      uses: "./.github/actions/build"
-      with:
-        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
-        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
-        emacs: 24.3-ci-eldev
   img-24-3-ci-keg:
     runs-on:
     - self-hosted
@@ -1846,21 +1831,6 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.2-ci
-  img-24-2-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
-    needs: img-24-2-ci
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Build
-      uses: "./.github/actions/build"
-      with:
-        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
-        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
-        emacs: 24.2-ci-eldev
   img-24-2-ci-keg:
     runs-on:
     - self-hosted
@@ -1905,21 +1875,6 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 24.1-ci
-  img-24-1-ci-eldev:
-    runs-on:
-    - self-hosted
-    - linux
-    - x64
-    needs: img-24-1-ci
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Build
-      uses: "./.github/actions/build"
-      with:
-        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
-        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
-        emacs: 24.1-ci-eldev
   img-24-1-ci-keg:
     runs-on:
     - self-hosted

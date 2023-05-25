@@ -478,10 +478,6 @@
   version: 24.3
   template: debian/ci
   depends: 24.3
-- tags: [24.3-ci-eldev]
-  version: 24.3
-  template: debian/ci/eldev
-  depends: 24.3-ci
 - tags: [24.3-ci-keg]
   version: 24.3
   template: debian/ci/keg
@@ -494,10 +490,6 @@
   version: 24.2
   template: debian/ci
   depends: 24.2
-- tags: [24.2-ci-eldev]
-  version: 24.2
-  template: debian/ci/eldev
-  depends: 24.2-ci
 - tags: [24.2-ci-keg]
   version: 24.2
   template: debian/ci/keg
@@ -510,10 +502,6 @@
   version: 24.1
   template: debian/ci
   depends: 24.1
-- tags: [24.1-ci-eldev]
-  version: 24.1
-  template: debian/ci/eldev
-  depends: 24.1-ci
 - tags: [24.1-ci-keg]
   version: 24.1
   template: debian/ci/keg
