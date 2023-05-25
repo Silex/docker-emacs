@@ -79,6 +79,46 @@
   template: alpine/ci/keg
   depends: 28.2-alpine-ci
 
+- tags: [28.1]
+  version: 28.1
+  template: debian
+- tags: [28.1-ci]
+  version: 28.1
+  template: debian/ci
+  depends: 28.1
+- tags: [28.1-ci-cask]
+  version: 28.1
+  template: debian/ci/cask
+  depends: 28.1-ci
+- tags: [28.1-ci-eldev]
+  version: 28.1
+  template: debian/ci/eldev
+  depends: 28.1-ci
+- tags: [28.1-ci-keg]
+  version: 28.1
+  template: debian/ci/keg
+  depends: 28.1-ci
+
+- tags: [28.1-alpine]
+  version: 28.1
+  template: alpine
+- tags: [28.1-alpine-ci]
+  version: 28.1
+  template: alpine/ci
+  depends: 28.1-alpine
+- tags: [28.1-alpine-ci-cask]
+  version: 28.1
+  template: alpine/ci/cask
+  depends: 28.1-alpine-ci
+- tags: [28.1-alpine-ci-eldev]
+  version: 28.1
+  template: alpine/ci/eldev
+  depends: 28.1-alpine-ci
+- tags: [28.1-alpine-ci-keg]
+  version: 28.1
+  template: alpine/ci/keg
+  depends: 28.1-alpine-ci
+
 - tags: [27.2, 27]
   version: 27.2
   template: debian
@@ -118,6 +158,46 @@
   version: 27.2
   template: alpine/ci/keg
   depends: 27.2-alpine-ci
+
+- tags: [27.1]
+  version: 27.1
+  template: debian
+- tags: [27.1-ci]
+  version: 27.1
+  template: debian/ci
+  depends: 27.1
+- tags: [27.1-ci-cask]
+  version: 27.1
+  template: debian/ci/cask
+  depends: 27.1-ci
+- tags: [27.1-ci-eldev]
+  version: 27.1
+  template: debian/ci/eldev
+  depends: 27.1-ci
+- tags: [27.1-ci-keg]
+  version: 27.1
+  template: debian/ci/keg
+  depends: 27.1-ci
+
+- tags: [27.1-alpine]
+  version: 27.1
+  template: alpine
+- tags: [27.1-alpine-ci]
+  version: 27.1
+  template: alpine/ci
+  depends: 27.1-alpine
+- tags: [27.1-alpine-ci-cask]
+  version: 27.1
+  template: alpine/ci/cask
+  depends: 27.1-alpine-ci
+- tags: [27.1-alpine-ci-eldev]
+  version: 27.1
+  template: alpine/ci/eldev
+  depends: 27.1-alpine-ci
+- tags: [27.1-alpine-ci-keg]
+  version: 27.1
+  template: alpine/ci/keg
+  depends: 27.1-alpine-ci
 
 - tags: [26.3, 26]
   version: 26.3
@@ -159,6 +239,86 @@
   template: alpine/ci/keg
   depends: 26.3-alpine-ci
 
+- tags: [26.2]
+  version: 26.2
+  template: debian
+- tags: [26.2-ci]
+  version: 26.2
+  template: debian/ci
+  depends: 26.2
+- tags: [26.2-ci-cask]
+  version: 26.2
+  template: debian/ci/cask
+  depends: 26.2-ci
+- tags: [26.2-ci-eldev]
+  version: 26.2
+  template: debian/ci/eldev
+  depends: 26.2-ci
+- tags: [26.2-ci-keg]
+  version: 26.2
+  template: debian/ci/keg
+  depends: 26.2-ci
+
+- tags: [26.2-alpine]
+  version: 26.2
+  template: alpine
+- tags: [26.2-alpine-ci]
+  version: 26.2
+  template: alpine/ci
+  depends: 26.2-alpine
+- tags: [26.2-alpine-ci-cask]
+  version: 26.2
+  template: alpine/ci/cask
+  depends: 26.2-alpine-ci
+- tags: [26.2-alpine-ci-eldev]
+  version: 26.2
+  template: alpine/ci/eldev
+  depends: 26.2-alpine-ci
+- tags: [26.2-alpine-ci-keg]
+  version: 26.2
+  template: alpine/ci/keg
+  depends: 26.2-alpine-ci
+
+- tags: [26.1]
+  version: 26.1
+  template: debian
+- tags: [26.1-ci]
+  version: 26.1
+  template: debian/ci
+  depends: 26.1
+- tags: [26.1-ci-cask]
+  version: 26.1
+  template: debian/ci/cask
+  depends: 26.1-ci
+- tags: [26.1-ci-eldev]
+  version: 26.1
+  template: debian/ci/eldev
+  depends: 26.1-ci
+- tags: [26.1-ci-keg]
+  version: 26.1
+  template: debian/ci/keg
+  depends: 26.1-ci
+
+- tags: [26.1-alpine]
+  version: 26.1
+  template: alpine
+- tags: [26.1-alpine-ci]
+  version: 26.1
+  template: alpine/ci
+  depends: 26.1-alpine
+- tags: [26.1-alpine-ci-cask]
+  version: 26.1
+  template: alpine/ci/cask
+  depends: 26.1-alpine-ci
+- tags: [26.1-alpine-ci-eldev]
+  version: 26.1
+  template: alpine/ci/eldev
+  depends: 26.1-alpine-ci
+- tags: [26.1-alpine-ci-keg]
+  version: 26.1
+  template: alpine/ci/keg
+  depends: 26.1-alpine-ci
+
 - tags: [25.3, 25]
   version: 25.3
   template: debian
@@ -199,6 +359,86 @@
   template: alpine/ci/keg
   depends: 25.3-alpine-ci
 
+- tags: [25.2]
+  version: 25.2
+  template: debian
+- tags: [25.2-ci]
+  version: 25.2
+  template: debian/ci
+  depends: 25.2
+- tags: [25.2-ci-cask]
+  version: 25.2
+  template: debian/ci/cask
+  depends: 25.2-ci
+- tags: [25.2-ci-eldev]
+  version: 25.2
+  template: debian/ci/eldev
+  depends: 25.2-ci
+- tags: [25.2-ci-keg]
+  version: 25.2
+  template: debian/ci/keg
+  depends: 25.2-ci
+
+- tags: [25.2-alpine]
+  version: 25.2
+  template: alpine
+- tags: [25.2-alpine-ci]
+  version: 25.2
+  template: alpine/ci
+  depends: 25.2-alpine
+- tags: [25.2-alpine-ci-cask]
+  version: 25.2
+  template: alpine/ci/cask
+  depends: 25.2-alpine-ci
+- tags: [25.2-alpine-ci-eldev]
+  version: 25.2
+  template: alpine/ci/eldev
+  depends: 25.2-alpine-ci
+- tags: [25.2-alpine-ci-keg]
+  version: 25.2
+  template: alpine/ci/keg
+  depends: 25.2-alpine-ci
+
+- tags: [25.1]
+  version: 25.1
+  template: debian
+- tags: [25.1-ci]
+  version: 25.1
+  template: debian/ci
+  depends: 25.1
+- tags: [25.1-ci-cask]
+  version: 25.1
+  template: debian/ci/cask
+  depends: 25.1-ci
+- tags: [25.1-ci-eldev]
+  version: 25.1
+  template: debian/ci/eldev
+  depends: 25.1-ci
+- tags: [25.1-ci-keg]
+  version: 25.1
+  template: debian/ci/keg
+  depends: 25.1-ci
+
+- tags: [25.1-alpine]
+  version: 25.1
+  template: alpine
+- tags: [25.1-alpine-ci]
+  version: 25.1
+  template: alpine/ci
+  depends: 25.1-alpine
+- tags: [25.1-alpine-ci-cask]
+  version: 25.1
+  template: alpine/ci/cask
+  depends: 25.1-alpine-ci
+- tags: [25.1-alpine-ci-eldev]
+  version: 25.1
+  template: alpine/ci/eldev
+  depends: 25.1-alpine-ci
+- tags: [25.1-alpine-ci-keg]
+  version: 25.1
+  template: alpine/ci/keg
+  depends: 25.1-alpine-ci
+
 - tags: [24.5, 24]
   version: 24.5
   template: debian
@@ -214,6 +454,70 @@
   version: 24.5
   template: debian/ci/keg
   depends: 24.5-ci
+
+- tags: [24.4]
+  version: 24.4
+  template: debian
+- tags: [24.4-ci]
+  version: 24.4
+  template: debian/ci
+  depends: 24.4
+- tags: [24.4-ci-eldev]
+  version: 24.4
+  template: debian/ci/eldev
+  depends: 24.4-ci
+- tags: [24.4-ci-keg]
+  version: 24.4
+  template: debian/ci/keg
+  depends: 24.4-ci
+
+- tags: [24.3]
+  version: 24.3
+  template: debian
+- tags: [24.3-ci]
+  version: 24.3
+  template: debian/ci
+  depends: 24.3
+- tags: [24.3-ci-eldev]
+  version: 24.3
+  template: debian/ci/eldev
+  depends: 24.3-ci
+- tags: [24.3-ci-keg]
+  version: 24.3
+  template: debian/ci/keg
+  depends: 24.3-ci
+
+- tags: [24.2]
+  version: 24.2
+  template: debian
+- tags: [24.2-ci]
+  version: 24.2
+  template: debian/ci
+  depends: 24.2
+- tags: [24.2-ci-eldev]
+  version: 24.2
+  template: debian/ci/eldev
+  depends: 24.2-ci
+- tags: [24.2-ci-keg]
+  version: 24.2
+  template: debian/ci/keg
+  depends: 24.2-ci
+
+- tags: [24.1]
+  version: 24.1
+  template: debian
+- tags: [24.1-ci]
+  version: 24.1
+  template: debian/ci
+  depends: 24.1
+- tags: [24.1-ci-eldev]
+  version: 24.1
+  template: debian/ci/eldev
+  depends: 24.1-ci
+- tags: [24.1-ci-keg]
+  version: 24.1
+  template: debian/ci/keg
+  depends: 24.1-ci
 
 - tags: [23.4, 23]
   version: 23.4
