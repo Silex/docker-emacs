@@ -54,19 +54,19 @@
   version: 29.1
   template: debian/ci
   depends: 29.1
-- tags: [29.1-ci-cask, 29-ci-cask, cask]
+- tags: [29.1-ci-cask, 29-ci-cask, ci-cask]
   version: 29.1
   template: debian/ci/cask
   depends: 29.1-ci
-- tags: [29.1-ci-eask, 29-ci-eask, eask]
+- tags: [29.1-ci-eask, 29-ci-eask, ci-eask]
   version: 29.1
   template: debian/ci/eask
   depends: 29.1-ci
-- tags: [29.1-ci-eldev, 29-ci-eldev, eldev]
+- tags: [29.1-ci-eldev, 29-ci-eldev, ci-eldev]
   version: 29.1
   template: debian/ci/eldev
   depends: 29.1-ci
-- tags: [29.1-ci-keg, 29-ci-keg, keg]
+- tags: [29.1-ci-keg, 29-ci-keg, ci-keg]
   version: 29.1
   template: debian/ci/keg
   depends: 29.1-ci
