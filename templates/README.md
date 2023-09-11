@@ -15,11 +15,13 @@ Wraps [nix-emacs-ci](https://github.com/purcell/nix-emacs-ci) in docker images.
 | [debian](https://debian.org)      | $version                 |       350 |                    | Emacs, curl & gnupg                                                   |
 | [debian](https://debian.org)      | $version-ci              |       430 | $version           | [git](https://git-scm.com) & make                                     |
 | [debian](https://debian.org)      | $version-ci-cask         |       460 | $version-ci        | [Cask](https://caskreadthedocs.io) & [Python](https://www.python.org) |
+| [debian](https://debian.org)      | $version-ci-eask         |       460 | $version-ci        | [Eask](https://github.com/emacs-eask/cli)                             |
 | [debian](https://debian.org)      | $version-ci-eldev        |       430 | $version-ci        | [eldev](https://github.com/doublep/eldev)                             |
 | [debian](https://debian.org)      | $version-ci-keg          |       430 | $version-ci        | [keg](https://github.com/conao3/keg.el)                               |
 | [alpine](https://alpinelinux.org) | $version-alpine          |       220 |                    | Emacs, curl & gnupg                                                   |
 | [alpine](https://alpinelinux.org) | $version-alpine-ci       |       240 | $version-alpine    | [git](https://git-scm.com) & make                                     |
 | [alpine](https://alpinelinux.org) | $version-alpine-ci-cask  |       280 | $version-alpine-ci | [Cask](https://caskreadthedocs.io) & [Python](https://www.python.org) |
+| [alpine](https://alpinelinux.org) | $version-alpine-ci-eask  |       280 | $version-alpine-ci | [Eask](https://github.com/emacs-eask/cli)                             |
 | [alpine](https://alpinelinux.org) | $version-alpine-ci-eldev |       240 | $version-alpine-ci | [eldev](https://github.com/doublep/eldev)                             |
 | [alpine](https://alpinelinux.org) | $version-alpine-ci-keg   |       240 | $version-alpine-ci | [keg](https://github.com/conao3/keg.el)                               |
 

@@ -10,6 +10,10 @@
   version: master
   template: debian/ci/cask
   depends: master-ci
+- tags: [master-ci-eask]
+  version: master
+  template: debian/ci/eask
+  depends: master-ci
 - tags: [master-ci-eldev]
   version: master
   template: debian/ci/eldev
@@ -29,6 +33,10 @@
 - tags: [master-alpine-ci-cask]
   version: master
   template: alpine/ci/cask
+  depends: master-alpine-ci
+- tags: [master-alpine-ci-eask]
+  version: master
+  template: alpine/ci/eask
   depends: master-alpine-ci
 - tags: [master-alpine-ci-eldev]
   version: master
@@ -50,6 +58,10 @@
   version: 29.1
   template: debian/ci/cask
   depends: 29.1-ci
+- tags: [29.1-ci-eask, 29-ci-eask, eask]
+  version: 29.1
+  template: debian/ci/eask
+  depends: 29.1-ci
 - tags: [29.1-ci-eldev, 29-ci-eldev, eldev]
   version: 29.1
   template: debian/ci/eldev
@@ -69,6 +81,10 @@
 - tags: [29.1-alpine-ci-cask, 29-alpine-ci-cask, alpine-ci-cask]
   version: 29.1
   template: alpine/ci/cask
+  depends: 29.1-alpine-ci
+- tags: [29.1-alpine-ci-eask, 29-alpine-ci-eask, alpine-ci-eask]
+  version: 29.1
+  template: alpine/ci/eask
   depends: 29.1-alpine-ci
 - tags: [29.1-alpine-ci-eldev, 29-alpine-ci-eldev, alpine-ci-eldev]
   version: 29.1
@@ -90,6 +106,10 @@
   version: 28.2
   template: debian/ci/cask
   depends: 28.2-ci
+- tags: [28.2-ci-eask, 28-ci-eask]
+  version: 28.2
+  template: debian/ci/eask
+  depends: 28.2-ci
 - tags: [28.2-ci-eldev, 28-ci-eldev]
   version: 28.2
   template: debian/ci/eldev
@@ -109,6 +129,10 @@
 - tags: [28.2-alpine-ci-cask, 28-alpine-ci-cask]
   version: 28.2
   template: alpine/ci/cask
+  depends: 28.2-alpine-ci
+- tags: [28.2-alpine-ci-eask, 28-alpine-ci-eask]
+  version: 28.2
+  template: alpine/ci/eask
   depends: 28.2-alpine-ci
 - tags: [28.2-alpine-ci-eldev, 28-alpine-ci-eldev]
   version: 28.2
@@ -130,6 +154,10 @@
   version: 28.1
   template: debian/ci/cask
   depends: 28.1-ci
+- tags: [28.1-ci-eask]
+  version: 28.1
+  template: debian/ci/eask
+  depends: 28.1-ci
 - tags: [28.1-ci-eldev]
   version: 28.1
   template: debian/ci/eldev
@@ -149,6 +177,10 @@
 - tags: [28.1-alpine-ci-cask]
   version: 28.1
   template: alpine/ci/cask
+  depends: 28.1-alpine-ci
+- tags: [28.1-alpine-ci-eask]
+  version: 28.1
+  template: alpine/ci/eask
   depends: 28.1-alpine-ci
 - tags: [28.1-alpine-ci-eldev]
   version: 28.1
@@ -170,6 +202,10 @@
   version: 27.2
   template: debian/ci/cask
   depends: 27.2-ci
+- tags: [27.2-ci-eask, 27-ci-eask]
+  version: 27.2
+  template: debian/ci/eask
+  depends: 27.2-ci
 - tags: [27.2-ci-eldev, 27-ci-eldev]
   version: 27.2
   template: debian/ci/eldev
@@ -189,6 +225,10 @@
 - tags: [27.2-alpine-ci-cask, 27-alpine-ci-cask]
   version: 27.2
   template: alpine/ci/cask
+  depends: 27.2-alpine-ci
+- tags: [27.2-alpine-ci-eask, 27-alpine-ci-eask]
+  version: 27.2
+  template: alpine/ci/eask
   depends: 27.2-alpine-ci
 - tags: [27.2-alpine-ci-eldev, 27-alpine-ci-eldev]
   version: 27.2
@@ -210,6 +250,10 @@
   version: 27.1
   template: debian/ci/cask
   depends: 27.1-ci
+- tags: [27.1-ci-eask]
+  version: 27.1
+  template: debian/ci/eask
+  depends: 27.1-ci
 - tags: [27.1-ci-eldev]
   version: 27.1
   template: debian/ci/eldev
@@ -229,6 +273,10 @@
 - tags: [27.1-alpine-ci-cask]
   version: 27.1
   template: alpine/ci/cask
+  depends: 27.1-alpine-ci
+- tags: [27.1-alpine-ci-eask]
+  version: 27.1
+  template: alpine/ci/eask
   depends: 27.1-alpine-ci
 - tags: [27.1-alpine-ci-eldev]
   version: 27.1
@@ -250,6 +298,10 @@
   version: 26.3
   template: debian/ci/cask
   depends: 26.3-ci
+- tags: [26.3-ci-eask, 26-ci-eask]
+  version: 26.3
+  template: debian/ci/eask
+  depends: 26.3-ci
 - tags: [26.3-ci-eldev, 26-ci-eldev]
   version: 26.3
   template: debian/ci/eldev
@@ -269,6 +321,10 @@
 - tags: [26.3-alpine-ci-cask, 26-alpine-ci-cask]
   version: 26.3
   template: alpine/ci/cask
+  depends: 26.3-alpine-ci
+- tags: [26.3-alpine-ci-eask, 26-alpine-ci-eask]
+  version: 26.3
+  template: alpine/ci/eask
   depends: 26.3-alpine-ci
 - tags: [26.3-alpine-ci-eldev, 26-alpine-ci-eldev]
   version: 26.3
@@ -290,6 +346,10 @@
   version: 26.2
   template: debian/ci/cask
   depends: 26.2-ci
+- tags: [26.2-ci-eask]
+  version: 26.2
+  template: debian/ci/eask
+  depends: 26.2-ci
 - tags: [26.2-ci-eldev]
   version: 26.2
   template: debian/ci/eldev
@@ -309,6 +369,10 @@
 - tags: [26.2-alpine-ci-cask]
   version: 26.2
   template: alpine/ci/cask
+  depends: 26.2-alpine-ci
+- tags: [26.2-alpine-ci-eask]
+  version: 26.2
+  template: alpine/ci/eask
   depends: 26.2-alpine-ci
 - tags: [26.2-alpine-ci-eldev]
   version: 26.2
@@ -330,6 +394,10 @@
   version: 26.1
   template: debian/ci/cask
   depends: 26.1-ci
+- tags: [26.1-ci-eask]
+  version: 26.1
+  template: debian/ci/eask
+  depends: 26.1-ci
 - tags: [26.1-ci-eldev]
   version: 26.1
   template: debian/ci/eldev
@@ -349,6 +417,10 @@
 - tags: [26.1-alpine-ci-cask]
   version: 26.1
   template: alpine/ci/cask
+  depends: 26.1-alpine-ci
+- tags: [26.1-alpine-ci-eask]
+  version: 26.1
+  template: alpine/ci/eask
   depends: 26.1-alpine-ci
 - tags: [26.1-alpine-ci-eldev]
   version: 26.1

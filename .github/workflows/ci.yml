@@ -47,6 +47,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-ci-cask
+  img-master-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-master-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-ci-eask
   img-master-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-master-ci
@@ -106,6 +118,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-cask
+  img-master-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-master-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: master-alpine-ci-eask
   img-master-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-master-alpine-ci
@@ -165,6 +189,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 29.1-ci-cask
+  img-29-1-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-29-1-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.1-ci-eask
   img-29-1-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-29-1-ci
@@ -224,6 +260,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 29.1-alpine-ci-cask
+  img-29-1-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-29-1-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.1-alpine-ci-eask
   img-29-1-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-29-1-alpine-ci
@@ -283,6 +331,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-ci-cask
+  img-28-2-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-28-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-ci-eask
   img-28-2-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-28-2-ci
@@ -342,6 +402,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.2-alpine-ci-cask
+  img-28-2-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-28-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.2-alpine-ci-eask
   img-28-2-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-28-2-alpine-ci
@@ -401,6 +473,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-ci-cask
+  img-28-1-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-28-1-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.1-ci-eask
   img-28-1-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-28-1-ci
@@ -460,6 +544,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 28.1-alpine-ci-cask
+  img-28-1-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-28-1-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 28.1-alpine-ci-eask
   img-28-1-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-28-1-alpine-ci
@@ -519,6 +615,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-ci-cask
+  img-27-2-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-27-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-ci-eask
   img-27-2-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-27-2-ci
@@ -578,6 +686,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.2-alpine-ci-cask
+  img-27-2-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-27-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.2-alpine-ci-eask
   img-27-2-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-27-2-alpine-ci
@@ -637,6 +757,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-ci-cask
+  img-27-1-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-27-1-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.1-ci-eask
   img-27-1-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-27-1-ci
@@ -696,6 +828,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 27.1-alpine-ci-cask
+  img-27-1-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-27-1-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 27.1-alpine-ci-eask
   img-27-1-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-27-1-alpine-ci
@@ -755,6 +899,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-ci-cask
+  img-26-3-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-26-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-ci-eask
   img-26-3-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-26-3-ci
@@ -814,6 +970,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.3-alpine-ci-cask
+  img-26-3-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-26-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.3-alpine-ci-eask
   img-26-3-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-26-3-alpine-ci
@@ -873,6 +1041,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-ci-cask
+  img-26-2-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-26-2-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.2-ci-eask
   img-26-2-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-26-2-ci
@@ -932,6 +1112,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.2-alpine-ci-cask
+  img-26-2-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-26-2-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.2-alpine-ci-eask
   img-26-2-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-26-2-alpine-ci
@@ -991,6 +1183,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-ci-cask
+  img-26-1-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-26-1-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.1-ci-eask
   img-26-1-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-26-1-ci
@@ -1050,6 +1254,18 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: 26.1-alpine-ci-cask
+  img-26-1-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-26-1-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 26.1-alpine-ci-eask
   img-26-1-alpine-ci-eldev:
     runs-on: ubuntu-latest
     needs: img-26-1-alpine-ci
