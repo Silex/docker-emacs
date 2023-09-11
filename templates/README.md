@@ -4,6 +4,8 @@
 
 Run Emacs in docker containers!
 
+Project page: https://github.com/Silex/docker-emacs
+
 Wraps [nix-emacs-ci](https://github.com/purcell/nix-emacs-ci) in docker images.
 
 # Images
