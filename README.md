@@ -1,4 +1,4 @@
-![status](https://github.com/Silex/docker-emacs/actions/workflows/ci.yml/badge.svg)
+![https://github.com/Silex/docker-emacs/actions](https://github.com/Silex/docker-emacs/actions/workflows/ci.yml/badge.svg)
 
 # Description
 
