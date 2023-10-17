@@ -14,6 +14,7 @@ RUN apt-get update && \
             curl \
             gnupg \
             openssh-client \
+            wget \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=0 /nix-emacs/nix/store /nix/store

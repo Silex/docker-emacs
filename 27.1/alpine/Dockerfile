@@ -12,7 +12,8 @@ FROM alpine:3.14
 RUN apk add --no-cache \
             curl \
             gnupg \
-            openssh-client
+            openssh-client \
+            wget
 
 COPY --from=0 /nix-emacs/nix/store /nix/store
 ENV PATH="/nix/store/emacs/bin:$PATH"
