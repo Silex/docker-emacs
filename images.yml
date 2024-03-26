@@ -47,50 +47,98 @@
   template: alpine/ci/keg
   depends: master-alpine-ci
 
-- tags: [29.2, 29, latest]
+- tags: [29.3, 29, latest]
+  version: 29.3
+  template: debian
+- tags: [29.3-ci, 29-ci, ci]
+  version: 29.3
+  template: debian/ci
+  depends: 29.3
+- tags: [29.3-ci-cask, 29-ci-cask, ci-cask]
+  version: 29.3
+  template: debian/ci/cask
+  depends: 29.3-ci
+- tags: [29.3-ci-eask, 29-ci-eask, ci-eask]
+  version: 29.3
+  template: debian/ci/eask
+  depends: 29.3-ci
+- tags: [29.3-ci-eldev, 29-ci-eldev, ci-eldev]
+  version: 29.3
+  template: debian/ci/eldev
+  depends: 29.3-ci
+- tags: [29.3-ci-keg, 29-ci-keg, ci-keg]
+  version: 29.3
+  template: debian/ci/keg
+  depends: 29.3-ci
+
+- tags: [29.3-alpine, 29-alpine, alpine]
+  version: 29.3
+  template: alpine
+- tags: [29.3-alpine-ci, 29-alpine-ci, alpine-ci]
+  version: 29.3
+  template: alpine/ci
+  depends: 29.3-alpine
+- tags: [29.3-alpine-ci-cask, 29-alpine-ci-cask, alpine-ci-cask]
+  version: 29.3
+  template: alpine/ci/cask
+  depends: 29.3-alpine-ci
+- tags: [29.3-alpine-ci-eask, 29-alpine-ci-eask, alpine-ci-eask]
+  version: 29.3
+  template: alpine/ci/eask
+  depends: 29.3-alpine-ci
+- tags: [29.3-alpine-ci-eldev, 29-alpine-ci-eldev, alpine-ci-eldev]
+  version: 29.3
+  template: alpine/ci/eldev
+  depends: 29.3-alpine-ci
+- tags: [29.3-alpine-ci-keg, 29-alpine-ci-keg, alpine-ci-keg]
+  version: 29.3
+  template: alpine/ci/keg
+  depends: 29.3-alpine-ci
+
+- tags: [29.2]
   version: 29.2
   template: debian
-- tags: [29.2-ci, 29-ci, ci]
+- tags: [29.2-ci]
   version: 29.2
   template: debian/ci
   depends: 29.2
-- tags: [29.2-ci-cask, 29-ci-cask, ci-cask]
+- tags: [29.2-ci-cask]
   version: 29.2
   template: debian/ci/cask
   depends: 29.2-ci
-- tags: [29.2-ci-eask, 29-ci-eask, ci-eask]
+- tags: [29.2-ci-eask]
   version: 29.2
   template: debian/ci/eask
   depends: 29.2-ci
-- tags: [29.2-ci-eldev, 29-ci-eldev, ci-eldev]
+- tags: [29.2-ci-eldev]
   version: 29.2
   template: debian/ci/eldev
   depends: 29.2-ci
-- tags: [29.2-ci-keg, 29-ci-keg, ci-keg]
+- tags: [29.2-ci-keg]
   version: 29.2
   template: debian/ci/keg
   depends: 29.2-ci
 
-- tags: [29.2-alpine, 29-alpine, alpine]
+- tags: [29.2-alpine]
   version: 29.2
   template: alpine
-- tags: [29.2-alpine-ci, 29-alpine-ci, alpine-ci]
+- tags: [29.2-alpine-ci]
   version: 29.2
   template: alpine/ci
   depends: 29.2-alpine
-- tags: [29.2-alpine-ci-cask, 29-alpine-ci-cask, alpine-ci-cask]
+- tags: [29.2-alpine-ci-cask]
   version: 29.2
   template: alpine/ci/cask
   depends: 29.2-alpine-ci
-- tags: [29.2-alpine-ci-eask, 29-alpine-ci-eask, alpine-ci-eask]
+- tags: [29.2-alpine-ci-eask]
   version: 29.2
   template: alpine/ci/eask
   depends: 29.2-alpine-ci
-- tags: [29.2-alpine-ci-eldev, 29-alpine-ci-eldev, alpine-ci-eldev]
+- tags: [29.2-alpine-ci-eldev]
   version: 29.2
   template: alpine/ci/eldev
   depends: 29.2-alpine-ci
-- tags: [29.2-alpine-ci-keg, 29-alpine-ci-keg, alpine-ci-keg]
+- tags: [29.2-alpine-ci-keg]
   version: 29.2
   template: alpine/ci/keg
   depends: 29.2-alpine-ci

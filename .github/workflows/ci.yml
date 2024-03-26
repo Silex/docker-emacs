@@ -154,6 +154,148 @@ jobs:
         dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
         dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
         emacs: master-alpine-ci-keg
+  img-29-3:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: '29.3'
+  img-29-3-ci:
+    runs-on: ubuntu-latest
+    needs: img-29-3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-ci
+  img-29-3-ci-cask:
+    runs-on: ubuntu-latest
+    needs: img-29-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-ci-cask
+  img-29-3-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-29-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-ci-eask
+  img-29-3-ci-eldev:
+    runs-on: ubuntu-latest
+    needs: img-29-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-ci-eldev
+  img-29-3-ci-keg:
+    runs-on: ubuntu-latest
+    needs: img-29-3-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-ci-keg
+  img-29-3-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-alpine
+  img-29-3-alpine-ci:
+    runs-on: ubuntu-latest
+    needs: img-29-3-alpine
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-alpine-ci
+  img-29-3-alpine-ci-cask:
+    runs-on: ubuntu-latest
+    needs: img-29-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-alpine-ci-cask
+  img-29-3-alpine-ci-eask:
+    runs-on: ubuntu-latest
+    needs: img-29-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-alpine-ci-eask
+  img-29-3-alpine-ci-eldev:
+    runs-on: ubuntu-latest
+    needs: img-29-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-alpine-ci-eldev
+  img-29-3-alpine-ci-keg:
+    runs-on: ubuntu-latest
+    needs: img-29-3-alpine-ci
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build
+      uses: "./.github/actions/build"
+      with:
+        dockerhub_username: "${{ secrets.DOCKERHUB_USERNAME }}"
+        dockerhub_token: "${{ secrets.DOCKERHUB_TOKEN }}"
+        emacs: 29.3-alpine-ci-keg
   img-29-2:
     runs-on: ubuntu-latest
     steps:
