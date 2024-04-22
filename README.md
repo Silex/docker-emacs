@@ -208,7 +208,7 @@ Wraps [nix-emacs-ci](https://github.com/purcell/nix-emacs-ci) in docker images.
 - [`24.1-ci`](https://github.com/Silex/docker-emacs/blob/master/24.1/debian/ci/Dockerfile)
 - [`24.1-ci-keg`](https://github.com/Silex/docker-emacs/blob/master/24.1/debian/ci/keg/Dockerfile)
 - [`23.4`, `23`](https://github.com/Silex/docker-emacs/blob/master/23.4/debian/Dockerfile)
-- [`23.4-ci`, `23-ci`](https://github.com/Silex/docker-emacs/blob/master/23.4/debian/Dockerfile)
+- [`23.4-ci`, `23-ci`](https://github.com/Silex/docker-emacs/blob/master/23.4/debian/ci/Dockerfile)
 
 # Usage
 

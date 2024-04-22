@@ -724,5 +724,5 @@
   template: debian
 - tags: [23.4-ci, 23-ci]
   version: 23.4
-  template: debian
+  template: debian/ci
   depends: 23.4
