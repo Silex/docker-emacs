@@ -1,43 +1,38 @@
 inputs:
-  dockerhub_username:
+  secrets:
     required: true
-  dockerhub_token:
+  version:
     required: true
-  emacs:
+  context:
     required: true
-    
+
 runs:
   using: composite
   steps:
     - name: Login to DockerHub
       uses: docker/login-action@v3
       with:
-        username: ${{ inputs.dockerhub_username }}
-        password: ${{ inputs.dockerhub_token }}
+        username: ${{ fromJSON(inputs.secrets).DOCKERHUB_USERNAME }}
+        password: ${{ fromJSON(inputs.secrets).DOCKERHUB_TOKEN }}
 
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Set environment
+    - uses: ruby/setup-ruby@v1
+
+    - name: Get data
+      id: data
       shell: bash
       run: |
-        yq() { docker run --rm -i -v "${PWD}":/workdir mikefarah/yq "$@"; }
-        VERSION="${{ inputs.emacs }}"
-        tags=$(yq ".[] | select(.tags[0] == \"$VERSION\") | .tags | join (\", silex/emacs:\")" images.yml)
-        version=$(yq ".[] | select(.tags[0] == \"$VERSION\") | .version" images.yml)
-        cache=$(yq ".[] | select(.tags[0] == \"$VERSION\") | .tags[0]" images.yml)
-        template=$(yq ".[] | select(.tags[0] == \"$VERSION\") | .template" images.yml)
-        echo "image_tags=silex/emacs:$tags" >> $GITHUB_ENV
-        echo "image_cache=silex/emacs:$cache" >> $GITHUB_ENV
-        echo "image_context=$version/$template" >> $GITHUB_ENV
+        echo "tags=$(bin/images --json | jq -c '.images[] | select(.directory == "${{ inputs.version }}/${{ inputs.context }}") | .tags_with_repository')" >> $GITHUB_OUTPUT
 
-    - name: Build
+    - name: Build image
       uses: docker/build-push-action@v5
       with:
         pull: true
         push: ${{ github.ref == 'refs/heads/master' }}
-        cache-from: ${{ env.image_cache }}
+        cache-from: ${{ fromJSON(steps.data.outputs.tags)[0] }}
         cache-to: '"type=inline"'
-        tags: ${{ env.image_tags }}
-        context: ${{ env.image_context }}
+        context: ${{ inputs.version }}/${{ inputs.context }}
+        tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}

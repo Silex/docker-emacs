@@ -1,0 +1,62 @@
+name: build
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      context:
+        required: true
+        type: string
+
+jobs:
+  base:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        uses: "./.github/actions/build"
+        with:
+          secrets: "${{ toJSON(secrets) }}"
+          version: "${{ inputs.version }}"
+          context: "${{ inputs.context }}"
+
+  ci:
+    needs: base
+    runs-on: ubuntu-latest
+    outputs:
+      contexts: ${{ steps.data.outputs.contexts }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        uses: "./.github/actions/build"
+        with:
+          secrets: "${{ toJSON(secrets) }}"
+          version: "${{ inputs.version }}"
+          context: "${{ inputs.context }}/ci"
+      - uses: ruby/setup-ruby@v1
+      - name: Setup variables
+        id: data
+        run: |
+          echo "contexts=$(bin/images --json | jq -c '.images[] | select(.directory == "${{ inputs.version }}/${{ inputs.context }}/ci") | .children_contexts')" >> $GITHUB_OUTPUT
+
+  tools:
+    needs: ci
+    if: needs.ci.outputs.contexts != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        context: ${{ fromJSON(needs.ci.outputs.contexts) }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: build
+        uses: "./.github/actions/build"
+        with:
+          secrets: "${{ tojson(secrets) }}"
+          version: "${{ inputs.version }}"
+          context: "${{ matrix.context }}"
