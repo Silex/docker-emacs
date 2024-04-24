@@ -1,728 +1,89 @@
 ---
-- tags: [master]
-  version: master
-  template: debian
-- tags: [master-ci]
-  version: master
-  template: debian/ci
-  depends: master
-- tags: [master-ci-cask]
-  version: master
-  template: debian/ci/cask
-  depends: master-ci
-- tags: [master-ci-eask]
-  version: master
-  template: debian/ci/eask
-  depends: master-ci
-- tags: [master-ci-eldev]
-  version: master
-  template: debian/ci/eldev
-  depends: master-ci
-- tags: [master-ci-keg]
-  version: master
-  template: debian/ci/keg
-  depends: master-ci
+versions:
+  - 23.4
+  - 24.1
+  - 24.2
+  - 24.3
+  - 24.4
+  - 24.5
+  - 25.1
+  - 25.2
+  - 25.3
+  - 26.1
+  - 26.2
+  - 26.3
+  - 27.1
+  - 27.2
+  - 28.1
+  - 28.2
+  - 29.1
+  - 29.2
+  - 29.3
+  - master
 
-- tags: [master-alpine]
-  version: master
-  template: alpine
-- tags: [master-alpine-ci]
-  version: master
-  template: alpine/ci
-  depends: master-alpine
-- tags: [master-alpine-ci-cask]
-  version: master
-  template: alpine/ci/cask
-  depends: master-alpine-ci
-- tags: [master-alpine-ci-eask]
-  version: master
-  template: alpine/ci/eask
-  depends: master-alpine-ci
-- tags: [master-alpine-ci-eldev]
-  version: master
-  template: alpine/ci/eldev
-  depends: master-alpine-ci
-- tags: [master-alpine-ci-keg]
-  version: master
-  template: alpine/ci/keg
-  depends: master-alpine-ci
+contexts:
+  - debian
+  - debian/ci
+  - debian/ci/cask
+  - debian/ci/eask
+  - debian/ci/eldev
+  - debian/ci/keg
+  - alpine
+  - alpine/ci
+  - alpine/ci/cask
+  - alpine/ci/eask
+  - alpine/ci/eldev
+  - alpine/ci/keg
 
-- tags: [29.3, 29, latest]
-  version: 29.3
-  template: debian
-- tags: [29.3-ci, 29-ci, ci]
-  version: 29.3
-  template: debian/ci
-  depends: 29.3
-- tags: [29.3-ci-cask, 29-ci-cask, ci-cask]
-  version: 29.3
-  template: debian/ci/cask
-  depends: 29.3-ci
-- tags: [29.3-ci-eask, 29-ci-eask, ci-eask]
-  version: 29.3
-  template: debian/ci/eask
-  depends: 29.3-ci
-- tags: [29.3-ci-eldev, 29-ci-eldev, ci-eldev]
-  version: 29.3
-  template: debian/ci/eldev
-  depends: 29.3-ci
-- tags: [29.3-ci-keg, 29-ci-keg, ci-keg]
-  version: 29.3
-  template: debian/ci/keg
-  depends: 29.3-ci
+excludes:
+  - version: 23.4
+    contexts:
+      - debian/ci/cask
+      - debian/ci/eask
+      - debian/ci/eldev
+      - debian/ci/keg
+      - alpine.*
 
-- tags: [29.3-alpine, 29-alpine, alpine]
-  version: 29.3
-  template: alpine
-- tags: [29.3-alpine-ci, 29-alpine-ci, alpine-ci]
-  version: 29.3
-  template: alpine/ci
-  depends: 29.3-alpine
-- tags: [29.3-alpine-ci-cask, 29-alpine-ci-cask, alpine-ci-cask]
-  version: 29.3
-  template: alpine/ci/cask
-  depends: 29.3-alpine-ci
-- tags: [29.3-alpine-ci-eask, 29-alpine-ci-eask, alpine-ci-eask]
-  version: 29.3
-  template: alpine/ci/eask
-  depends: 29.3-alpine-ci
-- tags: [29.3-alpine-ci-eldev, 29-alpine-ci-eldev, alpine-ci-eldev]
-  version: 29.3
-  template: alpine/ci/eldev
-  depends: 29.3-alpine-ci
-- tags: [29.3-alpine-ci-keg, 29-alpine-ci-keg, alpine-ci-keg]
-  version: 29.3
-  template: alpine/ci/keg
-  depends: 29.3-alpine-ci
+  - version: 24.1
+    contexts:
+      - debian/ci/cask
+      - debian/ci/eask
+      - debian/ci/eldev
+      - alpine.*
 
-- tags: [29.2]
-  version: 29.2
-  template: debian
-- tags: [29.2-ci]
-  version: 29.2
-  template: debian/ci
-  depends: 29.2
-- tags: [29.2-ci-cask]
-  version: 29.2
-  template: debian/ci/cask
-  depends: 29.2-ci
-- tags: [29.2-ci-eask]
-  version: 29.2
-  template: debian/ci/eask
-  depends: 29.2-ci
-- tags: [29.2-ci-eldev]
-  version: 29.2
-  template: debian/ci/eldev
-  depends: 29.2-ci
-- tags: [29.2-ci-keg]
-  version: 29.2
-  template: debian/ci/keg
-  depends: 29.2-ci
+  - version: 24.2
+    contexts:
+      - debian/ci/cask
+      - debian/ci/eask
+      - debian/ci/eldev
+      - alpine.*
 
-- tags: [29.2-alpine]
-  version: 29.2
-  template: alpine
-- tags: [29.2-alpine-ci]
-  version: 29.2
-  template: alpine/ci
-  depends: 29.2-alpine
-- tags: [29.2-alpine-ci-cask]
-  version: 29.2
-  template: alpine/ci/cask
-  depends: 29.2-alpine-ci
-- tags: [29.2-alpine-ci-eask]
-  version: 29.2
-  template: alpine/ci/eask
-  depends: 29.2-alpine-ci
-- tags: [29.2-alpine-ci-eldev]
-  version: 29.2
-  template: alpine/ci/eldev
-  depends: 29.2-alpine-ci
-- tags: [29.2-alpine-ci-keg]
-  version: 29.2
-  template: alpine/ci/keg
-  depends: 29.2-alpine-ci
+  - version: 24.3
+    contexts:
+      - debian/ci/cask
+      - debian/ci/eask
+      - debian/ci/eldev
+      - alpine.*
 
-- tags: [29.1]
-  version: 29.1
-  template: debian
-- tags: [29.1-ci]
-  version: 29.1
-  template: debian/ci
-  depends: 29.1
-- tags: [29.1-ci-cask]
-  version: 29.1
-  template: debian/ci/cask
-  depends: 29.1-ci
-- tags: [29.1-ci-eask]
-  version: 29.1
-  template: debian/ci/eask
-  depends: 29.1-ci
-- tags: [29.1-ci-eldev]
-  version: 29.1
-  template: debian/ci/eldev
-  depends: 29.1-ci
-- tags: [29.1-ci-keg]
-  version: 29.1
-  template: debian/ci/keg
-  depends: 29.1-ci
+  - version: 24.4
+    contexts:
+      - debian/ci/cask
+      - debian/ci/eask
+      - alpine.*
 
-- tags: [29.1-alpine]
-  version: 29.1
-  template: alpine
-- tags: [29.1-alpine-ci]
-  version: 29.1
-  template: alpine/ci
-  depends: 29.1-alpine
-- tags: [29.1-alpine-ci-cask]
-  version: 29.1
-  template: alpine/ci/cask
-  depends: 29.1-alpine-ci
-- tags: [29.1-alpine-ci-eask]
-  version: 29.1
-  template: alpine/ci/eask
-  depends: 29.1-alpine-ci
-- tags: [29.1-alpine-ci-eldev]
-  version: 29.1
-  template: alpine/ci/eldev
-  depends: 29.1-alpine-ci
-- tags: [29.1-alpine-ci-keg]
-  version: 29.1
-  template: alpine/ci/keg
-  depends: 29.1-alpine-ci
+  - version: 24.5
+    contexts:
+      - debian/ci/eask
+      - alpine.*
 
-- tags: [28.2, 28]
-  version: 28.2
-  template: debian
-- tags: [28.2-ci, 28-ci]
-  version: 28.2
-  template: debian/ci
-  depends: 28.2
-- tags: [28.2-ci-cask, 28-ci-cask]
-  version: 28.2
-  template: debian/ci/cask
-  depends: 28.2-ci
-- tags: [28.2-ci-eask, 28-ci-eask]
-  version: 28.2
-  template: debian/ci/eask
-  depends: 28.2-ci
-- tags: [28.2-ci-eldev, 28-ci-eldev]
-  version: 28.2
-  template: debian/ci/eldev
-  depends: 28.2-ci
-- tags: [28.2-ci-keg, 28-ci-keg]
-  version: 28.2
-  template: debian/ci/keg
-  depends: 28.2-ci
+  - version: 25.1
+    contexts:
+      - .*/ci/eask
 
-- tags: [28.2-alpine, 28-alpine]
-  version: 28.2
-  template: alpine
-- tags: [28.2-alpine-ci, 28-alpine-ci]
-  version: 28.2
-  template: alpine/ci
-  depends: 28.2-alpine
-- tags: [28.2-alpine-ci-cask, 28-alpine-ci-cask]
-  version: 28.2
-  template: alpine/ci/cask
-  depends: 28.2-alpine-ci
-- tags: [28.2-alpine-ci-eask, 28-alpine-ci-eask]
-  version: 28.2
-  template: alpine/ci/eask
-  depends: 28.2-alpine-ci
-- tags: [28.2-alpine-ci-eldev, 28-alpine-ci-eldev]
-  version: 28.2
-  template: alpine/ci/eldev
-  depends: 28.2-alpine-ci
-- tags: [28.2-alpine-ci-keg, 28-alpine-ci-keg]
-  version: 28.2
-  template: alpine/ci/keg
-  depends: 28.2-alpine-ci
+  - version: 25.2
+    contexts:
+      - .*/ci/eask
 
-- tags: [28.1]
-  version: 28.1
-  template: debian
-- tags: [28.1-ci]
-  version: 28.1
-  template: debian/ci
-  depends: 28.1
-- tags: [28.1-ci-cask]
-  version: 28.1
-  template: debian/ci/cask
-  depends: 28.1-ci
-- tags: [28.1-ci-eask]
-  version: 28.1
-  template: debian/ci/eask
-  depends: 28.1-ci
-- tags: [28.1-ci-eldev]
-  version: 28.1
-  template: debian/ci/eldev
-  depends: 28.1-ci
-- tags: [28.1-ci-keg]
-  version: 28.1
-  template: debian/ci/keg
-  depends: 28.1-ci
-
-- tags: [28.1-alpine]
-  version: 28.1
-  template: alpine
-- tags: [28.1-alpine-ci]
-  version: 28.1
-  template: alpine/ci
-  depends: 28.1-alpine
-- tags: [28.1-alpine-ci-cask]
-  version: 28.1
-  template: alpine/ci/cask
-  depends: 28.1-alpine-ci
-- tags: [28.1-alpine-ci-eask]
-  version: 28.1
-  template: alpine/ci/eask
-  depends: 28.1-alpine-ci
-- tags: [28.1-alpine-ci-eldev]
-  version: 28.1
-  template: alpine/ci/eldev
-  depends: 28.1-alpine-ci
-- tags: [28.1-alpine-ci-keg]
-  version: 28.1
-  template: alpine/ci/keg
-  depends: 28.1-alpine-ci
-
-- tags: [27.2, 27]
-  version: 27.2
-  template: debian
-- tags: [27.2-ci, 27-ci]
-  version: 27.2
-  template: debian/ci
-  depends: 27.2
-- tags: [27.2-ci-cask, 27-ci-cask]
-  version: 27.2
-  template: debian/ci/cask
-  depends: 27.2-ci
-- tags: [27.2-ci-eask, 27-ci-eask]
-  version: 27.2
-  template: debian/ci/eask
-  depends: 27.2-ci
-- tags: [27.2-ci-eldev, 27-ci-eldev]
-  version: 27.2
-  template: debian/ci/eldev
-  depends: 27.2-ci
-- tags: [27.2-ci-keg, 27-ci-keg]
-  version: 27.2
-  template: debian/ci/keg
-  depends: 27.2-ci
-
-- tags: [27.2-alpine, 27-alpine]
-  version: 27.2
-  template: alpine
-- tags: [27.2-alpine-ci, 27-alpine-ci]
-  version: 27.2
-  template: alpine/ci
-  depends: 27.2-alpine
-- tags: [27.2-alpine-ci-cask, 27-alpine-ci-cask]
-  version: 27.2
-  template: alpine/ci/cask
-  depends: 27.2-alpine-ci
-- tags: [27.2-alpine-ci-eask, 27-alpine-ci-eask]
-  version: 27.2
-  template: alpine/ci/eask
-  depends: 27.2-alpine-ci
-- tags: [27.2-alpine-ci-eldev, 27-alpine-ci-eldev]
-  version: 27.2
-  template: alpine/ci/eldev
-  depends: 27.2-alpine-ci
-- tags: [27.2-alpine-ci-keg, 27-alpine-ci-keg]
-  version: 27.2
-  template: alpine/ci/keg
-  depends: 27.2-alpine-ci
-
-- tags: [27.1]
-  version: 27.1
-  template: debian
-- tags: [27.1-ci]
-  version: 27.1
-  template: debian/ci
-  depends: 27.1
-- tags: [27.1-ci-cask]
-  version: 27.1
-  template: debian/ci/cask
-  depends: 27.1-ci
-- tags: [27.1-ci-eask]
-  version: 27.1
-  template: debian/ci/eask
-  depends: 27.1-ci
-- tags: [27.1-ci-eldev]
-  version: 27.1
-  template: debian/ci/eldev
-  depends: 27.1-ci
-- tags: [27.1-ci-keg]
-  version: 27.1
-  template: debian/ci/keg
-  depends: 27.1-ci
-
-- tags: [27.1-alpine]
-  version: 27.1
-  template: alpine
-- tags: [27.1-alpine-ci]
-  version: 27.1
-  template: alpine/ci
-  depends: 27.1-alpine
-- tags: [27.1-alpine-ci-cask]
-  version: 27.1
-  template: alpine/ci/cask
-  depends: 27.1-alpine-ci
-- tags: [27.1-alpine-ci-eask]
-  version: 27.1
-  template: alpine/ci/eask
-  depends: 27.1-alpine-ci
-- tags: [27.1-alpine-ci-eldev]
-  version: 27.1
-  template: alpine/ci/eldev
-  depends: 27.1-alpine-ci
-- tags: [27.1-alpine-ci-keg]
-  version: 27.1
-  template: alpine/ci/keg
-  depends: 27.1-alpine-ci
-
-- tags: [26.3, 26]
-  version: 26.3
-  template: debian
-- tags: [26.3-ci, 26-ci]
-  version: 26.3
-  template: debian/ci
-  depends: 26.3
-- tags: [26.3-ci-cask, 26-ci-cask]
-  version: 26.3
-  template: debian/ci/cask
-  depends: 26.3-ci
-- tags: [26.3-ci-eask, 26-ci-eask]
-  version: 26.3
-  template: debian/ci/eask
-  depends: 26.3-ci
-- tags: [26.3-ci-eldev, 26-ci-eldev]
-  version: 26.3
-  template: debian/ci/eldev
-  depends: 26.3-ci
-- tags: [26.3-ci-keg, 26-ci-keg]
-  version: 26.3
-  template: debian/ci/keg
-  depends: 26.3-ci
-
-- tags: [26.3-alpine, 26-alpine]
-  version: 26.3
-  template: alpine
-- tags: [26.3-alpine-ci, 26-alpine-ci]
-  version: 26.3
-  template: alpine/ci
-  depends: 26.3-alpine
-- tags: [26.3-alpine-ci-cask, 26-alpine-ci-cask]
-  version: 26.3
-  template: alpine/ci/cask
-  depends: 26.3-alpine-ci
-- tags: [26.3-alpine-ci-eask, 26-alpine-ci-eask]
-  version: 26.3
-  template: alpine/ci/eask
-  depends: 26.3-alpine-ci
-- tags: [26.3-alpine-ci-eldev, 26-alpine-ci-eldev]
-  version: 26.3
-  template: alpine/ci/eldev
-  depends: 26.3-alpine-ci
-- tags: [26.3-alpine-ci-keg, 26-alpine-ci-keg]
-  version: 26.3
-  template: alpine/ci/keg
-  depends: 26.3-alpine-ci
-
-- tags: [26.2]
-  version: 26.2
-  template: debian
-- tags: [26.2-ci]
-  version: 26.2
-  template: debian/ci
-  depends: 26.2
-- tags: [26.2-ci-cask]
-  version: 26.2
-  template: debian/ci/cask
-  depends: 26.2-ci
-- tags: [26.2-ci-eask]
-  version: 26.2
-  template: debian/ci/eask
-  depends: 26.2-ci
-- tags: [26.2-ci-eldev]
-  version: 26.2
-  template: debian/ci/eldev
-  depends: 26.2-ci
-- tags: [26.2-ci-keg]
-  version: 26.2
-  template: debian/ci/keg
-  depends: 26.2-ci
-
-- tags: [26.2-alpine]
-  version: 26.2
-  template: alpine
-- tags: [26.2-alpine-ci]
-  version: 26.2
-  template: alpine/ci
-  depends: 26.2-alpine
-- tags: [26.2-alpine-ci-cask]
-  version: 26.2
-  template: alpine/ci/cask
-  depends: 26.2-alpine-ci
-- tags: [26.2-alpine-ci-eask]
-  version: 26.2
-  template: alpine/ci/eask
-  depends: 26.2-alpine-ci
-- tags: [26.2-alpine-ci-eldev]
-  version: 26.2
-  template: alpine/ci/eldev
-  depends: 26.2-alpine-ci
-- tags: [26.2-alpine-ci-keg]
-  version: 26.2
-  template: alpine/ci/keg
-  depends: 26.2-alpine-ci
-
-- tags: [26.1]
-  version: 26.1
-  template: debian
-- tags: [26.1-ci]
-  version: 26.1
-  template: debian/ci
-  depends: 26.1
-- tags: [26.1-ci-cask]
-  version: 26.1
-  template: debian/ci/cask
-  depends: 26.1-ci
-- tags: [26.1-ci-eask]
-  version: 26.1
-  template: debian/ci/eask
-  depends: 26.1-ci
-- tags: [26.1-ci-eldev]
-  version: 26.1
-  template: debian/ci/eldev
-  depends: 26.1-ci
-- tags: [26.1-ci-keg]
-  version: 26.1
-  template: debian/ci/keg
-  depends: 26.1-ci
-
-- tags: [26.1-alpine]
-  version: 26.1
-  template: alpine
-- tags: [26.1-alpine-ci]
-  version: 26.1
-  template: alpine/ci
-  depends: 26.1-alpine
-- tags: [26.1-alpine-ci-cask]
-  version: 26.1
-  template: alpine/ci/cask
-  depends: 26.1-alpine-ci
-- tags: [26.1-alpine-ci-eask]
-  version: 26.1
-  template: alpine/ci/eask
-  depends: 26.1-alpine-ci
-- tags: [26.1-alpine-ci-eldev]
-  version: 26.1
-  template: alpine/ci/eldev
-  depends: 26.1-alpine-ci
-- tags: [26.1-alpine-ci-keg]
-  version: 26.1
-  template: alpine/ci/keg
-  depends: 26.1-alpine-ci
-
-- tags: [25.3, 25]
-  version: 25.3
-  template: debian
-- tags: [25.3-ci, 25-ci]
-  version: 25.3
-  template: debian/ci
-  depends: 25.3
-- tags: [25.3-ci-cask, 25-ci-cask]
-  version: 25.3
-  template: debian/ci/cask
-  depends: 25.3-ci
-- tags: [25.3-ci-eldev, 25-ci-eldev]
-  version: 25.3
-  template: debian/ci/eldev
-  depends: 25.3-ci
-- tags: [25.3-ci-keg, 25-ci-keg]
-  version: 25.3
-  template: debian/ci/keg
-  depends: 25.3-ci
-
-- tags: [25.3-alpine, 25-alpine]
-  version: 25.3
-  template: alpine
-- tags: [25.3-alpine-ci, 25-alpine-ci]
-  version: 25.3
-  template: alpine/ci
-  depends: 25.3-alpine
-- tags: [25.3-alpine-ci-cask, 25-alpine-ci-cask]
-  version: 25.3
-  template: alpine/ci/cask
-  depends: 25.3-alpine-ci
-- tags: [25.3-alpine-ci-eldev, 25-alpine-ci-eldev]
-  version: 25.3
-  template: alpine/ci/eldev
-  depends: 25.3-alpine-ci
-- tags: [25.3-alpine-ci-keg, 25-alpine-ci-keg]
-  version: 25.3
-  template: alpine/ci/keg
-  depends: 25.3-alpine-ci
-
-- tags: [25.2]
-  version: 25.2
-  template: debian
-- tags: [25.2-ci]
-  version: 25.2
-  template: debian/ci
-  depends: 25.2
-- tags: [25.2-ci-cask]
-  version: 25.2
-  template: debian/ci/cask
-  depends: 25.2-ci
-- tags: [25.2-ci-eldev]
-  version: 25.2
-  template: debian/ci/eldev
-  depends: 25.2-ci
-- tags: [25.2-ci-keg]
-  version: 25.2
-  template: debian/ci/keg
-  depends: 25.2-ci
-
-- tags: [25.2-alpine]
-  version: 25.2
-  template: alpine
-- tags: [25.2-alpine-ci]
-  version: 25.2
-  template: alpine/ci
-  depends: 25.2-alpine
-- tags: [25.2-alpine-ci-cask]
-  version: 25.2
-  template: alpine/ci/cask
-  depends: 25.2-alpine-ci
-- tags: [25.2-alpine-ci-eldev]
-  version: 25.2
-  template: alpine/ci/eldev
-  depends: 25.2-alpine-ci
-- tags: [25.2-alpine-ci-keg]
-  version: 25.2
-  template: alpine/ci/keg
-  depends: 25.2-alpine-ci
-
-- tags: [25.1]
-  version: 25.1
-  template: debian
-- tags: [25.1-ci]
-  version: 25.1
-  template: debian/ci
-  depends: 25.1
-- tags: [25.1-ci-cask]
-  version: 25.1
-  template: debian/ci/cask
-  depends: 25.1-ci
-- tags: [25.1-ci-eldev]
-  version: 25.1
-  template: debian/ci/eldev
-  depends: 25.1-ci
-- tags: [25.1-ci-keg]
-  version: 25.1
-  template: debian/ci/keg
-  depends: 25.1-ci
-
-- tags: [25.1-alpine]
-  version: 25.1
-  template: alpine
-- tags: [25.1-alpine-ci]
-  version: 25.1
-  template: alpine/ci
-  depends: 25.1-alpine
-- tags: [25.1-alpine-ci-cask]
-  version: 25.1
-  template: alpine/ci/cask
-  depends: 25.1-alpine-ci
-- tags: [25.1-alpine-ci-eldev]
-  version: 25.1
-  template: alpine/ci/eldev
-  depends: 25.1-alpine-ci
-- tags: [25.1-alpine-ci-keg]
-  version: 25.1
-  template: alpine/ci/keg
-  depends: 25.1-alpine-ci
-
-- tags: [24.5, 24]
-  version: 24.5
-  template: debian
-- tags: [24.5-ci, 24-ci]
-  version: 24.5
-  template: debian/ci
-  depends: 24.5
-- tags: [24.5-ci-cask, 24-ci-cask]
-  version: 24.5
-  template: debian/ci/cask
-  depends: 24.5-ci
-- tags: [24.5-ci-eldev, 24-ci-eldev]
-  version: 24.5
-  template: debian/ci/eldev
-  depends: 24.5-ci
-- tags: [24.5-ci-keg, 24-ci-keg]
-  version: 24.5
-  template: debian/ci/keg
-  depends: 24.5-ci
-
-- tags: [24.4]
-  version: 24.4
-  template: debian
-- tags: [24.4-ci]
-  version: 24.4
-  template: debian/ci
-  depends: 24.4
-- tags: [24.4-ci-eldev]
-  version: 24.4
-  template: debian/ci/eldev
-  depends: 24.4-ci
-- tags: [24.4-ci-keg]
-  version: 24.4
-  template: debian/ci/keg
-  depends: 24.4-ci
-
-- tags: [24.3]
-  version: 24.3
-  template: debian
-- tags: [24.3-ci]
-  version: 24.3
-  template: debian/ci
-  depends: 24.3
-- tags: [24.3-ci-keg]
-  version: 24.3
-  template: debian/ci/keg
-  depends: 24.3-ci
-
-- tags: [24.2]
-  version: 24.2
-  template: debian
-- tags: [24.2-ci]
-  version: 24.2
-  template: debian/ci
-  depends: 24.2
-- tags: [24.2-ci-keg]
-  version: 24.2
-  template: debian/ci/keg
-  depends: 24.2-ci
-
-- tags: [24.1]
-  version: 24.1
-  template: debian
-- tags: [24.1-ci]
-  version: 24.1
-  template: debian/ci
-  depends: 24.1
-- tags: [24.1-ci-keg]
-  version: 24.1
-  template: debian/ci/keg
-  depends: 24.1-ci
-
-- tags: [23.4, 23]
-  version: 23.4
-  template: debian
-- tags: [23.4-ci, 23-ci]
-  version: 23.4
-  template: debian/ci
-  depends: 23.4
+  - version: 25.3
+    contexts:
+      - .*/ci/eask

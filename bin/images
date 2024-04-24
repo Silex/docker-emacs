@@ -1,15 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
-require 'ostruct'
+require 'json'
 require 'optparse'
 require 'fileutils'
-
-class Object
-  def deep_clone
-    Marshal.load(Marshal.dump(self))
-  end
-end
 
 class String
   def quotify
@@ -19,34 +13,120 @@ class String
   def backquotify
     format('`%s`', self)
   end
-
-  def blank?
-    self.strip.empty?
-  end
 end
 
-class Image < OpenStruct
-  def self.load(file)
-    YAML.load_file(file).map do |h|
-      Image.new(h)
+class Image
+  attr_reader :version
+  attr_reader :context
+
+  REPOSITORY = 'silex/emacs'
+
+  class << self
+    def data
+      @data ||= YAML.load_file('images.yml')
+    end
+
+    def versions
+      data['versions'].map(&:to_s)
+    end
+
+    def contexts
+      data['contexts']
+    end
+
+    def excludes
+      data['excludes'].map do |h|
+        h['version'] = h['version'].to_s
+        h
+      end
+    end
+
+    def github_exclude
+      excludes.map do |h|
+        arr = contexts.select do |s|
+          h['contexts'].any?{ |r| Regexp.new(r).match(s) }
+        end
+        arr.reject!{ |s| s.include?('/') }.map do |s|
+          {
+            version: h['version'],
+            context: s
+          }
+        end
+      end.compact.flatten
+    end
+
+    def to_json
+      {
+        versions: versions,
+        contexts: contexts,
+        excludes: data['excludes'],
+        github: {
+          versions: versions,
+          contexts: contexts.reject{ |s| s.include?('/') },
+          excludes: github_exclude
+        },
+        images: load
+      }.to_json
+    end
+
+    def load
+      latests = versions
+        .reject{ |s| s == 'master' }
+        .group_by(&:to_i)
+        .map{ |k, v| v.sort.last }.sort
+      versions.map do |version|
+        exclude = excludes.find{ |h| h['version'] == version }
+        contexts.map do |context|
+          next if exclude&.[]('contexts')&.any?{ |s| Regexp.new(s).match(context) }
+          Image.new(version: version, context: context).tap do |image|
+            break image unless latests.include?(version)
+            image.tags << image.tags.last.sub(/\.\d+/, '')
+            break image unless latests.last == version
+            image.tags << ((context == 'debian') ? 'latest' : image.tags.last.sub(/\d+-/, ''))
+          end
+        end
+      end.flatten.compact
     end
   end
 
-  def tag
-    tags.first
+  def initialize(h)
+    @version    = h[:version]
+    @context    = h[:context]
   end
 
-  def aliases
-    tags[1..-1]
+  def to_json(options = nil)
+    {
+      version: version,
+      context: context,
+      directory: directory,
+      tags: tags,
+      tags_with_repository: tags_with_repository,
+      depends: depends,
+      depends_with_repository: depends_with_repository,
+      children: children
+    }.to_json
   end
 
-  def version
-    # Ensure version is a string
-    self['version'].to_s
+  def children
+    Image.load.select do |i|
+      i.version == version && i.context != context && i.context.start_with?(context)
+    end
+  end
+
+  def tags
+    @tags ||= [directory.gsub('/', '-').sub('-debian', '')]
+  end
+
+  def tags_with_repository
+    tags.map{ |s| format('%s:%s', REPOSITORY, s) }
   end
 
   def depends
-    format('silex/emacs:%s', self['depends'])
+    tags[0].split('-')[0..-2].join('-')
+  end
+
+  def depends_with_repository
+    format('%s:%s', REPOSITORY, depends)
   end
 
   def nix_version
@@ -55,16 +135,11 @@ class Image < OpenStruct
   end
 
   def directory
-    File.join(version, template)
+    File.join(version, context)
   end
 
   def dockerfile
     File.join(directory, 'Dockerfile')
-  end
-
-  def tags
-    # Ensure tags are strings
-    self['tags'].map(&:to_s)
   end
 end
 
@@ -73,17 +148,16 @@ def generate_dockerfiles(images)
   images.map(&:directory).uniq.each{ |path| FileUtils.rm_rf(path) }
   images.each do |image|
     FileUtils.mkdir_p(image.directory)
-    content = File.read(File.join('templates', image.template, 'Dockerfile'))
-    content.gsub!('{{DEPENDS}}', image.depends.to_s)
+    content = File.read(File.join('templates', image.context, 'Dockerfile'))
+    content.gsub!('{{DEPENDS}}', image.depends_with_repository.to_s)
     content.gsub!('{{NIX_VERSION}}', image.nix_version)
-    content.gsub!('{{BRANCH}}', image.branch.to_s)
     File.write(image.dockerfile, content)
   end
 end
 
 def generate_readme(images)
   puts '>>> generating README.md'
-  tags = images.map do |image|
+  tags = images.group_by(&:version).values.reverse.flatten.map do |image|
     format('- [%s](https://github.com/Silex/docker-emacs/blob/master/%s)',
            image.tags.map(&:backquotify).join(', '),
            image.dockerfile)
@@ -93,23 +167,34 @@ def generate_readme(images)
   File.write('README.md', content)
 end
 
-def generate(source)
-  images = Image.load(source)
-  generate_dockerfiles(images)
-  generate_readme(images)
+def run(options)
+  if options[:generate]
+    images = Image.load
+    generate_dockerfiles(images)
+    generate_readme(images)
+  end
+
+  if options[:json]
+    print Image.to_json
+  end
 end
 
 begin
-  parser = OptionParser.new do |opts|
-    opts.banner = 'Usage: generate [SOURCE=images.yml]'
+  options = {}
+  OptionParser.new do |opts|
+    opts.banner = 'Usage: images'
     opts.separator ''
-    opts.separator 'Generate the Dockerfiles, README and gitlab files.'
-  end
-  parser.parse!
-  source = ARGV.empty? ? 'images.yml' : ARGV.first
+    opts.separator 'Generate the Dockerfiles & README or return images JSON.'
+    opts.on('--generate', 'Generate') do
+      options[:generate] = true
+    end
+    opts.on('--json', 'JSON') do
+      options[:json] = true
+    end
+  end.parse!
 
   Dir.chdir(File.join(File.dirname(__FILE__), '..')) do
-    generate(source)
+    run(options)
   end
 rescue OptionParser::ParseError => e
   $stderr.puts e.message
