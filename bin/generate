@@ -76,7 +76,7 @@ def generate_dockerfiles(images)
     FileUtils.mkdir_p(image.directory)
     content = File.read(File.join('templates', image.template, 'Dockerfile'))
     content.gsub!('{{DEPENDS}}', image.depends.to_s)
-    content.gsub!('{{NIX-VERSION}}', image.nix_version.to_s)
+    content.gsub!('{{NIX_VERSION}}', image.nix_version)
     content.gsub!('{{BRANCH}}', image.branch.to_s)
     File.write(image.dockerfile, content)
   end

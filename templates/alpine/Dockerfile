@@ -2,7 +2,7 @@ FROM nixos/nix
 
 ADD https://api.github.com/repos/purcell/nix-emacs-ci/git/refs/heads/master /tmp/cache
 RUN echo 'extra-experimental-features = flakes nix-command' >> /etc/nix/nix.conf
-RUN nix profile install --impure --accept-flake-config "github:purcell/nix-emacs-ci#{{NIX-VERSION}}"
+RUN nix profile install --impure --accept-flake-config "github:purcell/nix-emacs-ci#{{NIX_VERSION}}"
 RUN nix copy --no-require-sigs --to /nix-emacs $(type -p emacs)
 RUN cd /nix-emacs/nix/store && ln -s *emacs* emacs
 
