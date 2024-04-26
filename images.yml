@@ -550,19 +550,19 @@
 - tags: [25.3-alpine, 25-alpine]
   version: 25.3
   template: alpine
-- tags: [25.3-alpine-ci]
+- tags: [25.3-alpine-ci, 25-alpine-ci]
   version: 25.3
   template: alpine/ci
   depends: 25.3-alpine
-- tags: [25.3-alpine-ci-cask]
+- tags: [25.3-alpine-ci-cask, 25-alpine-ci-cask]
   version: 25.3
   template: alpine/ci/cask
   depends: 25.3-alpine-ci
-- tags: [25.3-alpine-ci-eldev]
+- tags: [25.3-alpine-ci-eldev, 25-alpine-ci-eldev]
   version: 25.3
   template: alpine/ci/eldev
   depends: 25.3-alpine-ci
-- tags: [25.3-alpine-ci-keg]
+- tags: [25.3-alpine-ci-keg, 25-alpine-ci-keg]
   version: 25.3
   template: alpine/ci/keg
   depends: 25.3-alpine-ci
