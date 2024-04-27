@@ -102,34 +102,10 @@ def generate_readme(images)
   File.write('README.md', content)
 end
 
-def generate_github(images)
-  path = '.github/workflows/ci.yml'
-  puts format('>>> generating %s', path)
-  h = YAML.load_file(format('templates/%s', path))
-  template = h['jobs'].delete('template')
-
-  needs = images.reject{ |i| i.depends.blank? }.map do |image|
-    [image, format('img-%s', image.depends.gsub(/[^\w-]/i, '-'))]
-  end.to_h
-
-  images.each do |image|
-    params = template.deep_clone
-    params['needs'] = needs[image]
-    params['steps'].last['with']['emacs'] = image.tag
-    name = format('img-%s', image.tag.gsub(/[^\w-]/i, '-'))
-    h['jobs'][name] = params.compact
-  end
-
-  data = h.to_yaml(line_width: -1)
-  data.gsub!(/true:/, 'on:')
-  File.write(path, data)
-end
-
 def generate(source)
   images = Image.load(source)
   generate_dockerfiles(images)
   generate_readme(images)
-  generate_github(images)
 end
 
 begin
