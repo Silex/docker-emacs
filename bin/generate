@@ -69,14 +69,6 @@ class Image < OpenStruct
   end
 end
 
-def make_patches_string(urls)
-  return '' unless urls
-  commands = urls.map{ |s| format('curl -sSLOJ "%s"', s) }
-  commands << 'git apply *.patch'
-  commands.map!{ |s| format("    %s && \\\n", s) }
-  commands.join
-end
-
 def generate_dockerfiles(images)
   puts '>>> generating dockerfiles'
   images.map(&:directory).uniq.each{ |path| FileUtils.rm_rf(path) }
