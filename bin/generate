@@ -46,8 +46,7 @@ class Image < OpenStruct
   end
 
   def depends
-    # Ensure depends is a string
-    self['depends'].to_s
+    format('silex/emacs:%s', self['depends'])
   end
 
   def nix_version

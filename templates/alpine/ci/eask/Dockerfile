@@ -1,4 +1,4 @@
-FROM silex/emacs:{{DEPENDS}}
+FROM {{DEPENDS}}
 
 RUN apk add --no-cache unzip
 
