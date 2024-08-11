@@ -15,8 +15,21 @@ runs:
         username: ${{ fromJSON(inputs.secrets).DOCKERHUB_USERNAME }}
         password: ${{ fromJSON(inputs.secrets).DOCKERHUB_TOKEN }}
 
+    - name: Set up Docker
+      shell: bash
+      run: |
+        sudo mkdir -p /etc/docker
+        echo '{ "insecure-registries":["37.27.39.133:5000"], "registry-mirrors": ["http://37.27.39.133:5000"] }' | sudo tee /etc/docker/daemon.json
+        sudo systemctl restart docker
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
+      with:
+        buildkitd-config-inline: |
+          insecure-entitlements = [ "network.host", "security.insecure" ]
+          [registry."37.27.39.133:5000"]
+            http = true
+            insecure = true
 
     - uses: ruby/setup-ruby@v1
 

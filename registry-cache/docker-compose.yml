@@ -1,0 +1,11 @@
+services:
+  registry:
+    image: registry:2
+    restart: always
+    environment:
+      TZ: ${TZ:-Europe/Zurich}
+    ports:
+      - 5000:5000
+    volumes:
+      - ./data/registry/:/var/lib/registry/
+      - ./data/config.yml:/etc/docker/registry/config.yml
