@@ -24,7 +24,7 @@ runs:
       id: data
       shell: bash
       run: |
-        echo "tags=$(bin/images --json | jq -c '.images[] | select(.directory == "${{ inputs.version }}/${{ inputs.context }}") | .tags_with_repository')" >> $GITHUB_OUTPUT
+        echo "tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .tags_with_repository')" >> $GITHUB_OUTPUT
 
     - name: Build image
       uses: docker/build-push-action@v5
@@ -34,4 +34,4 @@ runs:
         cache-from: ${{ fromJSON(steps.data.outputs.tags)[0] }}
         cache-to: '"type=inline"'
         tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}
-        context: ${{ inputs.version }}/${{ inputs.context }}
+        context: images/${{ inputs.version }}/${{ inputs.context }}

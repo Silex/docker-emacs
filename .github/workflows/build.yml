@@ -41,7 +41,7 @@ jobs:
       - name: Setup variables
         id: data
         run: |
-          echo "contexts=$(bin/images --json | jq -c '.images[] | select(.directory == "${{ inputs.version }}/${{ inputs.context }}/ci") | [.children[].context]')" >> $GITHUB_OUTPUT
+          echo "contexts=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}/ci") | [.children[].context]')" >> $GITHUB_OUTPUT
 
   tools:
     needs: ci

@@ -114,7 +114,7 @@ class Image
   end
 
   def tags
-    @tags ||= [directory.gsub('/', '-').sub('-debian', '')]
+    @tags ||= [directory.gsub('/', '-').sub('images-', '').sub('-debian', '')]
   end
 
   def tags_with_repository
@@ -135,7 +135,7 @@ class Image
   end
 
   def directory
-    File.join(version, context)
+    File.join('images', version, context)
   end
 
   def dockerfile
