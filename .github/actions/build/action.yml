@@ -9,11 +9,12 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Login to DockerHub
+    - name: Login to ghcr.io
       uses: docker/login-action@v3
       with:
-        username: ${{ fromJSON(inputs.secrets).DOCKERHUB_USERNAME }}
-        password: ${{ fromJSON(inputs.secrets).DOCKERHUB_TOKEN }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ fromJSON(inputs.secrets).GITHUB_TOKEN }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -25,11 +26,28 @@ runs:
       shell: bash
       run: |
         echo "tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .tags_with_repository')" >> $GITHUB_OUTPUT
+        echo "ghcr_tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .ghcr_tags_with_repository')" >> $GITHUB_OUTPUT
 
-    - name: Build image
+    - name: Build & push image to ghcr.io
       uses: docker/build-push-action@v5
       with:
         pull: true
+        push: ${{ github.ref == 'refs/heads/master' }}
+        cache-from: ${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}
+        cache-to: '"type=inline"'
+        tags: ${{ join(fromJSON(steps.data.outputs.ghcr_tags), ', ') }}
+        context: images/${{ inputs.version }}/${{ inputs.context }}
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ fromJSON(inputs.secrets).DOCKERHUB_USERNAME }}
+        password: ${{ fromJSON(inputs.secrets).DOCKERHUB_TOKEN }}
+
+    - name: Push image to Docker Hub
+      uses: docker/build-push-action@v5
+      with:
+        pull: false
         push: ${{ github.ref == 'refs/heads/master' }}
         cache-from: ${{ fromJSON(steps.data.outputs.tags)[0] }}
         cache-to: '"type=inline"'

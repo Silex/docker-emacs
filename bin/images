@@ -101,6 +101,7 @@ class Image
       directory: directory,
       tags: tags,
       tags_with_repository: tags_with_repository,
+      ghcr_tags_with_repository: ghcr_tags_with_repository,
       depends: depends,
       depends_with_repository: depends_with_repository,
       children: children
@@ -119,6 +120,10 @@ class Image
 
   def tags_with_repository
     tags.map{ |s| format('%s:%s', REPOSITORY, s) }
+  end
+
+  def ghcr_tags_with_repository
+    tags_with_repository.map{ |s| format('ghcr.io/%s', s) }
   end
 
   def depends
