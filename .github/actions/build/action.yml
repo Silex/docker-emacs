@@ -32,7 +32,7 @@ runs:
       uses: docker/build-push-action@v5
       with:
         pull: true
-        push: ${{ github.ref == 'refs/heads/master' }}
+        push: true
         cache-from: ${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}
         cache-to: '"type=inline"'
         tags: ${{ join(fromJSON(steps.data.outputs.ghcr_tags), ', ') }}
