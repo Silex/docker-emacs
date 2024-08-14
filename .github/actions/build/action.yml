@@ -35,8 +35,8 @@ runs:
         push: ${{ github.ref == 'refs/heads/master' }}
         tags: ${{ join(fromJSON(steps.data.outputs.ghcr_tags), ', ') }}
         context: images/${{ inputs.version }}/${{ inputs.context }}
-        cache-from: type=registry,ref=${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}
-        cache-to: type=inline,mode=min
+        cache-from: type=registry,ref=${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}-cache
+        cache-to: type=registry,ref=${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}-cache,mode=max
 
     - name: Login to Docker Hub
       uses: docker/login-action@v3
@@ -49,6 +49,6 @@ runs:
       with:
         pull: false
         push: ${{ github.ref == 'refs/heads/master' }}
-        cache-from: ${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}
+        cache-from: ${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}-cache
         tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}
         context: images/${{ inputs.version }}/${{ inputs.context }}
