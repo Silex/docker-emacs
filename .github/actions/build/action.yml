@@ -49,7 +49,6 @@ runs:
       with:
         pull: false
         push: ${{ github.ref == 'refs/heads/master' }}
-        cache-from: ${{ fromJSON(steps.data.outputs.tags)[0] }}
-        cache-to: '"type=inline"'
+        cache-from: ${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}
         tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}
         context: images/${{ inputs.version }}/${{ inputs.context }}
