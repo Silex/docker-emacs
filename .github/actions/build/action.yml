@@ -33,9 +33,9 @@ runs:
       with:
         pull: true
         push: true
-        cache-from: ${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}
+        cache-from: ${{ fromJSON(steps.data.outputs.tags)[0] }}
         cache-to: '"type=inline"'
-        tags: ${{ join(fromJSON(steps.data.outputs.ghcr_tags), ', ') }}
+        tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}
         context: images/${{ inputs.version }}/${{ inputs.context }}
 
     - name: Login to Docker Hub
