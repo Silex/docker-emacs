@@ -37,7 +37,7 @@ jobs:
           secrets: "${{ toJSON(secrets) }}"
           version: "${{ inputs.version }}"
           context: "${{ inputs.context }}/ci"
-      - uses: ruby/setup-ruby@main
+      - uses: ruby/setup-ruby@master
       - name: Setup variables
         id: data
         run: |

@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - uses: ruby/setup-ruby@main
+      - uses: ruby/setup-ruby@master
       - name: Setup variables
         id: data
         run: |
