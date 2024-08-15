@@ -44,3 +44,11 @@ jobs:
       version: ${{ matrix.version }}
       context: ${{ matrix.context }}
     secrets: inherit
+
+  cleanup:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dataaxiom/ghcr-cleanup-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
