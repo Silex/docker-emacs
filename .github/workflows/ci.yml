@@ -49,6 +49,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: dataaxiom/ghcr-cleanup-action@main
+      - uses: actions/delete-package-versions@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          package-name: 'emacs'
+          package-type: 'container'
+          delete-only-untagged-versions: 'true'
