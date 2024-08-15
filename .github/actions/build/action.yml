@@ -10,16 +10,16 @@ runs:
   using: composite
   steps:
     - name: Login to ghcr.io
-      uses: docker/login-action@v3
+      uses: docker/login-action@master
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ fromJSON(inputs.secrets).GITHUB_TOKEN }}
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      uses: docker/setup-buildx-action@master
 
-    - uses: ruby/setup-ruby@v1
+    - uses: ruby/setup-ruby@master
 
     - name: Setup variables
       id: data
@@ -29,7 +29,7 @@ runs:
         echo "ghcr_tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .ghcr_tags_with_repository')" >> $GITHUB_OUTPUT
 
     - name: Build & push image to ghcr.io
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@master
       with:
         pull: true
         push: ${{ github.ref == 'refs/heads/master' }}
@@ -39,13 +39,13 @@ runs:
         cache-to: type=registry,ref=${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}-cache,mode=max
 
     - name: Login to Docker Hub
-      uses: docker/login-action@v3
+      uses: docker/login-action@master
       with:
         username: ${{ fromJSON(inputs.secrets).DOCKERHUB_USERNAME }}
         password: ${{ fromJSON(inputs.secrets).DOCKERHUB_TOKEN }}
 
     - name: Push image to Docker Hub
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@master
       with:
         pull: false
         push: ${{ github.ref == 'refs/heads/master' }}
