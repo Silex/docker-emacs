@@ -44,3 +44,14 @@ jobs:
       version: ${{ matrix.version }}
       context: ${{ matrix.context }}
     secrets: inherit
+
+  clean:
+    needs: build
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/delete-package-versions@main
+        with:
+          package-name: 'emacs'
+          package-type: 'container'
+          delete-only-untagged-versions: 'true'
