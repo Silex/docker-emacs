@@ -32,6 +32,7 @@ runs:
       shell: bash
       run: |
         echo "tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .tags_with_repository')" >> $GITHUB_OUTPUT
+        echo "cache=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .cache')" >> $GITHUB_OUTPUT
 
     - name: Build & push images
       uses: docker/build-push-action@master
@@ -40,5 +41,5 @@ runs:
         push: ${{ github.ref == 'refs/heads/master' }}
         tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}
         context: images/${{ inputs.version }}/${{ inputs.context }}
-        cache-from: type=registry,ref=${{ fromJSON(steps.data.outputs.tags)[0] }}-cache
-        cache-to: type=registry,ref=${{ fromJSON(steps.data.outputs.tags)[0] }}-cache,mode=max
+        cache-from: type=registry,ref=${{ fromJSON(steps.data.outputs.cache) }}
+        cache-to: type=registry,ref=${{ fromJSON(steps.data.outputs.cache) }},mode=max

@@ -50,7 +50,13 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
-      - uses: dataaxiom/ghcr-cleanup-action@main
+      - name: Clean emacs untagged images
+        uses: dataaxiom/ghcr-cleanup-action@main
         with:
           package: emacs
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Clean emacs-cache untagged images
+        uses: dataaxiom/ghcr-cleanup-action@main
+        with:
+          package: emacs-cache
           token: ${{ secrets.GITHUB_TOKEN }}

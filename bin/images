@@ -102,6 +102,7 @@ class Image
       directory: directory,
       tags: tags,
       tags_with_repository: tags_with_repository,
+      cache: cache,
       depends: depends,
       depends_with_repository: depends_with_repository,
       children: children
@@ -122,6 +123,10 @@ class Image
     REGISTRIES.map do |registry|
       tags.map{ |s| format('%s/%s:%s', registry, REPOSITORY, s) }
     end.flatten
+  end
+
+  def cache
+    tags_with_repository.first.sub('emacs:', 'emacs-cache:')
   end
 
   def depends
