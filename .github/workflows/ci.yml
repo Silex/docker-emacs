@@ -50,8 +50,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/delete-package-versions@main
+      - uses: dataaxiom/ghcr-cleanup-action@main
         with:
-          package-name: 'emacs'
-          package-type: 'container'
-          delete-only-untagged-versions: 'true'
+          package: emacs
+          token: ${{ secrets.GITHUB_TOKEN }}
