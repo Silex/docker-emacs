@@ -9,6 +9,12 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Login to docker.io
+      uses: docker/login-action@master
+      with:
+        username: ${{ fromJSON(inputs.secrets).DOCKERHUB_USERNAME }}
+        password: ${{ fromJSON(inputs.secrets).DOCKERHUB_TOKEN }}
+
     - name: Login to ghcr.io
       uses: docker/login-action@master
       with:
@@ -26,29 +32,13 @@ runs:
       shell: bash
       run: |
         echo "tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .tags_with_repository')" >> $GITHUB_OUTPUT
-        echo "ghcr_tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .ghcr_tags_with_repository')" >> $GITHUB_OUTPUT
 
-    - name: Build & push image to ghcr.io
+    - name: Build & push images
       uses: docker/build-push-action@master
       with:
         pull: true
         push: ${{ github.ref == 'refs/heads/master' }}
-        tags: ${{ join(fromJSON(steps.data.outputs.ghcr_tags), ', ') }}
-        context: images/${{ inputs.version }}/${{ inputs.context }}
-        cache-from: type=registry,ref=${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}-cache
-        cache-to: type=registry,ref=${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}-cache,mode=max
-
-    - name: Login to Docker Hub
-      uses: docker/login-action@master
-      with:
-        username: ${{ fromJSON(inputs.secrets).DOCKERHUB_USERNAME }}
-        password: ${{ fromJSON(inputs.secrets).DOCKERHUB_TOKEN }}
-
-    - name: Push image to Docker Hub
-      uses: docker/build-push-action@master
-      with:
-        pull: false
-        push: ${{ github.ref == 'refs/heads/master' }}
-        cache-from: ${{ fromJSON(steps.data.outputs.ghcr_tags)[0] }}-cache
         tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}
         context: images/${{ inputs.version }}/${{ inputs.context }}
+        cache-from: type=registry,ref=${{ fromJSON(steps.data.outputs.tags)[0] }}-cache
+        cache-to: type=registry,ref=${{ fromJSON(steps.data.outputs.tags)[0] }}-cache,mode=max
