@@ -1,4 +1,4 @@
-FROM silex/emacs:26.3-ci
+FROM ghcr.io/silex/emacs:26.3-ci
 
 RUN apt-get update && \
     apt-get install -y unzip && \

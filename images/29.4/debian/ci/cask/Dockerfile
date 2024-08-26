@@ -1,4 +1,4 @@
-FROM silex/emacs:29.4-ci
+FROM ghcr.io/silex/emacs:29.4-ci
 
 RUN apt-get update && \
     apt-get install -y python3 && \

@@ -1,4 +1,4 @@
-FROM silex/emacs:29.3-alpine-ci
+FROM ghcr.io/silex/emacs:29.3-alpine-ci
 
 RUN apk add --no-cache python3
 

@@ -103,8 +103,6 @@ class Image
       tags: tags,
       tags_with_repository: tags_with_repository,
       cache: cache,
-      depends: depends,
-      depends_with_repository: depends_with_repository,
       children: children
     }.to_json
   end
@@ -130,11 +128,7 @@ class Image
   end
 
   def depends
-    tags[0].split('-')[0..-2].join('-')
-  end
-
-  def depends_with_repository
-    format('%s:%s', REPOSITORY, depends)
+    tags_with_repository.first.split('-')[0..-2].join('-')
   end
 
   def nix_version
@@ -157,7 +151,7 @@ def generate_dockerfiles(images)
   images.each do |image|
     FileUtils.mkdir_p(image.directory)
     content = File.read(File.join('templates', image.context, 'Dockerfile'))
-    content.gsub!('{{DEPENDS}}', image.depends_with_repository.to_s)
+    content.gsub!('{{DEPENDS}}', image.depends)
     content.gsub!('{{NIX_VERSION}}', image.nix_version)
     File.write(image.dockerfile, content)
   end

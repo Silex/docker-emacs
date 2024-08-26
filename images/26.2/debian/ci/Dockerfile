@@ -1,4 +1,4 @@
-FROM silex/emacs:26.2
+FROM ghcr.io/silex/emacs:26.2
 
 RUN apt-get update && \
     apt-get install -y git make && \

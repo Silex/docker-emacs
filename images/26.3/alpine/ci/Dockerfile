@@ -1,3 +1,3 @@
-FROM silex/emacs:26.3-alpine
+FROM ghcr.io/silex/emacs:26.3-alpine
 
 RUN apk add --no-cache git make

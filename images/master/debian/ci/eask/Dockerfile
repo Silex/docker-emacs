@@ -1,4 +1,4 @@
-FROM silex/emacs:master-ci
+FROM ghcr.io/silex/emacs:master-ci
 
 RUN apt-get update && \
     apt-get install -y unzip && \

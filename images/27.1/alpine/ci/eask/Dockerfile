@@ -1,4 +1,4 @@
-FROM silex/emacs:27.1-alpine-ci
+FROM ghcr.io/silex/emacs:27.1-alpine-ci
 
 RUN apk add --no-cache unzip
 

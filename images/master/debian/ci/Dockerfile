@@ -1,4 +1,4 @@
-FROM silex/emacs:master
+FROM ghcr.io/silex/emacs:master
 
 RUN apt-get update && \
     apt-get install -y git make && \
