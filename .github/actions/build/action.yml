@@ -38,6 +38,7 @@ runs:
       uses: docker/build-push-action@master
       env:
         DOCKER_BUILD_RECORD_UPLOAD: false
+        DOCKER_BUILD_SUMMARY: false
       with:
         pull: true
         push: ${{ github.ref == 'refs/heads/master' }}
