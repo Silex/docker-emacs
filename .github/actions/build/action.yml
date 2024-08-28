@@ -36,6 +36,8 @@ runs:
 
     - name: Build & push images
       uses: docker/build-push-action@master
+      env:
+        DOCKER_BUILD_RECORD_UPLOAD: false
       with:
         pull: true
         push: ${{ github.ref == 'refs/heads/master' }}
