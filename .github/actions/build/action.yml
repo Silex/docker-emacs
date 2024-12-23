@@ -28,11 +28,10 @@ runs:
     - uses: ruby/setup-ruby@master
 
     - name: Setup variables
-      id: data
       shell: bash
       run: |
-        echo "tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .tags_with_repository')" >> $GITHUB_OUTPUT
-        echo "cache=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .cache')" >> $GITHUB_OUTPUT
+        echo "tags=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .tags_with_repository')" >> $GITHUB_ENV
+        echo "cache=$(bin/images --json | jq -c '.images[] | select(.version == "${{ inputs.version }}" and .context == "${{ inputs.context }}") | .cache')" >> $GITHUB_ENV
 
     - name: Build & push images
       uses: docker/build-push-action@master
@@ -42,7 +41,7 @@ runs:
       with:
         pull: true
         push: ${{ github.ref_name == 'master' }}
-        tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}
+        tags: ${{ join(fromJSON(env.tags), ', ') }}
         context: images/${{ inputs.version }}/${{ inputs.context }}
-        cache-from: type=registry,ref=${{ fromJSON(steps.data.outputs.cache) }}
-        cache-to: type=registry,ref=${{ fromJSON(steps.data.outputs.cache) }},mode=max
+        cache-from: type=registry,ref=${{ fromJSON(env.cache) }}
+        cache-to: type=registry,ref=${{ fromJSON(env.cache) }},mode=max

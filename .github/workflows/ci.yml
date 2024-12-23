@@ -17,19 +17,18 @@ jobs:
   matrix:
     runs-on: ubuntu-latest
     outputs:
-      versions: ${{ steps.data.outputs.versions }}
-      contexts: ${{ steps.data.outputs.contexts }}
-      excludes: ${{ steps.data.outputs.excludes }}
+      versions: ${{ env.versions }}
+      contexts: ${{ env.contexts }}
+      excludes: ${{ env.excludes }}
     steps:
       - name: Checkout
         uses: actions/checkout@main
       - uses: ruby/setup-ruby@master
       - name: Setup variables
-        id: data
         run: |
-          echo "versions=$(bin/images --json | jq -c '.github.versions')" >> $GITHUB_OUTPUT
-          echo "contexts=$(bin/images --json | jq -c '.github.contexts')" >> $GITHUB_OUTPUT
-          echo "excludes=$(bin/images --json | jq -c '.github.excludes')" >> $GITHUB_OUTPUT
+          echo "versions=$(bin/images --json | jq -c '.github.versions')" >> $GITHUB_ENV
+          echo "contexts=$(bin/images --json | jq -c '.github.contexts')" >> $GITHUB_ENV
+          echo "excludes=$(bin/images --json | jq -c '.github.excludes')" >> $GITHUB_ENV
 
   build:
     needs: matrix
