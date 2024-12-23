@@ -41,7 +41,7 @@ runs:
         DOCKER_BUILD_SUMMARY: false
       with:
         pull: true
-        push: ${{ github.ref == 'refs/heads/master' }}
+        push: ${{ github.ref_name == 'master' }}
         tags: ${{ join(fromJSON(steps.data.outputs.tags), ', ') }}
         context: images/${{ inputs.version }}/${{ inputs.context }}
         cache-from: type=registry,ref=${{ fromJSON(steps.data.outputs.cache) }}
