@@ -17,14 +17,16 @@ jobs:
   matrix:
     runs-on: ubuntu-latest
     outputs:
-      os:      ${{ env.oses }}
-      version: ${{ env.versions }}
+      os:      ${{ env.os }}
+      version: ${{ env.version }}
       include: ${{ env.include }}
       exclude: ${{ env.exclude }}
     steps:
       - name: Checkout
         uses: actions/checkout@main
+
       - uses: ruby/setup-ruby@master
+
       - name: Setup variables
         run: |
           echo "os=     $(bin/images --json | jq -c '.oses')"           >> $GITHUB_ENV
@@ -44,11 +46,14 @@ jobs:
         include: ${{ fromJson(needs.matrix.outputs.include) }}
         exclude: ${{ fromJson(needs.matrix.outputs.exclude) }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
       - name: Login to docker.io
         uses: docker/login-action@master
         with:
-          username: ${{ fromJSON(inputs.secrets).DOCKERHUB_USERNAME }}
-          password: ${{ fromJSON(inputs.secrets).DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@master

@@ -12,11 +12,11 @@ def build(options)
   abort 'Could not find image' unless image
 
   args = %w[docker buildx build]
-  args << '--pull' if target == 'base' # avoid pulling child images
+  args << '--pull' if options['target'] == 'base' # avoid pulling child images
   args << '--push' if ENV['GITHUB_REF'] == 'master'
-  args << image['tags'].map { |s| format('--tag %s', s) }
-  args << '--cache-from' << format("type=registry,ref=%s", image['cache'])
-  args << '--cache-to' << format('"type=registry,ref=%s,mode=max"', image['cache'])
+  args << image['tags_with_repository'].map { |s| ['--tag', s] }
+  args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
+  args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
   args << image['context']
   args.flatten!
 

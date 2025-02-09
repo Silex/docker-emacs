@@ -90,8 +90,10 @@ class Image
 
     def github_exclude
       with_excluded_os = exclusions.select{ |h| h.has_key?('os') }
-      with_excluded_os.map do |h|
-        { version: h['version'], os: h['os'] }
+      with_excluded_os.flat_map do |h|
+        h['os'].map do |os|
+          { version: h['version'], os: os }
+        end
       end
     end
 
