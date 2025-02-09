@@ -17,45 +17,55 @@ jobs:
   matrix:
     runs-on: ubuntu-latest
     outputs:
-      versions: ${{ env.versions }}
-      contexts: ${{ env.contexts }}
-      excludes: ${{ env.excludes }}
+      os:      ${{ env.os }}
+      version: ${{ env.version }}
+      include: ${{ env.include }}
+      exclude: ${{ env.exclude }}
     steps:
       - name: Checkout
         uses: actions/checkout@main
+
       - uses: ruby/setup-ruby@master
+
       - name: Setup variables
         run: |
-          echo "versions=$(bin/images --json | jq -c '.github.versions')" >> $GITHUB_ENV
-          echo "contexts=$(bin/images --json | jq -c '.github.contexts')" >> $GITHUB_ENV
-          echo "excludes=$(bin/images --json | jq -c '.github.excludes')" >> $GITHUB_ENV
+          echo "os=     $(bin/images --json | jq -c '.oses')"           >> $GITHUB_ENV
+          echo "version=$(bin/images --json | jq -c '.versions')"       >> $GITHUB_ENV
+          echo "include=$(bin/images --json | jq -c '.github.include')" >> $GITHUB_ENV
+          echo "exclude=$(bin/images --json | jq -c '.github.exclude')" >> $GITHUB_ENV
 
   build:
     needs: matrix
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      # The "include:" block will inject "target:" into the matrix
       matrix:
-        version: ${{ fromJson(needs.matrix.outputs.versions) }}
-        context: ${{ fromJson(needs.matrix.outputs.contexts) }}
-        exclude: ${{ fromJson(needs.matrix.outputs.excludes) }}
-    uses: ./.github/workflows/build.yml
-    with:
-      version: ${{ matrix.version }}
-      context: ${{ matrix.context }}
-    secrets: inherit
-
-  clean:
-    needs: build
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
+        os:      ${{ fromJson(needs.matrix.outputs.os) }}
+        version: ${{ fromJson(needs.matrix.outputs.version) }}
+        include: ${{ fromJson(needs.matrix.outputs.include) }}
+        exclude: ${{ fromJson(needs.matrix.outputs.exclude) }}
     steps:
-      - name: Clean emacs untagged images
-        uses: dataaxiom/ghcr-cleanup-action@main
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Login to docker.io
+        uses: docker/login-action@master
         with:
-          package: emacs
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Clean emacs-cache untagged images
-        uses: dataaxiom/ghcr-cleanup-action@main
-        with:
-          package: emacs-cache
-          token: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@master
+
+      - uses: ruby/setup-ruby@master
+
+      - name: Build and push images for ${{ matrix.version }} (${{ matrix.os }})
+        run: |
+          version="${{ matrix.version }}"
+          os="${{ matrix.os }}"
+          targets=$(echo '${{ toJson(matrix.target) }}' | jq -r '.[]')
+          for target in $targets; do
+            echo ">>>>>>> Building version \"$version\" os \"$os\" target \"$target\""
+            bin/build --os $os --version $version --target $target
+          done

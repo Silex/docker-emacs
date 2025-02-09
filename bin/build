@@ -1,0 +1,83 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'optparse'
+
+def build(options)
+  command = format('%s/images --json', File.expand_path( __dir__))
+  json = `#{command}`
+  images = JSON.parse(json)['images']
+
+  image = images.find { |i| i.values_at('os', 'version', 'target') == options.values_at(:os, :version, :target) }
+  abort 'Could not find image' unless image
+
+  args = %w[docker buildx build]
+  args << '--build-arg' << format('NIX_VERSION=%s', image['nix_version'])
+  args << '--target' << options[:target]
+  args << image['tags_with_repository'].map { |s| ['--tag', s] }
+  args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
+  args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
+  args << '--pull' if options[:target] == 'base' # avoid pulling child images
+  args << '--push' if ENV['GITHUB_REF_NAME'] == 'master'
+  args << image['context']
+  args.flatten!
+
+  puts format('Running command: %s', args.join(' '))
+  system(*args) || abort('Build failed')
+end
+
+def parse_options
+  options = {}
+
+  parser = OptionParser.new do |opts|
+    opts.banner = 'Usage: build --os OS --version VERSION --target TARGET'
+    opts.separator ''
+    opts.separator 'Build an image'
+
+    opts.on('--os OS', 'Image OS (required)') do |os|
+      options[:os] = os
+    end
+
+    opts.on('--version VERSION', 'Image VERSION (required)') do |version|
+      options[:version] = version
+    end
+
+    opts.on('--target TARGET', 'Image TARGET (required)') do |target|
+      options[:target] = target
+    end
+
+    opts.on('-h', '--help', 'Print usage') do
+      puts opts
+      exit
+    end
+  end
+
+  begin
+    parser.parse!
+  rescue OptionParser::InvalidOption => e
+    STDERR.puts e.message
+    STDERR.puts parser
+    exit 1
+  end
+
+  # Check that all required options are present
+  missing = []
+  missing << '--os' unless options[:os]
+  missing << '--version' unless options[:version]
+  missing << '--target' unless options[:target]
+
+  unless missing.empty?
+    STDERR.puts "Missing required option(s): #{missing.join(', ')}"
+    STDERR.puts parser
+    exit 1
+  end
+
+  options
+end
+
+def main
+  options = parse_options
+  build(options)
+end
+
+main
