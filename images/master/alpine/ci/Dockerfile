@@ -1,3 +1,0 @@
-FROM ghcr.io/silex/emacs:master-alpine
-
-RUN apk add --no-cache git make
