@@ -22,69 +22,73 @@ versions:
   - 29.4
   - master
 
-contexts:
+oses:
   - debian
-  - debian/ci
-  - debian/ci/cask
-  - debian/ci/eask
-  - debian/ci/eldev
-  - debian/ci/keg
   - alpine
-  - alpine/ci
-  - alpine/ci/cask
-  - alpine/ci/eask
-  - alpine/ci/eldev
-  - alpine/ci/keg
 
-excludes:
+targets:
+  - base
+  - ci
+  - ci-cask
+  - ci-eask
+  - ci-eldev
+  - ci-keg
+
+exclusions:
   - version: 23.4
-    contexts:
-      - debian/ci/cask
-      - debian/ci/eask
-      - debian/ci/eldev
-      - debian/ci/keg
-      - alpine.*
+    os:
+      - alpine
+    target:
+      - ci-cask
+      - ci-eask
+      - ci-eldev
+      - ci-keg
 
   - version: 24.1
-    contexts:
-      - debian/ci/cask
-      - debian/ci/eask
-      - debian/ci/eldev
-      - alpine.*
+    os:
+      - alpine
+    target:
+      - ci-cask
+      - ci-eask
+      - ci-eldev
 
   - version: 24.2
-    contexts:
-      - debian/ci/cask
-      - debian/ci/eask
-      - debian/ci/eldev
-      - alpine.*
+    os:
+      - alpine
+    target:
+      - ci-cask
+      - ci-eask
+      - ci-eldev
 
   - version: 24.3
-    contexts:
-      - debian/ci/cask
-      - debian/ci/eask
-      - debian/ci/eldev
-      - alpine.*
+    os:
+      - alpine
+    target:
+      - ci-cask
+      - ci-eask
+      - ci-eldev
 
   - version: 24.4
-    contexts:
-      - debian/ci/cask
-      - debian/ci/eask
-      - alpine.*
+    os:
+      - alpine
+    target:
+      - ci-cask
+      - ci-eask
 
   - version: 24.5
-    contexts:
-      - debian/ci/eask
-      - alpine.*
+    os:
+      - alpine
+    target:
+      - ci-eask
 
   - version: 25.1
-    contexts:
-      - .*/ci/eask
+    target:
+      - ci-eask
 
   - version: 25.2
-    contexts:
-      - .*/ci/eask
+    target:
+      - ci-eask
 
   - version: 25.3
-    contexts:
-      - .*/ci/eask
+    target:
+      - ci-eask

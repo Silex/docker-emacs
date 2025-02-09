@@ -16,194 +16,252 @@ class String
 end
 
 class Image
-  attr_reader :version
-  attr_reader :context
+  REPOSITORY    = 'silex/emacs'
+  IMAGES_YML    = 'images.yml'
 
-  REGISTRIES = %w[ghcr.io docker.io]
-  REPOSITORY = 'silex/emacs'
+  attr_reader :os
+  attr_reader :version
+  attr_reader :target
 
   class << self
+    def all
+      images = []
+      versions.each do |version|
+        exclusion = exclusions.find { |h| h['version'] == version }
+        oses.each do |os|
+          next if exclusion&.dig('os')&.include?(os)
+          targets.each do |target|
+            next if exclusion&.dig('target')&.include?(target)
+            images << Image.new(version: version, os: os, target: target)
+          end
+        end
+      end
+      images
+    end
+
     def data
-      @data ||= YAML.load_file('images.yml')
+      @data ||= YAML.safe_load(File.read(IMAGES_YML), symbolize_names: false)
     end
 
     def versions
       data['versions'].map(&:to_s)
     end
 
-    def contexts
-      data['contexts']
+    def oses
+      data['oses']
     end
 
-    def excludes
-      data['excludes'].map do |h|
+    def targets
+      data['targets']
+    end
+
+    def major_latests
+      versions
+        .reject { |v| v == 'master' }
+        .group_by(&:to_i)
+        .map { |_, vs| vs.sort.last }
+        .sort
+    end
+
+    def exclusions
+      # Ensure versions are strings
+      data['exclusions'].map do |h|
         h['version'] = h['version'].to_s
         h
       end
     end
 
+    def github
+      {
+        include: github_include,
+        exclude: github_exclude
+      }
+    end
+
+    def github_include
+      include = [{ target: targets }]
+      with_excluded_targets = exclusions.select{ |h| h.has_key?('target') }
+      with_excluded_targets.each do |h|
+        include << { version: h['version'], target: targets - h['target'] }
+      end
+      include
+    end
+
     def github_exclude
-      excludes.map do |h|
-        arr = contexts.select do |s|
-          h['contexts'].any?{ |r| Regexp.new(r).match(s) }
+      with_excluded_os = exclusions.select{ |h| h.has_key?('os') }
+      with_excluded_os.flat_map do |h|
+        h['os'].map do |os|
+          { version: h['version'], os: os }
         end
-        arr.reject!{ |s| s.include?('/') }.map do |s|
-          {
-            version: h['version'],
-            context: s
-          }
-        end
-      end.compact.flatten
+      end
     end
 
     def to_json
       {
         versions: versions,
-        contexts: contexts,
-        excludes: data['excludes'],
-        github: {
-          versions: versions,
-          contexts: contexts.reject{ |s| s.include?('/') },
-          excludes: github_exclude
-        },
-        images: load
+        oses: oses,
+        targets: targets,
+        exclusions: exclusions,
+        github: github,
+        images: all
       }.to_json
     end
-
-    def load
-      latests = versions
-        .reject{ |s| s == 'master' }
-        .group_by(&:to_i)
-        .map{ |k, v| v.sort.last }.sort
-      versions.map do |version|
-        exclude = excludes.find{ |h| h['version'] == version }
-        contexts.map do |context|
-          next if exclude&.[]('contexts')&.any?{ |s| Regexp.new(s).match(context) }
-          Image.new(version: version, context: context).tap do |image|
-            break image unless latests.include?(version)
-            image.tags << image.tags.last.sub(/\.\d+/, '')
-            break image unless latests.last == version
-            image.tags << ((context == 'debian') ? 'latest' : image.tags.last.sub(/\d+-/, ''))
-          end
-        end
-      end.flatten.compact
-    end
   end
 
-  def initialize(h)
-    @version    = h[:version]
-    @context    = h[:context]
+  def initialize(version:, os:, target:)
+    @version = version
+    @os      = os
+    @target  = target
   end
 
-  def to_json(options = nil)
-    {
-      version: version,
-      context: context,
-      directory: directory,
-      tags: tags,
-      tags_with_repository: tags_with_repository,
-      cache: cache,
-      children: children
-    }.to_json
+  def major_latest?
+    self.class.major_latests.include?(version)
   end
 
-  def children
-    Image.load.select do |i|
-      i.version == version && i.context != context && i.context.start_with?(context)
-    end
+  def latest?
+    self.class.major_latests.last == version
   end
 
   def tags
-    @tags ||= [directory.gsub('/', '-').sub('images-', '').sub('-debian', '')]
+    tags = []
+
+    # Base tag
+    tags << format('%s-%s-%s', version, os, target)
+
+    # Pretty tag for debian
+    if os == 'debian'
+      tags << format('%s-%s', version, target)
+    end
+
+    # Handle major latest
+    if major_latest?
+      tags += tags.map { |t| t.sub(/\.\d+/, '') }
+      if latest?
+        additional_tag = (os == 'debian' && target == 'base') ? 'latest' : tags.last.sub(/\d+-/, '')
+        tags << additional_tag
+      end
+    end
+
+    # Handle ci tags
+    tags += tags.map { |t| t.sub('ci-', '') } if target.include?('ci-')
+
+    # Pretty tag for base
+    tags.map!{ |t| t.sub('-base', '') }
+
+    tags
   end
 
   def tags_with_repository
-    REGISTRIES.map do |registry|
-      tags.map{ |s| format('%s/%s:%s', registry, REPOSITORY, s) }
-    end.flatten
+    tags.map do |s|
+      format('%s:%s', REPOSITORY, s)
+    end
   end
 
   def cache
-    tags_with_repository.first.sub('emacs:', 'emacs-cache:')
+    "#{REPOSITORY}:#{os}-#{version}-cache"
   end
 
-  def depends
-    tags_with_repository.first.split('-')[0..-2].join('-')
-  end
-
+  # Returns the corresponding Nix version.
   def nix_version
     return 'emacs-snapshot' if version == 'master'
     format('emacs-%s', version.gsub('.', '-'))
   end
 
-  def directory
-    File.join('images', version, context)
+  def context
+    os
   end
 
   def dockerfile
-    File.join(directory, 'Dockerfile')
+    File.join(context, 'Dockerfile')
   end
-end
 
-def generate_dockerfiles(images)
-  puts '>>> generating dockerfiles'
-  images.map(&:directory).uniq.each{ |path| FileUtils.rm_rf(path) }
-  images.each do |image|
-    FileUtils.mkdir_p(image.directory)
-    content = File.read(File.join('templates', image.context, 'Dockerfile'))
-    content.gsub!('{{DEPENDS}}', image.depends)
-    content.gsub!('{{NIX_VERSION}}', image.nix_version)
-    File.write(image.dockerfile, content)
+  def to_json(options = nil)
+    {
+      version: version,
+      os: os,
+      target: target,
+      nix_version: nix_version,
+      context: context,
+      tags: tags,
+      tags_with_repository: tags_with_repository,
+      cache: cache,
+      major_latest?: major_latest?,
+      latest?: latest?,
+    }.to_json
   end
 end
 
 def generate_readme(images)
   puts '>>> generating README.md'
-  tags = images.group_by(&:version).values.reverse.flatten.map do |image|
+  # Group by version and reverse the order if needed
+  tags = images.group_by(&:version).values.reverse.flatten.flat_map do |image|
     format('- [%s](https://github.com/Silex/docker-emacs/blob/master/%s)',
            image.tags.map(&:backquotify).join(', '),
            image.dockerfile)
-  end.flatten
-  content = File.read('templates/README.md')
+  end
+
+  readme = 'README.md.template'
+  unless File.exist?(readme)
+    warn "README template not found at #{readme}"
+    return
+  end
+
+  content = File.read(readme)
   content.gsub!('{{TAGS}}', tags.join("\n"))
   File.write('README.md', content)
 end
 
 def run(options)
   if options[:generate]
-    images = Image.load
-    generate_dockerfiles(images)
+    images = Image.all
     generate_readme(images)
   end
 
-  if options[:json]
-    print Image.to_json
-  end
+  puts Image.to_json if options[:json]
 end
 
-begin
+def parse_options
   options = {}
-  OptionParser.new do |opts|
-    opts.banner = 'Usage: images'
+  parser = OptionParser.new do |opts|
+    opts.banner = 'Usage: images [options]'
     opts.separator ''
     opts.separator 'Generate the Dockerfiles & README or return images JSON.'
-    opts.on('--generate', 'Generate') do
+
+    opts.on('--generate', 'Generate Dockerfiles and README') do
       options[:generate] = true
     end
-    opts.on('--json', 'JSON') do
+
+    opts.on('--json', 'Output images as JSON') do
       options[:json] = true
     end
-  end.parse!
 
-  Dir.chdir(File.join(File.dirname(__FILE__), '..')) do
+    opts.on('-h', '--help', 'Print usage') do
+      puts opts
+      exit
+    end
+  end
+
+  begin
+    parser.parse!
+  rescue OptionParser::InvalidOption => e
+    warn e.message
+    puts parser
+    exit(1)
+  end
+
+  if options.empty?
+    puts parser
+    exit(1)
+  end
+
+  options
+end
+
+def main
+  options = parse_options
+  Dir.chdir(File.expand_path('..', __dir__)) do
     run(options)
   end
-rescue OptionParser::ParseError => e
-  $stderr.puts e.message
-  $stderr.puts
-  $stderr.puts parser.help
-  exit(1)
-rescue => e
-  $stderr.puts(e.message)
-  exit(1)
 end
+
+main
