@@ -158,7 +158,7 @@ class Image
   end
 
   def cache
-    "#{REPOSITORY}:#{os}-#{version}-cache"
+    format('%s-cache:%s-%s', REPOSITORY, os, version)
   end
 
   # Returns the corresponding Nix version.
