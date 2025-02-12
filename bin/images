@@ -79,10 +79,10 @@ class Image
     end
 
     def github_include
-      include = [{ target: targets }]
+      include = [{ targets: targets }]
       with_excluded_targets = exclusions.select{ |h| h.has_key?('target') }
       with_excluded_targets.each do |h|
-        include << { version: h['version'], target: targets - h['target'] }
+        include << { version: h['version'], targets: targets - h['target'] }
       end
       include
     end

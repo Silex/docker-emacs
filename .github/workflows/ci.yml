@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      # The "include:" block will inject "target:" into the matrix
+      # The "include:" block will inject "targets:" into the matrix
       matrix:
         os:      ${{ fromJson(needs.matrix.outputs.os) }}
         version: ${{ fromJson(needs.matrix.outputs.version) }}
@@ -61,11 +61,4 @@ jobs:
       - uses: ruby/setup-ruby@master
 
       - name: Build and push images for ${{ matrix.version }} (${{ matrix.os }})
-        run: |
-          version="${{ matrix.version }}"
-          os="${{ matrix.os }}"
-          targets=$(echo '${{ toJson(matrix.target) }}' | jq -r '.[]')
-          for target in $targets; do
-            echo ">>>>>>> Building version \"$version\" os \"$os\" target \"$target\""
-            bin/build --os $os --version $version --target $target
-          done
+        run: bin/build --os ${{ matrix.os }} --version ${{ matrix.version }} --targets ${{ join(matrix.targets, ',') }}
