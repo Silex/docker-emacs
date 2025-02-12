@@ -65,7 +65,7 @@ jobs:
           version="${{ matrix.version }}"
           os="${{ matrix.os }}"
           targets=$(echo '${{ toJson(matrix.target) }}' | jq -r '.[]')
-          for target in $targets; do
-            echo ">>>>>>> Building version \"$version\" os \"$os\" target \"$target\""
-            bin/build --os $os --version $version --target $target
-          done
+          set -x
+          echo '${{ matrix.target }}'
+          echo '${{ toJson(matrix.target) }}'
+          echo '${{ join(matrix.target, ',') }}'
