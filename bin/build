@@ -79,6 +79,8 @@ end
 
 def main
   options = parse_options
+  puts options.inspect
+  qweweq
   build(options)
 end
 
