@@ -61,11 +61,4 @@ jobs:
       - uses: ruby/setup-ruby@master
 
       - name: Build and push images for ${{ matrix.version }} (${{ matrix.os }})
-        run: |
-          version="${{ matrix.version }}"
-          os="${{ matrix.os }}"
-          targets=$(echo '${{ toJson(matrix.target) }}' | jq -r '.[]')
-          for target in $targets; do
-            echo ">>>>>>> Building version \"$version\" os \"$os\" target \"$target\""
-            bin/build --os $os --version $version --target $target
-          done
+        run: bin/build --os ${{ matrix.os }} --version ${{ matrix.version }} --targets ${{ matrix.targets }}

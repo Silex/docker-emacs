@@ -7,30 +7,32 @@ def build(options)
   command = format('%s/images --json', File.expand_path(__dir__))
   json = `#{command}`
   images = JSON.parse(json)['images']
+  os, version, targets = options.values_at(:os, :version, :targets)
 
-  image = images.find { |i| i.values_at('os', 'version', 'target') == options.values_at(:os, :version, :target) }
-  abort 'Could not find image' unless image
+  targets.each_with_index do |target, i|
+    image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, target] }
+    abort 'Could not find image' unless image
 
-  args = %w[docker buildx build]
-  args << '--build-arg' << format('NIX_VERSION=%s', image['nix_version'])
-  args << '--target' << options[:target]
-  args << image['tags_with_repository'].map { |s| ['--tag', s] }
-  args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
-  args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
-  args << '--pull' if options[:target] == 'base' # avoid pulling child images
-  args << '--push' if ENV['GITHUB_REF_NAME'] == 'master'
-  args << image['context']
-  args.flatten!
+    args = %w[docker buildx build]
+    args << '--build-arg' << format('NIX_VERSION=%s', image['nix_version'])
+    args << '--target' << target
+    args.concat(image['tags_with_repository'].flat_map { |s| ['--tag', s] })
+    args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
+    args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
+    args << '--pull' if i == 0 # only pull first target
+    args << '--push' if ENV['GITHUB_REF_NAME'] == 'master' && i == (targets.size - 1) # only push last target
+    args << image['context']
 
-  puts format('Running command: %s', args.join(' '))
-  system(*args) || abort('Build failed')
+    puts format('Running command: %s', args.join(' '))
+    system(*args) || abort('Build failed')
+  end
 end
 
 def parse_options
   options = {}
 
   parser = OptionParser.new do |opts|
-    opts.banner = 'Usage: build --os OS --version VERSION --target TARGET'
+    opts.banner = 'Usage: build --os OS --version VERSION --targets TARGETS'
     opts.separator ''
     opts.separator 'Build an image'
 
@@ -42,8 +44,8 @@ def parse_options
       options[:version] = version
     end
 
-    opts.on('--target TARGET', 'Image TARGET (required)') do |target|
-      options[:target] = target
+    opts.on('--targets TARGETS', 'Image TARGETS (required)') do |targets|
+      options[:targets] = targets
     end
 
     opts.on('-h', '--help', 'Print usage') do
@@ -64,7 +66,7 @@ def parse_options
   missing = []
   missing << '--os' unless options[:os]
   missing << '--version' unless options[:version]
-  missing << '--target' unless options[:target]
+  missing << '--targets' unless options[:targets]
 
   unless missing.empty?
     STDERR.puts "Missing required option(s): #{missing.join(', ')}"
