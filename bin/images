@@ -158,7 +158,7 @@ class Image
   end
 
   def cache
-    "#{REPOSITORY}:#{os}-#{version}-cache"
+    tags_with_repository.first.sub('emacs:', 'emacs-cache:')
   end
 
   # Returns the corresponding Nix version.
