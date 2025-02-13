@@ -15,13 +15,18 @@ def build(options)
     abort 'Could not find image' unless image
 
     args = %w[docker buildx build]
+
+    # Common arguments
     args << '--build-arg' << format('NIX_VERSION=%s', image['nix_version'])
     args << '--target' << target
     args.concat(image['tags_with_repository'].flat_map { |s| ['--tag', s] })
     args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
-    args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
+
+    # Conditional arguments
     args << '--pull' if i == 0 # only pull first target
-    args << '--push' if ENV['GITHUB_REF_NAME'] == 'master' && i == (targets.size - 1) # only push last target
+    args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache']) if i == (targets.size - 1) # only cache last target
+    args << '--push' if ENV['GITHUB_REF_NAME'] == 'master' # push master branch
+
     args << image['context']
 
     puts format('Running command: %s', args.join(' '))
