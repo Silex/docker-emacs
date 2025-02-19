@@ -5,7 +5,8 @@ require 'optparse'
 
 def build(options)
   command = format('%s/images --json', File.expand_path(__dir__))
-  json = `#{command}`
+  json = `#{command}`.strip
+  abort 'Failed to retrieve images' if json.empty?
   images = JSON.parse(json)['images']
   os, version, targets = options.values_at(:os, :version, :targets)
   targets = targets.split(',')
