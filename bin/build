@@ -18,10 +18,10 @@ def build(options)
     args = %w[docker buildx build]
 
     # Common arguments
-    args << '--target' << target
-    args << '--build-arg' << format('NIX_VERSION=%s', image['nix_version'])
-    args.concat(image['tags_with_repository'].flat_map { |s| ['--tag', s] })
-    args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
+    args += ['--target', target]
+    args += ['--build-arg', format('NIX_VERSION=%s', image['nix_version'])]
+    args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
+    args += ['--cache-from', format('type=registry,ref=%s', image['cache'])]
 
     # Conditional arguments
     args << '--pull' if i == 0 # only pull first target
