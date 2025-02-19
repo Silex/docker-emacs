@@ -29,7 +29,7 @@ def build(options)
 
     args << image['context']
 
-    puts format('Running command: %s', args.join(' '))
+    puts format('>>> Running command: %s', args.join(' '))
     system(*args) || abort('Build failed')
   end
 end
