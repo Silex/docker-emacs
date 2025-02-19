@@ -29,8 +29,13 @@ def build(options)
 
     args << image['context']
 
+    # Build image
     puts format('>>> Running command: %s', args.join(' '))
     system(*args) || abort('Build failed')
+
+    # Check if image runs properly
+    command = format('docker run --rm %s emacs --version', image['tags_with_repository'].first)
+    system(command) || abort('Image does not work')
   end
 end
 
