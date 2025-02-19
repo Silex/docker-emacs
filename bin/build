@@ -26,7 +26,7 @@ def build(options)
     # Conditional arguments
     args << '--pull' if i == 0 # only pull first target
     args << '--push' if ENV['GITHUB_REF_NAME'] == 'master' # push master branch
-    args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache']) if i == (targets.size - 1) # only cache last target
+    args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if i == (targets.size - 1) # only cache last target
 
     args << image['context']
 
