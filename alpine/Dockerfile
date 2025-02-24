@@ -64,3 +64,15 @@ FROM ci AS ci-keg
 
 RUN git clone https://github.com/conao3/keg.el.git /root/.keg
 ENV PATH="/root/.keg/bin:$PATH"
+
+# -------------------------------------------------------------------------------
+
+FROM base AS cache
+
+# Reference all layers in final cache layer
+COPY --from=base     /etc/os-release /tmp/base
+COPY --from=ci       /etc/os-release /tmp/ci
+COPY --from=ci-cask  /etc/os-release /tmp/ci-cask
+COPY --from=ci-eask  /etc/os-release /tmp/ci-eask
+COPY --from=ci-eldev /etc/os-release /tmp/ci-eldev
+COPY --from=ci-keg   /etc/os-release /tmp/ci-keg

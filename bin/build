@@ -9,12 +9,14 @@ def build(options)
   abort 'Failed to retrieve images' if json.empty?
   images = JSON.parse(json)['images']
   os, version, targets = options.values_at(:os, :version, :targets)
-  targets = targets.split(',')
+  targets = targets.split(',') << 'cache'
 
-  targets.each_with_index do |target, i|
+  targets.each do |target|
     puts format('----------------------------------------------------------------------')
 
-    image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, target] }
+    # For the cache we use information from base target
+    image_target = (target == 'cache') ? 'base' : target
+    image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, image_target] }
     abort 'Could not find image' unless image
 
     args = %w[docker buildx build]
@@ -22,13 +24,20 @@ def build(options)
     # Common arguments
     args += ['--target', target]
     args += ['--build-arg', format('NIX_VERSION=%s', image['nix_version'])]
-    args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
     args += ['--cache-from', format('type=registry,ref=%s', image['cache'])]
 
-    # Conditional arguments
-    args << '--pull' if i == 0 # only pull first target
-    args << '--push' if ENV['GITHUB_REF_NAME'] == 'master' # push master branch
-    args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if i == (targets.size - 1) # only cache last target
+    # Only pull first image
+    args << '--pull' if target == 'base'
+
+    # Only push master branch
+    args << '--push' if ENV['GITHUB_REF_NAME'] == 'master'
+
+    if target == 'cache'
+      args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if target == 'cache'
+      args += ['--tag', image['cache']]
+    else
+      args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
+    end
 
     args << image['context']
 
