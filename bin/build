@@ -12,6 +12,8 @@ def build(options)
   targets = targets.split(',')
 
   targets.each_with_index do |target, i|
+    puts format('----------------------------------------------------------------------')
+
     image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, target] }
     abort 'Could not find image' unless image
 
@@ -35,6 +37,7 @@ def build(options)
     system(*args) || abort('Build failed')
 
     # Check if image runs properly
+    puts format('>>> Testing Emacs run')
     command = format('docker run --rm %s emacs --version', image['tags_with_repository'].first)
     system(command) || abort('Image does not work')
   end
