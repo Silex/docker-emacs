@@ -1,8 +1,5 @@
 FROM nixos/nix AS builder
 
-# Rebuild if nix-emacs-ci changed
-ADD https://api.github.com/repos/purcell/nix-emacs-ci/git/refs/heads/master /tmp/cache
-
 # Install Emacs using nix
 RUN echo 'extra-experimental-features = flakes nix-command' >> /etc/nix/nix.conf
 ARG NIX_VERSION

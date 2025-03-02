@@ -1,0 +1,37 @@
+---
+name: CI
+
+on:
+  schedule:
+    - cron: 0 0 * * 0
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      os: ${{ env.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - uses: ruby/setup-ruby@master
+
+      - name: Setup variables
+        run: echo "os=$(bin/images --json | jq -c '.oses')" >> $GITHUB_ENV
+
+  delete-cache:
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJson(needs.matrix.outputs.os) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Delete silex/emacs-cache:${{ matrix.os }}-master from Docker registry
+        run: |
+          curl -X DELETE \
+          -u "${{ secrets.DOCKERHUB_USERNAME }}:${{ secrets.DOCKERHUB_TOKEN }}" \
+          "https://hub.docker.com/v2/repositories/silex/emacs-cache/tags/${{ matrix.os }}-master/"
