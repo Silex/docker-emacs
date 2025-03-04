@@ -46,6 +46,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Login to Docker Hub
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@master
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
