@@ -1,5 +1,5 @@
 ---
-name: CI
+name: Delete master cache
 
 on:
   schedule:
