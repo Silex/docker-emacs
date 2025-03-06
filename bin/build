@@ -34,7 +34,7 @@ def build(options)
 
     if target == 'cache'
       args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if target == 'cache'
-      args += ['--tag', image['cache']]
+      args += ['--tag', format('%s-cache', image['cache'])]
     else
       args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
     end
