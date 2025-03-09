@@ -37,8 +37,8 @@ jobs:
       fail-fast: false
       # The "include:" block will inject "targets:" into the matrix
       matrix:
-        os:      ${{ fromJson(needs.matrix.outputs.os) }}
         version: ${{ fromJson(needs.matrix.outputs.version) }}
+        os:      ${{ fromJson(needs.matrix.outputs.os) }}
         include: ${{ fromJson(needs.matrix.outputs.include) }}
         exclude: ${{ fromJson(needs.matrix.outputs.exclude) }}
     steps:
