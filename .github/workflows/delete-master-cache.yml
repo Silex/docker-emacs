@@ -27,11 +27,16 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.matrix.outputs.os) }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@main
+      - name: Login to Docker Hub and get JWT token
+        run: |
+          TOKEN=$(curl -s -H "Content-Type: application/json" \
+            -X POST \
+            -d '{"username": "${{ secrets.DOCKERHUB_USERNAME }}", "password": "${{ secrets.DOCKERHUB_TOKEN }}"}' \
+            https://hub.docker.com/v2/users/login/ | jq -r '.token')
+          echo "TOKEN=$TOKEN" >> $GITHUB_ENV
 
       - name: Delete silex/emacs-cache:${{ matrix.os }}-master from Docker registry
         run: |
-          curl -X DELETE \
-          -u "${{ secrets.DOCKERHUB_USERNAME }}:${{ secrets.DOCKERHUB_TOKEN }}" \
-          "https://hub.docker.com/v2/repositories/silex/emacs-cache/tags/${{ matrix.os }}-master/"
+          curl --fail -X DELETE \
+            -H "Authorization: JWT $TOKEN" \
+            "https://hub.docker.com/v2/repositories/silex/emacs-cache/tags/${{ matrix.os }}-master/"
