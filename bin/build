@@ -29,8 +29,8 @@ def build(options)
     # Only pull first image
     args << '--pull' if target == 'base'
 
-    # Only push master branch
-    args << '--push' if ENV['GITHUB_REF_NAME'] == 'master'
+    # Only push main branch
+    args << '--push' if ENV['GITHUB_REF_NAME'] == 'main'
 
     if target == 'cache'
       args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if target == 'cache'

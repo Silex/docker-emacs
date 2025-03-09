@@ -195,7 +195,7 @@ def generate_readme(images)
   puts '>>> generating README.md'
   # Group by version and reverse the order if needed
   tags = images.group_by(&:version).values.reverse.flatten.flat_map do |image|
-    format('- [%s](https://github.com/Silex/docker-emacs/blob/master/%s)',
+    format('- [%s](https://github.com/Silex/docker-emacs/blob/main/%s)',
            image.tags.map(&:backquotify).join(', '),
            image.dockerfile)
   end
