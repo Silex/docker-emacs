@@ -19,7 +19,7 @@ def build(options)
     image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, image_target] }
     abort 'Could not find image' unless image
 
-    args = %w[docker buildx build]
+    args = %w[docker buildx build --progress plain]
 
     # Common arguments
     args += ['--target', target]
