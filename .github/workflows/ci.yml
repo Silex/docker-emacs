@@ -54,6 +54,8 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@master
+        with:
+          config: .github/buildkitd.toml
 
       - uses: ruby/setup-ruby@master
 
