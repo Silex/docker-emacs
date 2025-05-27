@@ -11,7 +11,7 @@ RUN cd /nix-emacs/nix/store && ln -s *emacs* emacs
 
 # -------------------------------------------------------------------------------
 
-FROM alpine:3.14 AS base
+FROM alpine:3.21 AS base
 
 RUN apk add --no-cache \
             curl \
