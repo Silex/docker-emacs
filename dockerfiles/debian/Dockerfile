@@ -6,7 +6,7 @@ ARG NIX_VERSION
 RUN nix profile install --impure --accept-flake-config "github:purcell/nix-emacs-ci#${NIX_VERSION}"
 
 # Store emacs and all its dependencies to /nix-emacs
-RUN nix copy --no-require-sigs --to /nix-emacs $(type -p emacs)
+RUN nix copy --no-require-sigs --to /nix-emacs $(readlink -f $(dirname $(type -p emacs))/..)
 RUN cd /nix-emacs/nix/store && ln -s *emacs* emacs
 
 # -------------------------------------------------------------------------------
