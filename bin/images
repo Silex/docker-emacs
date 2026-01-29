@@ -159,7 +159,7 @@ class Image
   end
 
   def cache
-    format('%s:%s-%s', CACHE_REPOSITORY, os, version)
+    format('%s:%s', CACHE_REPOSITORY, tags.first)
   end
 
   # Returns the corresponding Nix version.

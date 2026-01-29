@@ -7,38 +7,34 @@ def build(options)
   command = format('%s/images --json', File.expand_path(__dir__))
   json = `#{command}`.strip
   abort 'Failed to retrieve images' if json.empty?
-  images = JSON.parse(json)['images']
+  data = JSON.parse(json)
+  images = data['images']
   os, version, targets = options.values_at(:os, :version, :targets)
-  targets = targets.split(',') << 'cache'
+  targets = targets.split(',')
 
   targets.each do |target|
     puts format('----------------------------------------------------------------------')
 
-    # For the cache we use information from base target
-    image_target = (target == 'cache') ? 'base' : target
-    image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, image_target] }
+    image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, target] }
     abort 'Could not find image' unless image
 
-    args = %w[docker buildx build --progress plain]
+    push = ENV['GITHUB_REF_NAME'] == 'main'
+    use_buildx = push
+    args = use_buildx ? %w[docker buildx build --progress plain] : %w[docker build --progress plain]
 
     # Common arguments
-    args += ['--target', target]
     args += ['--cache-from', format('type=registry,ref=%s', image['cache'])] if use_buildx
 
     # Only pull first image
     args << '--pull' if target == 'base'
 
     # Only push main branch
-    args << '--push' if ENV['GITHUB_REF_NAME'] == 'main'
+    args << '--push' if push
 
-    if target == 'cache'
-      args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if target == 'cache'
-      args += ['--tag', format('%s-cache', image['cache'])]
-    else
-      args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
-    end
+    args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if push
+    args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
 
-    args << image['context']
+    args << image['directory']
 
     # Build image
     puts format('>>> Running command: %s', args.join(' '))
