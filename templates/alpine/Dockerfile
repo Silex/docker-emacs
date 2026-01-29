@@ -2,6 +2,7 @@ FROM nixos/nix AS builder
 
 # Install Emacs using nix
 RUN echo 'extra-experimental-features = flakes nix-command' >> /etc/nix/nix.conf
+{{CACHE_BUST}}
 RUN nix profile add --impure --accept-flake-config "github:purcell/nix-emacs-ci#{{NIX_VERSION}}"
 
 # Store emacs and all its dependencies to /nix-emacs

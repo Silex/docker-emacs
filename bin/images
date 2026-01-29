@@ -56,6 +56,10 @@ class Image
       data['targets']
     end
 
+    def cache_bust_versions
+      Array(data['cache_bust']).map(&:to_s)
+    end
+
     def major_latests
       versions
         .reject { |v| v == 'master' }
@@ -103,6 +107,7 @@ class Image
         oses: oses,
         targets: targets,
         exclusions: exclusions,
+        cache_bust: cache_bust_versions,
         github: github,
         images: all
       }.to_json
@@ -211,6 +216,7 @@ class Image
       tags_with_repository: tags_with_repository,
       cache: cache,
       depends: depends,
+      cache_bust: self.class.cache_bust_versions.include?(version),
       major_latest?: major_latest?,
       latest?: latest?,
     }.to_json
@@ -225,6 +231,12 @@ def generate_dockerfiles(images)
     FileUtils.mkdir_p(image.directory)
     content = File.read(image.template)
     content.gsub!('{{NIX_VERSION}}', image.nix_version)
+    if Image.cache_bust_versions.include?(image.version)
+      cache_bust = 'ADD https://api.github.com/repos/purcell/nix-emacs-ci/commits?per_page=1 /tmp/cache'
+      content.gsub!(/\n{{CACHE_BUST}}/, "\n#{cache_bust}")
+    else
+      content.gsub!(/\n{{CACHE_BUST}}/, '')
+    end
     content.gsub!('{{DEPENDS}}', image.depends) if image.depends
     File.write(image.dockerfile, content)
   end

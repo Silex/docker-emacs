@@ -36,6 +36,9 @@ targets:
   - ci-eldev
   - ci-keg
 
+cache_bust:
+  - master
+
 exclusions:
   - version: 23.4
     os:
