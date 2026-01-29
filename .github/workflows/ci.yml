@@ -52,6 +52,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Login to registry mirror
+        uses: docker/login-action@master
+        with:
+          registry: ${{ secrets.MIRROR_HOST }}
+          username: ${{ secrets.MIRROR_USERNAME }}
+          password: ${{ secrets.MIRROR_PASSWORD }}
+
       - name: Login to GHCR
         if: github.event_name != 'pull_request'
         uses: docker/login-action@master
@@ -66,6 +73,8 @@ jobs:
           buildkitd-config-inline: |
             [worker.oci]
               max-parallelism = 1
+            [registry."docker.io"]
+              mirrors = ["https://${{ secrets.MIRROR_HOST }}"]
 
       - uses: ruby/setup-ruby@master
 
