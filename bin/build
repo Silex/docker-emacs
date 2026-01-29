@@ -23,8 +23,7 @@ def build(options)
 
     # Common arguments
     args += ['--target', target]
-    args += ['--build-arg', format('NIX_VERSION=%s', image['nix_version'])]
-    args += ['--cache-from', format('type=registry,ref=%s', image['cache'])]
+    args += ['--cache-from', format('type=registry,ref=%s', image['cache'])] if use_buildx
 
     # Only pull first image
     args << '--pull' if target == 'base'

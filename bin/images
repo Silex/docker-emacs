@@ -16,8 +16,9 @@ class String
 end
 
 class Image
-  REPOSITORY    = 'silex/emacs'
-  IMAGES_YML    = 'images.yml'
+  REPOSITORY       = 'silex/emacs'
+  CACHE_REPOSITORY = 'ghcr.io/silex/emacs-cache'
+  IMAGES_YML       = 'images.yml'
 
   attr_reader :os
   attr_reader :version
@@ -158,7 +159,7 @@ class Image
   end
 
   def cache
-    format('%s-cache:%s-%s', REPOSITORY, os, version)
+    format('%s:%s-%s', CACHE_REPOSITORY, os, version)
   end
 
   # Returns the corresponding Nix version.
@@ -168,11 +169,33 @@ class Image
   end
 
   def context
-    File.join('dockerfiles', os)
+    return os if target == 'base'
+    return File.join(os, 'ci') if target == 'ci'
+
+    File.join(os, 'ci', target.sub('ci-', ''))
+  end
+
+  def directory
+    File.join('images', version, context)
   end
 
   def dockerfile
-    File.join(context, 'Dockerfile')
+    File.join(directory, 'Dockerfile')
+  end
+
+  def template
+    return File.join('templates', os, 'Dockerfile') if target == 'base'
+    return File.join('templates', os, 'ci', 'Dockerfile') if target == 'ci'
+
+    File.join('templates', os, 'ci', target.sub('ci-', ''), 'Dockerfile')
+  end
+
+  def depends
+    return nil if target == 'base'
+
+    parent_target = (target == 'ci') ? 'base' : 'ci'
+    parent = self.class.new(version: version, os: os, target: parent_target)
+    parent.tags_with_repository.first
   end
 
   def to_json(options = nil)
@@ -182,12 +205,28 @@ class Image
       target: target,
       nix_version: nix_version,
       context: context,
+      directory: directory,
+      dockerfile: dockerfile,
       tags: tags,
       tags_with_repository: tags_with_repository,
       cache: cache,
+      depends: depends,
       major_latest?: major_latest?,
       latest?: latest?,
     }.to_json
+  end
+end
+
+def generate_dockerfiles(images)
+  puts '>>> generating dockerfiles'
+  images.map(&:directory).uniq.each { |path| FileUtils.rm_rf(path) }
+
+  images.each do |image|
+    FileUtils.mkdir_p(image.directory)
+    content = File.read(image.template)
+    content.gsub!('{{NIX_VERSION}}', image.nix_version)
+    content.gsub!('{{DEPENDS}}', image.depends) if image.depends
+    File.write(image.dockerfile, content)
   end
 end
 
@@ -200,7 +239,7 @@ def generate_readme(images)
            image.dockerfile)
   end
 
-  readme = 'README.md.template'
+  readme = File.join('templates', 'README.md')
   unless File.exist?(readme)
     warn "README template not found at #{readme}"
     return
@@ -214,6 +253,7 @@ end
 def run(options)
   if options[:generate]
     images = Image.all
+    generate_dockerfiles(images)
     generate_readme(images)
   end
 
