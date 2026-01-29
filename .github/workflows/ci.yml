@@ -71,8 +71,6 @@ jobs:
         uses: docker/setup-buildx-action@master
         with:
           buildkitd-config-inline: |
-            [worker.oci]
-              max-parallelism = 1
             [registry."docker.io"]
               mirrors = ["https://${{ secrets.MIRROR_HOST }}"]
 
