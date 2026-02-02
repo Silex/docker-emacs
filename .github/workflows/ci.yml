@@ -78,3 +78,13 @@ jobs:
 
       - name: Build and push images for ${{ matrix.version }} (${{ matrix.os }})
         run: bin/build --os ${{ matrix.os }} --version ${{ matrix.version }} --targets ${{ join(matrix.targets, ',') }}
+
+  clean:
+    needs: build
+    if: ${{ always() && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dataaxiom/ghcr-cleanup-action@main
+        with:
+          package: emacs-cache
+          token: ${{ secrets.GITHUB_TOKEN }}
