@@ -9,21 +9,30 @@ def build(options)
   abort 'Failed to retrieve images' if json.empty?
   data = JSON.parse(json)
   images = data['images']
-  os, version, targets = options.values_at(:os, :version, :targets)
-  targets = targets.split(',')
+  os, version, subdirs = options.values_at(:os, :version, :subdirs)
+  subdirs = parse_subdirs(subdirs)
+  build_subdirs = build_order(subdirs, data['subdirs'])
 
   push = ENV['GITHUB_REF_NAME'] == 'main'
-  targets.each do |target|
+  build_list = []
+  root = find_image(images, os, version, nil)
+  abort 'Could not find root image' unless root
+  build_list << root
+  build_subdirs.each do |subdir|
+    image = find_image(images, os, version, subdir)
+    abort format('Could not find image for %s', subdir) unless image
+    build_list << image
+  end
+
+  build_list.each do |image|
     puts format('----------------------------------------------------------------------')
 
-    image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, target] }
-    abort 'Could not find image' unless image
     source_date_epoch = read_source_date_epoch(image['dockerfile'])
 
     args = %w[docker buildx build --progress plain]
 
     # Only pull first image
-    args << '--pull' if target == 'base'
+    args << '--pull' if image['subdir'].nil?
 
     if push
       args << '--provenance=false'
@@ -46,6 +55,41 @@ def build(options)
   end
 end
 
+def parse_subdirs(subdirs)
+  return [] if subdirs.nil?
+
+  subdirs.split(',').map(&:strip).reject(&:empty?)
+end
+
+def parent_paths(subdir)
+  parts = subdir.split('/')
+  parents = []
+  1.upto(parts.length - 1) do |i|
+    parents << parts[0, i].join('/')
+  end
+  parents
+end
+
+def build_order(subdirs, child_order)
+  return [] if subdirs.empty?
+
+  index = child_order.each_with_index.to_h
+  required = []
+  subdirs.each do |subdir|
+    required << subdir
+    required.concat(parent_paths(subdir))
+  end
+  required = required.uniq
+  unknown = required.reject { |subdir| index.key?(subdir) }
+  abort format('Unknown child directory: %s', unknown.join(', ')) unless unknown.empty?
+
+  required.sort_by { |subdir| [subdir.count('/'), index[subdir]] }
+end
+
+def find_image(images, os, version, subdir)
+  images.find { |img| img.values_at('os', 'version', 'subdir') == [os, version, subdir] }
+end
+
 def read_source_date_epoch(path)
   repo_root = File.expand_path('..', __dir__)
   epoch = IO.popen(['git', '-C', repo_root, 'log', '-1', '--format=%ct', '--', path], &:read).strip
@@ -58,7 +102,7 @@ def parse_options
   options = {}
 
   parser = OptionParser.new do |opts|
-    opts.banner = 'Usage: build --os OS --version VERSION --targets TARGETS'
+    opts.banner = 'Usage: build --os OS --version VERSION --subdirs SUBDIRS'
     opts.separator ''
     opts.separator 'Build an image'
 
@@ -70,8 +114,8 @@ def parse_options
       options[:version] = version
     end
 
-    opts.on('--targets TARGETS', 'Image TARGETS (required)') do |targets|
-      options[:targets] = targets
+    opts.on('--subdirs SUBDIRS', 'Image SUBDIRS (required)') do |subdirs|
+      options[:subdirs] = subdirs
     end
 
     opts.on('-h', '--help', 'Print usage') do
@@ -92,7 +136,7 @@ def parse_options
   missing = []
   missing << '--os' unless options[:os]
   missing << '--version' unless options[:version]
-  missing << '--targets' unless options[:targets]
+  missing << '--subdirs' unless options[:subdirs]
 
   unless missing.empty?
     STDERR.puts "Missing required option(s): #{missing.join(', ')}"

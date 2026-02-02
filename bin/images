@@ -22,7 +22,7 @@ class Image
 
   attr_reader :os
   attr_reader :version
-  attr_reader :target
+  attr_reader :subdir
 
   class << self
     def all
@@ -31,9 +31,10 @@ class Image
         exclusion = exclusions.find { |h| h['version'] == version }
         oses.each do |os|
           next if exclusion&.dig('os')&.include?(os)
-          targets.each do |target|
-            next if exclusion&.dig('target')&.include?(target)
-            images << Image.new(version: version, os: os, target: target)
+          images << Image.new(version: version, os: os, subdir: nil)
+          subdirs.each do |child_subdir|
+            next if exclusion&.dig('subdirs')&.include?(child_subdir)
+            images << Image.new(version: version, os: os, subdir: child_subdir)
           end
         end
       end
@@ -52,8 +53,8 @@ class Image
       data['oses']
     end
 
-    def targets
-      data['targets']
+    def subdirs
+      Array(data['subdirs'])
     end
 
     def cache_bust_versions
@@ -72,6 +73,7 @@ class Image
       # Ensure versions are strings
       data['exclusions'].map do |h|
         h['version'] = h['version'].to_s
+        h['subdirs'] = Array(h['subdirs']).map(&:to_s) if h.key?('subdirs')
         h
       end
     end
@@ -84,10 +86,10 @@ class Image
     end
 
     def github_include
-      include = [{ targets: targets }]
-      with_excluded_targets = exclusions.select{ |h| h.has_key?('target') }
-      with_excluded_targets.each do |h|
-        include << { version: h['version'], targets: targets - h['target'] }
+      include = [{ subdirs: subdirs }]
+      with_excluded_subdirs = exclusions.select{ |h| h.has_key?('subdirs') }
+      with_excluded_subdirs.each do |h|
+        include << { version: h['version'], subdirs: subdirs - h['subdirs'] }
       end
       include
     end
@@ -105,7 +107,7 @@ class Image
       {
         versions: versions,
         oses: oses,
-        targets: targets,
+        subdirs: subdirs,
         exclusions: exclusions,
         cache_bust: cache_bust_versions,
         github: github,
@@ -114,10 +116,10 @@ class Image
     end
   end
 
-  def initialize(version:, os:, target:)
+  def initialize(version:, os:, subdir:)
     @version = version
     @os      = os
-    @target  = target
+    @subdir  = subdir
   end
 
   def major_latest?
@@ -132,27 +134,36 @@ class Image
     tags = []
 
     # Base tag
-    tags << format('%s-%s-%s', version, os, target)
+    if subdir
+      tags << format('%s-%s-%s', version, os, subdir.tr('/', '-'))
+    else
+      tags << format('%s-%s', version, os)
+    end
 
     # Pretty tag for debian
     if os == 'debian'
-      tags << format('%s-%s', version, target)
+      if subdir
+        tags << format('%s-%s', version, subdir.tr('/', '-'))
+      else
+        tags << version
+      end
     end
 
     # Handle major latest
     if major_latest?
       tags += tags.map { |t| t.sub(/\.\d+/, '') }
       if latest?
-        additional_tag = (os == 'debian' && target == 'base') ? 'latest' : tags.last.sub(/\d+-/, '')
+        additional_tag = if os == 'debian' && subdir.nil?
+                           'latest'
+                         else
+                           tags.last.sub(/\d+-/, '')
+                         end
         tags << additional_tag
       end
     end
 
     # Handle ci tags
-    tags += tags.map { |t| t.sub('ci-', '') } if target.include?('ci-')
-
-    # Pretty tag for base
-    tags.map!{ |t| t.sub('-base', '') }
+    tags += tags.map { |t| t.sub('ci-', '') } if subdir&.start_with?('ci/')
 
     tags
   end
@@ -173,15 +184,9 @@ class Image
     format('emacs-%s', version.gsub('.', '-'))
   end
 
-  def context
-    return os if target == 'base'
-    return File.join(os, 'ci') if target == 'ci'
-
-    File.join(os, 'ci', target.sub('ci-', ''))
-  end
-
   def directory
-    File.join('images', version, context)
+    parts = [version, os, subdir].compact
+    File.join('images', *parts)
   end
 
   def dockerfile
@@ -189,27 +194,31 @@ class Image
   end
 
   def template
-    return File.join('templates', os, 'Dockerfile') if target == 'base'
-    return File.join('templates', os, 'ci', 'Dockerfile') if target == 'ci'
+    return File.join('templates', os, 'Dockerfile') unless subdir
 
-    File.join('templates', os, 'ci', target.sub('ci-', ''), 'Dockerfile')
+    File.join('templates', os, subdir, 'Dockerfile')
   end
 
   def depends
-    return nil if target == 'base'
+    return nil unless subdir
 
-    parent_target = (target == 'ci') ? 'base' : 'ci'
-    parent = self.class.new(version: version, os: os, target: parent_target)
+    parent = self.class.new(version: version, os: os, subdir: parent_subdir)
     parent.tags_with_repository.first
+  end
+
+  def parent_subdir
+    return nil unless subdir
+
+    parent, _sep, _leaf = subdir.rpartition('/')
+    parent.empty? ? nil : parent
   end
 
   def to_json(options = nil)
     {
       version: version,
       os: os,
-      target: target,
+      subdir: subdir,
       nix_version: nix_version,
-      context: context,
       directory: directory,
       dockerfile: dockerfile,
       tags: tags,

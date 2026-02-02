@@ -28,13 +28,12 @@ oses:
   - debian
   - alpine
 
-targets:
-  - base
+subdirs:
   - ci
-  - ci-cask
-  - ci-eask
-  - ci-eldev
-  - ci-keg
+  - ci/cask
+  - ci/eask
+  - ci/eldev
+  - ci/keg
 
 cache_bust:
   - master
@@ -43,57 +42,57 @@ exclusions:
   - version: 23.4
     os:
       - alpine
-    target:
-      - ci-cask
-      - ci-eask
-      - ci-eldev
-      - ci-keg
+    subdirs:
+      - ci/cask
+      - ci/eask
+      - ci/eldev
+      - ci/keg
 
   - version: 24.1
     os:
       - alpine
-    target:
-      - ci-cask
-      - ci-eask
-      - ci-eldev
+    subdirs:
+      - ci/cask
+      - ci/eask
+      - ci/eldev
 
   - version: 24.2
     os:
       - alpine
-    target:
-      - ci-cask
-      - ci-eask
-      - ci-eldev
+    subdirs:
+      - ci/cask
+      - ci/eask
+      - ci/eldev
 
   - version: 24.3
     os:
       - alpine
-    target:
-      - ci-cask
-      - ci-eask
-      - ci-eldev
+    subdirs:
+      - ci/cask
+      - ci/eask
+      - ci/eldev
 
   - version: 24.4
     os:
       - alpine
-    target:
-      - ci-cask
-      - ci-eask
+    subdirs:
+      - ci/cask
+      - ci/eask
 
   - version: 24.5
     os:
       - alpine
-    target:
-      - ci-eask
+    subdirs:
+      - ci/eask
 
   - version: 25.1
-    target:
-      - ci-eask
+    subdirs:
+      - ci/eask
 
   - version: 25.2
-    target:
-      - ci-eask
+    subdirs:
+      - ci/eask
 
   - version: 25.3
-    target:
-      - ci-eask
+    subdirs:
+      - ci/eask
