@@ -257,9 +257,26 @@ def generate_readme(images)
     return
   end
 
-  content = File.read(readme)
+  template_content = File.read(readme)
+  content = template_content.dup
   content.gsub!('{{TAGS}}', tags.join("\n"))
   File.write('README.md', content)
+
+  # Docker Hub description: only keep master + latest for each major (25,000 bytes description limit).
+  latest_versions = Image.major_latests
+  short_tags = images.select do |image|
+    image.version == 'master' || latest_versions.include?(image.version)
+  end
+  short_tags = short_tags.group_by(&:version).values.reverse.flatten.flat_map do |image|
+    format('- [%s](https://github.com/Silex/docker-emacs/blob/main/%s)',
+           image.tags.map(&:backquotify).join(', '),
+           image.dockerfile)
+  end
+
+  dockerhub_content = template_content.dup
+  dockerhub_content.gsub!('{{TAGS}}', short_tags.join("\n"))
+  dockerhub_content.sub!('# Tags', "# Tags\n\nFull image list: https://github.com/Silex/docker-emacs#tags")
+  File.write('README.dockerhub.md', dockerhub_content)
 end
 
 def run(options)
