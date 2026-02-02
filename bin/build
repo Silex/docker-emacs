@@ -21,7 +21,7 @@ def build(options)
     image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, target] }
     abort 'Could not find image' unless image
 
-    args = push ? %w[docker buildx build --progress plain] : %w[docker build --progress plain]
+    args = %w[docker buildx build --progress plain]
 
     # Common arguments
     args += ['--provenance=false', '--sbom=false'] if push
@@ -30,6 +30,7 @@ def build(options)
     # Only pull first image
     args << '--pull' if target == 'base'
 
+    args << '--load' unless push
     args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if push
 
     if push
