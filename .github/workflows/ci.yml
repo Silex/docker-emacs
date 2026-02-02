@@ -98,6 +98,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        with:
+          fetch-depth: 0
 
       - uses: ruby/setup-ruby@master
 

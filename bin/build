@@ -13,13 +13,12 @@ def build(options)
   targets = targets.split(',')
 
   push = ENV['GITHUB_REF_NAME'] == 'main'
-  source_date_epoch = read_source_date_epoch
-
   targets.each do |target|
     puts format('----------------------------------------------------------------------')
 
     image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, target] }
     abort 'Could not find image' unless image
+    source_date_epoch = read_source_date_epoch(image['dockerfile'])
 
     args = %w[docker buildx build --progress plain]
 
@@ -47,9 +46,12 @@ def build(options)
   end
 end
 
-def read_source_date_epoch
+def read_source_date_epoch(path)
   repo_root = File.expand_path('..', __dir__)
-  IO.popen(['git', '-C', repo_root, 'log', '-1', '--format=%ct'], &:read).strip
+  epoch = IO.popen(['git', '-C', repo_root, 'log', '-1', '--format=%ct', '--', path], &:read).strip
+  return epoch unless epoch.empty?
+
+  abort format('No git history found for %s. Ensure full git history is available (e.g., checkout with fetch-depth: 0).', path)
 end
 
 def parse_options
