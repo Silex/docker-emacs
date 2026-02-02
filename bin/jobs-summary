@@ -1,0 +1,75 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'optparse'
+require 'time'
+
+options = {
+  repo: ENV['GITHUB_REPOSITORY'],
+  run_id: ENV['GITHUB_RUN_ID'],
+  per_page: 100,
+  sort: 'duration'
+}
+
+OptionParser.new do |parser|
+  parser.on('--repo REPO', 'Owner/repo (default: GITHUB_REPOSITORY)') { |v| options[:repo] = v }
+  parser.on('--run-id ID', 'Run id (default: GITHUB_RUN_ID)') { |v| options[:run_id] = v }
+  parser.on('--per-page N', Integer, 'Jobs per page (default: 100)') { |v| options[:per_page] = v }
+end.parse!
+
+if options[:repo].to_s.empty? || options[:run_id].to_s.empty?
+  warn 'Missing repo or run id. Set GITHUB_REPOSITORY and GITHUB_RUN_ID, or pass --repo/--run-id.'
+  exit 1
+end
+
+api_path = format('/repos/%s/actions/runs/%s/jobs?per_page=%d', options[:repo], options[:run_id], options[:per_page])
+cmd = ['gh', 'api', '-H', 'Accept: application/vnd.github+json', api_path]
+
+output = IO.popen(cmd, err: [:child, :out], &:read)
+unless $?.success?
+  warn output
+  exit 1
+end
+
+payload = JSON.parse(output)
+jobs = payload.fetch('jobs', []).map do |job|
+  started = Time.parse(job.fetch('started_at'))
+  completed_at = job['completed_at']
+  completed = completed_at ? Time.parse(completed_at) : Time.now
+  duration = completed - started
+
+  {
+    name: job.fetch('name'),
+    status: job.fetch('status'),
+    conclusion: job['conclusion'] || '-',
+    started_at: job.fetch('started_at'),
+    completed_at: completed_at || '-',
+    duration: duration
+  }
+end
+
+def format_duration(seconds)
+  total = seconds.to_i
+  s = total % 60
+  total /= 60
+  m = total % 60
+  h = total / 60
+
+  return format('%dh %dm %ds', h, m, s) if h > 0
+  return format('%dm %ds', m, s) if m > 0
+  format('%ds', s)
+end
+
+sorted = jobs.sort_by { |j| j[:duration] }.reverse
+
+puts '## Job Summary'
+puts ''
+puts '| Job | Status | Conclusion | Started | Completed | Duration |'
+puts '| --- | ------ | ---------- | ------- | --------- | -------- |'
+sorted.each do |job|
+  name = job[:name].gsub('|', '\|')
+  duration = format_duration(job[:duration])
+  puts format('| %s | %s | %s | %s | %s | %s |', name, job[:status], job[:conclusion], job[:started_at], job[:completed_at], duration)
+end
+puts ''
+puts '_Sorted by duration (desc)._'

@@ -88,3 +88,20 @@ jobs:
         with:
           package: emacs-cache
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  summary:
+    needs: clean
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - uses: ruby/setup-ruby@master
+
+      - name: Summarize jobs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bin/jobs-summary >> "$GITHUB_STEP_SUMMARY"
