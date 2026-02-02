@@ -131,41 +131,7 @@ class Image
   end
 
   def tags
-    tags = []
-
-    # Base tag
-    if subdir
-      tags << format('%s-%s-%s', version, os, subdir.tr('/', '-'))
-    else
-      tags << format('%s-%s', version, os)
-    end
-
-    # Pretty tag for debian
-    if os == 'debian'
-      if subdir
-        tags << format('%s-%s', version, subdir.tr('/', '-'))
-      else
-        tags << version
-      end
-    end
-
-    # Handle major latest
-    if major_latest?
-      tags += tags.map { |t| t.sub(/\.\d+/, '') }
-      if latest?
-        additional_tag = if os == 'debian' && subdir.nil?
-                           'latest'
-                         else
-                           tags.last.sub(/\d+-/, '')
-                         end
-        tags << additional_tag
-      end
-    end
-
-    # Handle ci tags
-    tags += tags.map { |t| t.sub('ci-', '') } if subdir&.start_with?('ci/')
-
-    tags
+    tag_variants.flat_map { |variant| tags_for_variant(variant) }
   end
 
   def tags_with_repository
@@ -211,6 +177,49 @@ class Image
 
     parent, _sep, _leaf = subdir.rpartition('/')
     parent.empty? ? nil : parent
+  end
+
+  def tag_variants
+    return [nil] unless subdir
+
+    segments = subdir.split('/')
+    (0...segments.length).map { |i| segments[i..-1].join('-') }
+  end
+
+  def tags_for_variant(variant)
+    tags = [tag_with_os(variant)]
+    tags << tag_pretty(variant) if os == 'debian'
+
+    if major_latest?
+      tags += tags.map { |t| t.sub(/\.\d+/, '') }
+      tags << latest_tag(variant) if latest?
+    end
+
+    tags
+  end
+
+  def tag_with_os(variant)
+    return format('%s-%s', version, os) unless variant
+
+    format('%s-%s-%s', version, os, variant)
+  end
+
+  def tag_pretty(variant)
+    return version unless variant
+
+    format('%s-%s', version, variant)
+  end
+
+  def latest_tag(variant)
+    if os == 'debian'
+      return 'latest' unless variant
+
+      return variant
+    end
+
+    return os unless variant
+
+    format('%s-%s', os, variant)
   end
 
   def to_json(options = nil)
