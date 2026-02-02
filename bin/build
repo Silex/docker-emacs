@@ -12,34 +12,45 @@ def build(options)
   os, version, targets = options.values_at(:os, :version, :targets)
   targets = targets.split(',')
 
+  push = ENV['GITHUB_REF_NAME'] == 'main'
+  source_date_epoch = read_source_date_epoch
+
   targets.each do |target|
     puts format('----------------------------------------------------------------------')
 
     image = images.find { |img| img.values_at('os', 'version', 'target') == [os, version, target] }
     abort 'Could not find image' unless image
 
-    push = ENV['GITHUB_REF_NAME'] == 'main'
-    use_buildx = push
-    args = use_buildx ? %w[docker buildx build --progress plain] : %w[docker build --progress plain]
+    args = push ? %w[docker buildx build --progress plain] : %w[docker build --progress plain]
 
     # Common arguments
-    args += ['--cache-from', format('type=registry,ref=%s', image['cache'])] if use_buildx
+    args += ['--provenance=false', '--sbom=false'] if push
+    args += ['--cache-from', format('type=registry,ref=%s', image['cache'])] if push
 
     # Only pull first image
     args << '--pull' if target == 'base'
 
-    # Only push main branch
-    args << '--push' if push
-
     args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if push
-    args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
+
+    if push
+      output = ['type=image', "\"name=#{image['tags_with_repository'].join(',')}\"", 'push=true', 'rewrite-timestamp=true']
+      args += ['--output', output.join(',')]
+    else
+      args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
+    end
 
     args << image['directory']
 
     # Build image
     puts format('>>> Running command: %s', args.join(' '))
-    system(*args) || abort('Build failed')
+    env = { 'SOURCE_DATE_EPOCH' => source_date_epoch }
+    system(env, *args) || abort('Build failed')
   end
+end
+
+def read_source_date_epoch
+  repo_root = File.expand_path('..', __dir__)
+  IO.popen(['git', '-C', repo_root, 'log', '-1', '--format=%ct'], &:read).strip
 end
 
 def parse_options
