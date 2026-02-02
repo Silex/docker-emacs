@@ -4,55 +4,63 @@ require 'json'
 require 'optparse'
 
 def build(options)
+  os, version, subdirs = options.values_at(:os, :version, :subdirs)
+  subdirs = parse_subdirs(subdirs)
+  images = load_images.select { |img| img.values_at('os', 'version') == [os, version] }
+  root = images.find { |img| img['subdir'].nil? }
+  subdir_index = index_by_subdir(images)
+  build_subdirs = build_order(subdirs, subdir_index.keys)
+  build_list = [root] + build_subdirs.map { |subdir| subdir_index.fetch(subdir) }
+
+  build_list.each do |image|
+    build_image(image)
+  end
+end
+
+def load_images
   command = format('%s/images --json', File.expand_path(__dir__))
   json = `#{command}`.strip
   abort 'Failed to retrieve images' if json.empty?
   data = JSON.parse(json)
-  images = data['images']
-  os, version, subdirs = options.values_at(:os, :version, :subdirs)
-  subdirs = parse_subdirs(subdirs)
-  build_subdirs = build_order(subdirs, data['subdirs'])
+  data['images']
+end
 
-  push = ENV['GITHUB_REF_NAME'] == 'main'
-  build_list = []
-  root = find_image(images, os, version, nil)
-  abort 'Could not find root image' unless root
-  build_list << root
-  build_subdirs.each do |subdir|
-    image = find_image(images, os, version, subdir)
-    abort format('Could not find image for %s', subdir) unless image
-    build_list << image
+def index_by_subdir(images)
+  images.each_with_object({}) do |image, index|
+    subdir = image['subdir']
+    next if subdir.nil?
+    index[subdir] = image
+  end
+end
+
+def build_image(image)
+  puts format('----------------------------------------------------------------------')
+
+  source_date_epoch = read_source_date_epoch(image['dockerfile'])
+
+  args = %w[docker buildx build --progress plain]
+
+  # Only pull first image
+  args << '--pull' if image['subdir'].nil?
+
+  if ENV['GITHUB_REF_NAME'] == 'main'
+    args << '--provenance=false'
+    args << '--sbom=false'
+    args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
+    args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
+    output = ['type=image', "\"name=#{image['tags_with_repository'].join(',')}\"", 'push=true', 'rewrite-timestamp=true']
+    args << '--output' << output.join(',')
+  else
+    args << '--load'
+    args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
   end
 
-  build_list.each do |image|
-    puts format('----------------------------------------------------------------------')
+  args << image['directory']
 
-    source_date_epoch = read_source_date_epoch(image['dockerfile'])
-
-    args = %w[docker buildx build --progress plain]
-
-    # Only pull first image
-    args << '--pull' if image['subdir'].nil?
-
-    if push
-      args << '--provenance=false'
-      args << '--sbom=false'
-      args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
-      args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
-      output = ['type=image', "\"name=#{image['tags_with_repository'].join(',')}\"", 'push=true', 'rewrite-timestamp=true']
-      args << '--output' << output.join(',')
-    else
-      args << '--load'
-      args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
-    end
-
-    args << image['directory']
-
-    # Build image
-    puts format('>>> Running command: %s', args.join(' '))
-    env = { 'SOURCE_DATE_EPOCH' => source_date_epoch }
-    system(env, *args) || abort('Build failed')
-  end
+  # Build image
+  puts format('>>> Running command: %s', args.join(' '))
+  env = { 'SOURCE_DATE_EPOCH' => source_date_epoch }
+  system(env, *args) || abort('Build failed')
 end
 
 def parse_subdirs(subdirs)
@@ -70,10 +78,10 @@ def parent_paths(subdir)
   parents
 end
 
-def build_order(subdirs, child_order)
+def build_order(subdirs, available_subdirs)
   return [] if subdirs.empty?
 
-  index = child_order.each_with_index.to_h
+  index = available_subdirs.each_with_index.to_h
   required = []
   subdirs.each do |subdir|
     required << subdir
@@ -81,13 +89,9 @@ def build_order(subdirs, child_order)
   end
   required = required.uniq
   unknown = required.reject { |subdir| index.key?(subdir) }
-  abort format('Unknown child directory: %s', unknown.join(', ')) unless unknown.empty?
+  abort format('Unknown subdir: %s', unknown.join(', ')) unless unknown.empty?
 
   required.sort_by { |subdir| [subdir.count('/'), index[subdir]] }
-end
-
-def find_image(images, os, version, subdir)
-  images.find { |img| img.values_at('os', 'version', 'subdir') == [os, version, subdir] }
 end
 
 def read_source_date_epoch(path)
