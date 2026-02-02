@@ -23,20 +23,18 @@ def build(options)
 
     args = %w[docker buildx build --progress plain]
 
-    # Common arguments
-    args += ['--provenance=false', '--sbom=false'] if push
-    args += ['--cache-from', format('type=registry,ref=%s', image['cache'])] if push
-
     # Only pull first image
     args << '--pull' if target == 'base'
 
-    args << '--load' unless push
-    args += ['--cache-to', format('type=registry,ref=%s,mode=max', image['cache'])] if push
-
     if push
+      args << '--provenance=false'
+      args << '--sbom=false'
+      args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
+      args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
       output = ['type=image', "\"name=#{image['tags_with_repository'].join(',')}\"", 'push=true', 'rewrite-timestamp=true']
-      args += ['--output', output.join(',')]
+      args << '--output' << output.join(',')
     else
+      args << '--load'
       args += image['tags_with_repository'].flat_map { |s| ['--tag', s] }
     end
 
