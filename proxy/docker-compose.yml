@@ -1,0 +1,28 @@
+x-default: &default
+  restart: 'always'
+  logging:
+    driver: 'local'
+    options:
+      max-size: '50m'
+      max-file: '10'
+
+services:
+  caddy:
+    <<: *default
+    image: 'caddy:2'
+    ports:
+      - '80:80'
+      - '443:443'
+    env_file:
+      - './data/caddy/config/.env'
+    volumes:
+      - './Caddyfile:/etc/caddy/Caddyfile'
+      - './data/caddy/data:/data'
+
+  registry:
+    <<: *default
+    image: 'registry:3'
+    env_file:
+      - './data/registry/config/.env'
+    volumes:
+      - './data/registry/data:/var/lib/registry'

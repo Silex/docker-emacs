@@ -1,0 +1,6 @@
+{$MIRROR_HOST} {
+  basicauth {
+    {$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+  }
+  reverse_proxy registry:5000
+}
