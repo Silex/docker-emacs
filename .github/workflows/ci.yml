@@ -44,6 +44,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        with:
+          fetch-depth: 0
 
       - name: Login to Docker Hub
         if: github.event_name != 'pull_request'
