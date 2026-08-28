@@ -1,0 +1,153 @@
+#!/usr/bin/env bash
+
+# Setup entry point: seed runtime config under data/ from templates/, generate the mirror
+# credentials, prompt for the values a human must supply, then render the env files.
+# Idempotent: an existing env file is never clobbered, so the credentials stay stable.
+#
+# The envsubst allowlists are single-quoted on purpose so the ${VAR} names reach envsubst
+# literally instead of being expanded by bash.
+# shellcheck disable=SC2016
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+TEMPLATE_DATA_DIR="${ROOT}/templates/data"
+TEMPLATE_DIR="${ROOT}/templates/render"
+
+CADDY_ENV="${ROOT}/data/caddy/config/.env"
+REGISTRY_ENV="${ROOT}/data/registry/config/.env"
+
+case "${1:-}" in
+  -h|--help) echo "usage: bin/configure"; exit 0 ;;
+  '') ;;
+  *) echo "unknown argument: $1" >&2; echo "usage: bin/configure" >&2; exit 2 ;;
+esac
+
+# --- preflight -------------------------------------------------------------
+
+for tool in openssl envsubst rsync docker; do
+  if ! command -v "$tool" >/dev/null 2>&1; then
+    if [[ "$tool" == envsubst ]]; then
+      echo "envsubst not found. Install gettext (Debian/Ubuntu: gettext-base, Alpine: gettext)." >&2
+    else
+      echo "$tool not found. Install it and re-run." >&2
+    fi
+    exit 1
+  fi
+done
+
+# --- helpers ---------------------------------------------------------------
+
+# Prompt for a value, re-asking until non-empty. Optional default shown in brackets.
+prompt() {
+  local var="$1" text="$2" default="${3:-}" reply
+  while true; do
+    if [[ -n "$default" ]]; then
+      read -rp "${text} [${default}]: " reply || true
+      reply="${reply:-$default}"
+    else
+      read -rp "${text}: " reply || true
+    fi
+    if [[ -n "$reply" ]]; then
+      printf -v "$var" '%s' "$reply"
+      return 0
+    fi
+    echo "  A value is required." >&2
+  done
+}
+
+# Destination env file for a staged template name.
+env_dest() {
+  case "$1" in
+    caddy) echo "$CADDY_ENV" ;;
+    registry) echo "$REGISTRY_ENV" ;;
+  esac
+}
+
+# Render a template, substituting only the allowlisted variables.
+render() {
+  local tmpl="$1" out="$2" allow="$3"
+  envsubst "$allow" < "${TEMPLATE_DIR}/${tmpl}" > "$out"
+}
+
+# Caddy's basicauth directive reads a bcrypt hash, while hash-password now defaults to
+# argon2id, so the algorithm is explicit. The image is already part of this stack, which
+# saves the operator an htpasswd install.
+hash_password() {
+  docker run --rm caddy:2 caddy hash-password --algorithm bcrypt --plaintext "$1"
+}
+
+# --- seed static tree ------------------------------------------------------
+
+mkdir -p "${ROOT}/data/caddy/config" "${ROOT}/data/registry/config"
+rsync -a --ignore-existing "${TEMPLATE_DATA_DIR}/" "${ROOT}/data/"
+
+# --- generate env files (once) ---------------------------------------------
+
+tmp_dir="$(mktemp -d)"
+trap 'rm -rf "$tmp_dir"' EXIT
+staged=0
+
+if [[ -f "$CADDY_ENV" ]]; then
+  echo "${CADDY_ENV} exists, keeping it."
+else
+  echo "Configuring Caddy."
+  prompt MIRROR_HOST "Public domain of the mirror" mirror.example.com
+  prompt BASIC_AUTH_USER "User the CI logs in as" mirror
+  BASIC_AUTH_PASSWORD="$(openssl rand -hex 24)"
+  BASIC_AUTH_HASH="$(hash_password "$BASIC_AUTH_PASSWORD")"
+  export MIRROR_HOST BASIC_AUTH_USER BASIC_AUTH_HASH
+  render caddy.env.tmpl "${tmp_dir}/caddy.env" '${MIRROR_HOST} ${BASIC_AUTH_USER} ${BASIC_AUTH_HASH}'
+  staged=1
+fi
+
+if [[ -f "$REGISTRY_ENV" ]]; then
+  echo "${REGISTRY_ENV} exists, keeping it."
+else
+  echo "Configuring the registry."
+  prompt REGISTRY_PROXY_USERNAME "Docker Hub user the cache pulls as"
+  prompt REGISTRY_PROXY_PASSWORD "Docker Hub token for that user"
+  export REGISTRY_PROXY_USERNAME REGISTRY_PROXY_PASSWORD
+  render registry.env.tmpl "${tmp_dir}/registry.env" '${REGISTRY_PROXY_USERNAME} ${REGISTRY_PROXY_PASSWORD}'
+  staged=1
+fi
+
+if (( staged )); then
+  echo
+  echo "Will write:"
+  for name in caddy registry; do
+    if [[ -f "${tmp_dir}/${name}.env" ]]; then
+      echo
+      echo "===> $(env_dest "$name")"
+      cat "${tmp_dir}/${name}.env"
+    fi
+  done
+  echo
+  read -rp "Write these files? [y/N]: " confirm || true
+  if [[ "${confirm,,}" != "y" && "${confirm,,}" != "yes" ]]; then
+    echo "Nothing written; re-run bin/configure."
+    exit 0
+  fi
+  for name in caddy registry; do
+    if [[ -f "${tmp_dir}/${name}.env" ]]; then
+      mv "${tmp_dir}/${name}.env" "$(env_dest "$name")"
+    fi
+  done
+fi
+
+# Env files hold secrets; restrict them.
+find "${ROOT}/data" -type f -name '*.env' -exec chmod 600 {} +
+
+echo
+echo "Configuration ready. Start with: docker compose up -d"
+
+if [[ -n "${BASIC_AUTH_PASSWORD:-}" ]]; then
+  echo
+  echo "Only the hash of the mirror password is stored, so here it is once:"
+  echo
+  echo "  ${BASIC_AUTH_PASSWORD}"
+  echo
+  echo "In the docker-emacs repository, set it as the MIRROR_PASSWORD secret, with"
+  echo "MIRROR_USERNAME='${BASIC_AUTH_USER}' and MIRROR_HOST='${MIRROR_HOST}' as variables."
+fi

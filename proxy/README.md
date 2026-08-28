@@ -7,33 +7,25 @@ TLS-terminated pull-through cache for Docker Hub. GitHub-hosted runners pull thr
 - DNS name pointing to your server (e.g. `mirror.example.com`)
 - Ports 80/443 open
 - Docker + docker compose
+- `openssl`, `rsync` and `envsubst` (Debian/Ubuntu: `gettext-base`)
 
 ## Setup
 
-1) Bootstrap:
+Run the configure script and answer its prompts:
 
 ```
-./bin/bootstrap
+./bin/configure
 ```
 
-This copies template configs into `data/`.
+It seeds `data/`, generates the mirror password and keeps only its bcrypt hash, then writes
+`data/caddy/config/.env` and `data/registry/config/.env`. Re-running it never overwrites an
+existing env file, so the credentials stay stable.
 
-2) Edit env files:
+The generated password is printed once, because only its hash is stored. In the docker-emacs
+repository it is the `MIRROR_PASSWORD` secret, next to the `MIRROR_USERNAME` and `MIRROR_HOST`
+variables.
 
-```
-data/caddy/config/.env       # MIRROR_HOST, BASIC_AUTH_*
-data/registry/config/.env    # REGISTRY_PROXY_USERNAME, REGISTRY_PROXY_PASSWORD
-```
-
-3) Generate bcrypt hash for basic auth:
-
-```
-htpasswd -nbB user pass | cut -d: -f2
-```
-
-Set `BASIC_AUTH_USER` and `BASIC_AUTH_HASH` in `data/caddy/config/.env`.
-
-4) Start:
+Start the stack:
 
 ```
 docker compose up -d
