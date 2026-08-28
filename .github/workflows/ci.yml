@@ -55,6 +55,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to registry mirror
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@master
         with:
           registry: ${{ vars.MIRROR_HOST }}
