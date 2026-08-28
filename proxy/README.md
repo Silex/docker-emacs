@@ -31,6 +31,21 @@ Start the stack:
 docker compose up -d
 ```
 
+## Upgrading
+
+```
+git pull
+./bin/configure --check
+```
+
+`--check` writes nothing and exits non-zero when an env file is missing a key its template
+defines. Env files are rendered once and never revisited, so a key added to a template after
+this mirror was set up never reaches it on its own — and a missing key is not an error, it is
+whatever default the software falls back to.
+
+The check compares key names only. It cannot see a value that drifted away from its template,
+nor a key the software reads that was never in a template at all.
+
 ## GitHub Actions BuildKit configuration
 
 ```

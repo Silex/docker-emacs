@@ -18,10 +18,12 @@ TEMPLATE_DIR="${ROOT}/templates/render"
 CADDY_ENV="${ROOT}/data/caddy/config/.env"
 REGISTRY_ENV="${ROOT}/data/registry/config/.env"
 
+check_only=0
 case "${1:-}" in
-  -h|--help) echo "usage: bin/configure"; exit 0 ;;
+  --check) check_only=1 ;;
+  -h|--help) echo "usage: bin/configure [--check]"; exit 0 ;;
   '') ;;
-  *) echo "unknown argument: $1" >&2; echo "usage: bin/configure" >&2; exit 2 ;;
+  *) echo "unknown argument: $1" >&2; echo "usage: bin/configure [--check]" >&2; exit 2 ;;
 esac
 
 # --- preflight -------------------------------------------------------------
@@ -77,6 +79,67 @@ render() {
 hash_password() {
   docker run --rm caddy:2 caddy hash-password --algorithm bcrypt --plaintext "$1"
 }
+
+# --- env drift -------------------------------------------------------------
+
+# An env file is rendered once and never revisited, so a key added to its template
+# afterwards never reaches an install that already exists — and a missing key is not a
+# config error, it is whatever fallback the software happened to choose. A registry with
+# no REGISTRY_PROXY_USERNAME pulls anonymously, which is the rate limit this mirror exists
+# to avoid. Compare key names and report the gap; the operator pastes the lines, because
+# appending a default would silently change a running system at the next restart.
+env_drift=0
+
+check_env_drift() {
+  local tmpl="${TEMPLATE_DIR}/$1" dest="$2" key line missing=()
+
+  if [[ ! -f "$dest" ]]; then
+    if (( check_only )); then
+      env_drift=1
+      echo "${dest} does not exist — run bin/configure." >&2
+    fi
+    return 0
+  fi
+
+  # Key names are literal in a .tmpl (only values carry ${VAR}), so nothing needs rendering.
+  while IFS= read -r key; do
+    grep -q "^${key}" "$dest" || missing+=("$key")
+  done < <(grep -o '^[A-Za-z_][A-Za-z0-9_]*=' "$tmpl")
+
+  (( ${#missing[@]} )) || return 0
+
+  env_drift=1
+  echo >&2
+  echo "${dest} is missing ${#missing[@]} key(s) its template defines. Append:" >&2
+  for key in "${missing[@]}"; do
+    line="$(grep -m1 "^${key}" "$tmpl")"
+    if [[ "$line" == *'${'* ]]; then
+      echo "  ${line}    # generated value — supply one" >&2
+    else
+      echo "  ${line}" >&2
+    fi
+  done
+}
+
+check_all_env_drift() {
+  check_env_drift caddy.env.tmpl "$CADDY_ENV"
+  check_env_drift registry.env.tmpl "$REGISTRY_ENV"
+}
+
+# --- check mode ------------------------------------------------------------
+
+# Preflight plus the drift check, writing nothing. A human reading warnings is not a gate;
+# an exit code is.
+if (( check_only )); then
+  check_all_env_drift
+  if (( env_drift )); then
+    echo >&2
+    echo "Env drift found. Clear the warnings above, then re-run bin/configure --check." >&2
+    exit 1
+  fi
+  echo "No env drift."
+  exit 0
+fi
 
 # --- seed static tree ------------------------------------------------------
 
@@ -138,6 +201,11 @@ fi
 
 # Env files hold secrets; restrict them.
 find "${ROOT}/data" -type f -name '*.env' -exec chmod 600 {} +
+
+# Runs on every invocation, the "already configured" path included: that path is the one an
+# install spends its whole life on, and the only one drift can appear on. A warning here,
+# never a failure — bin/configure --check is the gate.
+check_all_env_drift
 
 echo
 echo "Configuration ready. Start with: docker compose up -d"
