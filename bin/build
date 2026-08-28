@@ -43,7 +43,7 @@ def build_image(image)
   # Only pull first image
   args << '--pull' if image['subdir'].nil?
 
-  if ENV['GITHUB_REF_NAME'] == 'main'
+  if push?
     args << '--provenance=false'
     args << '--sbom=false'
     args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
@@ -61,6 +61,21 @@ def build_image(image)
   puts format('>>> Running command: %s', args.join(' '))
   env = { 'SOURCE_DATE_EPOCH' => source_date_epoch }
   system(env, *args) || abort('Build failed')
+
+  test_image(image) unless push?
+end
+
+def push?
+  ENV['GITHUB_REF_NAME'] == 'main'
+end
+
+# Only possible when the image was loaded rather than pushed, otherwise it
+# would have to be pulled back from the registry.
+def test_image(image)
+  args = ['docker', 'run', '--rm', image['tags_with_repository'].first, 'emacs', '--version']
+
+  puts format('>>> Running command: %s', args.join(' '))
+  system(*args) || abort('Test failed')
 end
 
 def parse_subdirs(subdirs)
