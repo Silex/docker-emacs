@@ -32,6 +32,12 @@ jobs:
 
   build:
     needs: matrix
+    # Pull requests from forks receive no secrets nor variables, so they cannot
+    # reach the registry mirror and would exhaust Docker Hub's anonymous pull
+    # quota. Contributors verify their images locally instead, see README.md.
+    if: >-
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
