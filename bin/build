@@ -121,7 +121,7 @@ def parse_options
   options = {}
 
   parser = OptionParser.new do |opts|
-    opts.banner = 'Usage: build --os OS --version VERSION --subdirs SUBDIRS'
+    opts.banner = 'Usage: build --os OS --version VERSION [--subdirs SUBDIRS]'
     opts.separator ''
     opts.separator 'Build an image'
 
@@ -133,7 +133,7 @@ def parse_options
       options[:version] = version
     end
 
-    opts.on('--subdirs SUBDIRS', 'Image SUBDIRS (required)') do |subdirs|
+    opts.on('--subdirs SUBDIRS', 'Image SUBDIRS (default: none)') do |subdirs|
       options[:subdirs] = subdirs
     end
 
@@ -155,7 +155,6 @@ def parse_options
   missing = []
   missing << '--os' unless options[:os]
   missing << '--version' unless options[:version]
-  missing << '--subdirs' unless options[:subdirs]
 
   unless missing.empty?
     STDERR.puts "Missing required option(s): #{missing.join(', ')}"
