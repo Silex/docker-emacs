@@ -281,5 +281,16 @@ docker run -it --rm silex/emacs
 They are very welcome! The basic workflow is as follow:
 
 - Modify `images.yml`.
-- Modify `README.md.template` and files in the `dockerfiles` directory if needed.
+- Modify `templates/README.md` and the Dockerfiles in the `templates` directory if needed.
 - Run `bin/images --generate` to spread the changes everywhere.
+- Build the images locally, for instance for Emacs 31.1:
+
+``` shell
+bin/build --os debian --version 31.1 --subdirs ci,ci/cask,ci/eask,ci/eldev,ci/keg
+bin/build --os alpine --version 31.1 --subdirs ci,ci/cask,ci/eask,ci/eldev,ci/keg
+```
+
+`bin/build` runs `emacs --version` on every image it builds, which is the real
+verification of a change: the build checks are skipped for pull requests from
+forks, because GitHub does not pass repository secrets to them and CI cannot
+reach the registry mirror.
