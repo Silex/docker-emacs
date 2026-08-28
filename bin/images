@@ -293,7 +293,7 @@ def generate_readme(images)
 
   dockerhub_content = template_content.dup
   dockerhub_content.gsub!('{{TAGS}}', short_tags.join("\n"))
-  dockerhub_content.sub!('# Tags', "# Tags\n\nFull image list: https://github.com/Silex/docker-emacs#tags")
+  dockerhub_content.sub!('## Tags', "## Tags\n\nFull image list: https://github.com/Silex/docker-emacs#tags")
   File.write('README.dockerhub.md', dockerhub_content)
 end
 

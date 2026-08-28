@@ -1,6 +1,8 @@
+# docker-emacs
+
 ![https://github.com/Silex/docker-emacs/actions](https://github.com/Silex/docker-emacs/actions/workflows/ci.yml/badge.svg)
 
-# Description
+## Description
 
 Run Emacs in docker containers!
 
@@ -9,7 +11,7 @@ Docker Hub: https://hub.docker.com/r/silex/emacs
 
 Wraps [nix-emacs-ci](https://github.com/purcell/nix-emacs-ci) in docker images.
 
-# Images
+## Images
 
 | OS                                | Tag                      | Size (MB) | Inherits from      | Contents                                                               |
 |-----------------------------------|--------------------------|-----------|--------------------|------------------------------------------------------------------------|
@@ -26,7 +28,7 @@ Wraps [nix-emacs-ci](https://github.com/purcell/nix-emacs-ci) in docker images.
 | [alpine](https://alpinelinux.org) | $version-alpine-ci-eldev | 250       | $version-alpine-ci | [eldev](https://github.com/doublep/eldev)                              |
 | [alpine](https://alpinelinux.org) | $version-alpine-ci-keg   | 250       | $version-alpine-ci | [keg](https://github.com/conao3/keg.el)                                |
 
-# Tags
+## Tags
 
 - [`master-debian`, `master`](https://github.com/Silex/docker-emacs/blob/main/images/master/debian/Dockerfile)
 - [`master-debian-ci`, `master-ci`](https://github.com/Silex/docker-emacs/blob/main/images/master/debian/ci/Dockerfile)
@@ -259,13 +261,13 @@ Wraps [nix-emacs-ci](https://github.com/purcell/nix-emacs-ci) in docker images.
 - [`23.4-debian`, `23.4`, `23-debian`, `23`](https://github.com/Silex/docker-emacs/blob/main/images/23.4/debian/Dockerfile)
 - [`23.4-debian-ci`, `23.4-ci`, `23-debian-ci`, `23-ci`](https://github.com/Silex/docker-emacs/blob/main/images/23.4/debian/ci/Dockerfile)
 
-# Usage
+## Usage
 
 ``` shell
 docker run -it --rm silex/emacs
 ```
 
-# Alternatives
+## Alternatives
 
 - [flycheck/emacs-cask](https://hub.docker.com/r/flycheck/emacs-cask): collection of docker images containing a
   minimal Emacs compiled from source with Cask.
@@ -276,7 +278,7 @@ docker run -it --rm silex/emacs
 - [JAremko/docker-emacs](https://github.com/JAremko/docker-emacs): collection of docker images with focus on GUI usage.
 - [rejeep/evm](https://github.com/rejeep/evm): pre-built Emacs binaries.
 
-# Contributions
+## Contributions
 
 They are very welcome! The basic workflow is as follow:
 
