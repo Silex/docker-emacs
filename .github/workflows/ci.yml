@@ -36,10 +36,13 @@ jobs:
 
       - name: Setup variables
         run: |
-          echo "os=     $(bin/images --json | jq -c '.oses')"           >> $GITHUB_ENV
-          echo "version=$(bin/images --json | jq -c '.versions')"       >> $GITHUB_ENV
-          echo "include=$(bin/images --json | jq -c '.github.include')" >> $GITHUB_ENV
-          echo "exclude=$(bin/images --json | jq -c '.github.exclude')" >> $GITHUB_ENV
+          images="$(bin/images --json)"
+          {
+            echo "os=$(jq -c '.oses' <<< "$images")"
+            echo "version=$(jq -c '.versions' <<< "$images")"
+            echo "include=$(jq -c '.github.include' <<< "$images")"
+            echo "exclude=$(jq -c '.github.exclude' <<< "$images")"
+          } >> "$GITHUB_ENV"
 
   build:
     needs: matrix
@@ -66,6 +69,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
+          # bin/build reads SOURCE_DATE_EPOCH from each Dockerfile's last commit.
           fetch-depth: 0
 
       - name: Login to Docker Hub
@@ -128,8 +132,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
 
       - uses: ruby/setup-ruby@v1
 
