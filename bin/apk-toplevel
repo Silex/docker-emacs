@@ -1,8 +1,0 @@
-#!/usr/bin/env ruby
-
-packages = `apk info 2>/dev/null`.split("\n").sort
-toplevel = packages.select do |p|
-  dependencies = `apk info -r #{p} 2>/dev/null`.split("\n")[1..-1]
-  dependencies.empty?
-end
-puts toplevel.join("\n")
