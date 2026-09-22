@@ -255,25 +255,31 @@ class Image
   end
 end
 
-def generate_dockerfiles(images)
-  puts '>>> generating dockerfiles'
-  images.map(&:directory).uniq.each { |path| FileUtils.rm_rf(path) }
+CACHE_BUST_LINE = 'ADD https://api.github.com/repos/purcell/nix-emacs-ci/commits?per_page=1 /tmp/cache'
+README_TEMPLATE = File.join('templates', 'README.md')
 
-  images.each do |image|
-    abort format('Dockerfile template not found at %s', image.template) unless File.exist?(image.template)
+# Docker Hub truncates a repository description past this many bytes, which is
+# why README.dockerhub.md lists fewer tags than README.md.
+DOCKERHUB_DESCRIPTION_LIMIT = 25_000
 
-    FileUtils.mkdir_p(image.directory)
-    content = File.read(image.template)
-    content.gsub!('{{NIX_VERSION}}', image.nix_version)
-    if Image.cache_bust_versions.include?(image.version)
-      cache_bust = 'ADD https://api.github.com/repos/purcell/nix-emacs-ci/commits?per_page=1 /tmp/cache'
-      content.gsub!(/\n{{CACHE_BUST}}/, "\n#{cache_bust}")
-    else
-      content.gsub!(/\n{{CACHE_BUST}}/, '')
-    end
-    content.gsub!('{{DEPENDS}}', image.depends) if image.depends
-    File.write(image.dockerfile, content)
-  end
+# Renders every generated file to a { path => content } map. Nothing is written,
+# so a caller may write the result or compare it against the working tree.
+def rendered_files(images)
+  files = {}
+  images.each { |image| files[image.dockerfile] = render_dockerfile(image) }
+  files.merge(render_readmes(images))
+end
+
+def render_dockerfile(image)
+  abort format('Dockerfile template not found at %s', image.template) unless File.exist?(image.template)
+
+  cache_bust = Image.cache_bust_versions.include?(image.version) ? "\n#{CACHE_BUST_LINE}" : ''
+
+  content = File.read(image.template)
+  content = content.gsub('{{NIX_VERSION}}', image.nix_version)
+  content = content.gsub("\n{{CACHE_BUST}}", cache_bust)
+  content = content.gsub('{{DEPENDS}}', image.depends) if image.depends
+  content
 end
 
 def tag_bullets(images)
@@ -287,34 +293,71 @@ def tag_bullets(images)
   bullets.join("\n")
 end
 
-def generate_readme(images)
-  puts '>>> generating README.md'
+def render_readmes(images)
+  abort format('README template not found at %s', README_TEMPLATE) unless File.exist?(README_TEMPLATE)
 
-  readme = File.join('templates', 'README.md')
-  abort format('README template not found at %s', readme) unless File.exist?(readme)
+  template = File.read(README_TEMPLATE)
 
-  template_content = File.read(readme)
-  content = template_content.dup
-  content.gsub!('{{TAGS}}', tag_bullets(images))
-  File.write('README.md', content)
-
-  # Docker Hub description: only keep master + latest for each major (25,000 bytes description limit).
+  # Only master and the latest release of each major, to stay under the limit.
   latest_versions = Image.major_latests
   short = images.select do |image|
     image.version == 'master' || latest_versions.include?(image.version)
   end
 
-  dockerhub_content = template_content.dup
-  dockerhub_content.gsub!('{{TAGS}}', tag_bullets(short))
-  dockerhub_content.sub!('## Tags', format("## Tags\n\nFull image list: %s#tags", Image::SOURCE_URL))
-  File.write('README.dockerhub.md', dockerhub_content)
+  dockerhub = template.gsub('{{TAGS}}', tag_bullets(short))
+  dockerhub = dockerhub.sub('## Tags', format("## Tags\n\nFull image list: %s#tags", Image::SOURCE_URL))
+
+  {
+    'README.md' => template.gsub('{{TAGS}}', tag_bullets(images)),
+    'README.dockerhub.md' => dockerhub
+  }
+end
+
+def verify_dockerhub_size(files)
+  size = files['README.dockerhub.md'].bytesize
+  return if size <= DOCKERHUB_DESCRIPTION_LIMIT
+
+  abort format('README.dockerhub.md is %d bytes, over the %d byte Docker Hub description limit. Reduce the tags it lists.',
+               size, DOCKERHUB_DESCRIPTION_LIMIT)
+end
+
+def generate(files)
+  puts '>>> generating the Dockerfiles and READMEs'
+  # images/ holds nothing but generated Dockerfiles, so removing it also drops
+  # the directories of a version deleted from images.yml.
+  FileUtils.rm_rf('images')
+
+  files.each do |path, content|
+    FileUtils.mkdir_p(File.dirname(path))
+    File.write(path, content)
+  end
+end
+
+def check(files)
+  problems = files.filter_map do |path, content|
+    next format('%-10s %s', 'missing:', path) unless File.exist?(path)
+    next format('%-10s %s', 'differs:', path) if File.read(path) != content
+  end
+
+  extra = Dir.glob(File.join('images', '**', 'Dockerfile')).sort - files.keys
+  problems += extra.map { |path| format('%-10s %s', 'orphaned:', path) }
+
+  if problems.empty?
+    puts 'Generated files are up to date.'
+    return
+  end
+
+  warn 'Generated files do not match images.yml and templates/. Run bin/images --generate.'
+  problems.each { |problem| warn format('  %s', problem) }
+  exit 1
 end
 
 def run(options)
-  if options[:generate]
-    images = Image.all
-    generate_dockerfiles(images)
-    generate_readme(images)
+  if options[:generate] || options[:check]
+    files = rendered_files(Image.all)
+    verify_dockerhub_size(files)
+    generate(files) if options[:generate]
+    check(files) if options[:check]
   end
 
   puts Image.to_json if options[:json]
@@ -329,6 +372,10 @@ def parse_options
 
     opts.on('--generate', 'Generate Dockerfiles and README') do
       options[:generate] = true
+    end
+
+    opts.on('--check', 'Verify the generated files are up to date') do
+      options[:check] = true
     end
 
     opts.on('--json', 'Output images as JSON') do
