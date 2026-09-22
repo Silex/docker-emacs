@@ -7,8 +7,7 @@ require 'time'
 options = {
   repo: ENV['GITHUB_REPOSITORY'],
   run_id: ENV['GITHUB_RUN_ID'],
-  per_page: 100,
-  sort: 'duration'
+  per_page: 100
 }
 
 OptionParser.new do |parser|
@@ -23,7 +22,7 @@ if options[:repo].to_s.empty? || options[:run_id].to_s.empty?
 end
 
 api_path = format('/repos/%s/actions/runs/%s/jobs?per_page=%d', options[:repo], options[:run_id], options[:per_page])
-cmd = ['gh', 'api', '-H', 'Accept: application/vnd.github+json', api_path]
+cmd = ['gh', 'api', '--paginate', '--slurp', '-H', 'Accept: application/vnd.github+json', api_path]
 
 output = IO.popen(cmd, err: [:child, :out], &:read)
 unless $?.success?
@@ -31,20 +30,22 @@ unless $?.success?
   exit 1
 end
 
-payload = JSON.parse(output)
-jobs = payload.fetch('jobs', []).map do |job|
-  started = Time.parse(job.fetch('started_at'))
+# --slurp wraps every page in an outer array, so the pages are concatenated.
+pages = JSON.parse(output)
+jobs = pages.flat_map { |page| page.fetch('jobs', []) }.map do |job|
+  # A queued job has neither timestamp yet.
+  started_at = job['started_at']
   completed_at = job['completed_at']
+  started = started_at && Time.parse(started_at)
   completed = completed_at ? Time.parse(completed_at) : Time.now
-  duration = completed - started
 
   {
     name: job.fetch('name'),
     status: job.fetch('status'),
     conclusion: job['conclusion'] || '-',
-    started_at: job.fetch('started_at'),
+    started_at: started_at || '-',
     completed_at: completed_at || '-',
-    duration: duration
+    duration: started ? completed - started : 0
   }
 end
 
