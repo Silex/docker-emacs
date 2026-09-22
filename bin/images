@@ -17,19 +17,15 @@ class Image
 
   class << self
     def all
-      images = []
-      versions.each do |version|
-        exclusion = exclusions.find { |h| h['version'] == version }
-        oses.each do |os|
-          next if exclusion&.dig('os')&.include?(os)
-          images << Image.new(version: version, os: os, subdir: nil)
-          subdirs.each do |child_subdir|
-            next if exclusion&.dig('subdirs')&.include?(child_subdir)
-            images << Image.new(version: version, os: os, subdir: child_subdir)
+      versions.flat_map do |version|
+        buildable_oses(version).flat_map do |os|
+          root = Image.new(version: version, os: os, subdir: nil)
+          children = buildable_subdirs(version).map do |subdir|
+            Image.new(version: version, os: os, subdir: subdir)
           end
+          [root] + children
         end
       end
-      images
     end
 
     def data
@@ -61,12 +57,38 @@ class Image
     end
 
     def exclusions
-      # Ensure versions are strings
-      data['exclusions'].map do |h|
-        h['version'] = h['version'].to_s
-        h['subdirs'] = Array(h['subdirs']).map(&:to_s) if h.key?('subdirs')
-        h
+      # Normalize the version to a string and the subdir list to an array,
+      # without writing back into the memoized YAML.
+      @exclusions ||= Array(data['exclusions']).map do |entry|
+        entry.each_with_object({}) do |(key, value), normalized|
+          normalized[key] = case key
+                            when 'version' then value.to_s
+                            when 'subdirs' then Array(value).map(&:to_s)
+                            else value
+                            end
+        end
       end
+    end
+
+    # A version may carry several exclusion entries; every one of them applies.
+    def exclusions_for(version)
+      exclusions.select { |entry| entry['version'] == version }
+    end
+
+    def excluded_oses(version)
+      exclusions_for(version).flat_map { |entry| Array(entry['os']) }.uniq
+    end
+
+    def excluded_subdirs(version)
+      exclusions_for(version).flat_map { |entry| Array(entry['subdirs']) }.uniq
+    end
+
+    def buildable_oses(version)
+      oses - excluded_oses(version)
+    end
+
+    def buildable_subdirs(version)
+      subdirs - excluded_subdirs(version)
     end
 
     def github
@@ -78,18 +100,19 @@ class Image
 
     def github_include
       include = [{ subdirs: subdirs }]
-      with_excluded_subdirs = exclusions.select{ |h| h.has_key?('subdirs') }
-      with_excluded_subdirs.each do |h|
-        include << { version: h['version'], subdirs: subdirs - h['subdirs'] }
+      versions.each do |version|
+        excluded = excluded_subdirs(version)
+        next if excluded.empty?
+
+        include << { version: version, subdirs: subdirs - excluded }
       end
       include
     end
 
     def github_exclude
-      with_excluded_os = exclusions.select{ |h| h.has_key?('os') }
-      with_excluded_os.flat_map do |h|
-        h['os'].map do |os|
-          { version: h['version'], os: os }
+      versions.flat_map do |version|
+        excluded_oses(version).map do |os|
+          { version: version, os: os }
         end
       end
     end
@@ -237,6 +260,8 @@ def generate_dockerfiles(images)
   images.map(&:directory).uniq.each { |path| FileUtils.rm_rf(path) }
 
   images.each do |image|
+    abort format('Dockerfile template not found at %s', image.template) unless File.exist?(image.template)
+
     FileUtils.mkdir_p(image.directory)
     content = File.read(image.template)
     content.gsub!('{{NIX_VERSION}}', image.nix_version)
@@ -266,10 +291,7 @@ def generate_readme(images)
   puts '>>> generating README.md'
 
   readme = File.join('templates', 'README.md')
-  unless File.exist?(readme)
-    warn "README template not found at #{readme}"
-    return
-  end
+  abort format('README template not found at %s', readme) unless File.exist?(readme)
 
   template_content = File.read(readme)
   content = template_content.dup
@@ -323,12 +345,12 @@ def parse_options
     parser.parse!
   rescue OptionParser::InvalidOption => e
     warn e.message
-    puts parser
+    warn parser
     exit(1)
   end
 
   if options.empty?
-    puts parser
+    warn parser
     exit(1)
   end
 
