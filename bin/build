@@ -3,11 +3,15 @@
 require 'json'
 require 'optparse'
 
+BUILD_ATTEMPTS     = 3
+BUILD_RETRY_DELAY  = 15
+
 def build(options)
   os, version, subdirs = options.values_at(:os, :version, :subdirs)
   subdirs = parse_subdirs(subdirs)
   images = load_images.select { |img| img.values_at('os', 'version') == [os, version] }
   root = images.find { |img| img['subdir'].nil? }
+  abort format('No image for os %s and version %s. Check images.yml, the pair may be excluded.', os, version) if root.nil?
   subdir_index = index_by_subdir(images)
   build_subdirs = build_order(subdirs, subdir_index.keys)
   build_list = [root] + build_subdirs.map { |subdir| subdir_index.fetch(subdir) }
@@ -18,11 +22,11 @@ def build(options)
 end
 
 def load_images
-  command = format('%s/images --json', File.expand_path(__dir__))
-  json = `#{command}`.strip
-  abort 'Failed to retrieve images' if json.empty?
-  data = JSON.parse(json)
-  data['images']
+  command = [File.join(__dir__, 'images'), '--json']
+  json = IO.popen(command, &:read)
+  abort 'Failed to retrieve images' unless $?.success?
+
+  JSON.parse(json)['images']
 end
 
 def index_by_subdir(images)
@@ -48,6 +52,9 @@ def build_image(image)
     args << '--sbom=false'
     args << '--cache-from' << format('type=registry,ref=%s', image['cache'])
     args << '--cache-to' << format('type=registry,ref=%s,mode=max', image['cache'])
+    # The quotes around name= are buildx's own CSV quoting, which keeps the
+    # comma-separated tag list in one field. system() takes an argv, so no
+    # shell ever sees them.
     output = ['type=image', "\"name=#{image['tags_with_repository'].join(',')}\"", 'push=true', 'rewrite-timestamp=true']
     args << '--output' << output.join(',')
   else
@@ -60,9 +67,23 @@ def build_image(image)
   # Build image
   puts format('>>> Running command: %s', args.join(' '))
   env = { 'SOURCE_DATE_EPOCH' => source_date_epoch }
-  system(env, *args) || abort('Build failed')
+  build_with_retries(env, args)
 
   test_image(image) unless push?
+end
+
+# Registry authentication and layer transfers fail transiently often enough
+# that a single connection reset would otherwise lose an entire matrix run.
+def build_with_retries(env, args)
+  BUILD_ATTEMPTS.times do |attempt|
+    return if system(env, *args)
+
+    remaining = BUILD_ATTEMPTS - attempt - 1
+    abort('Build failed') if remaining.zero?
+
+    puts format('>>> Build failed, retrying in %ds (%d attempt(s) left)', BUILD_RETRY_DELAY, remaining)
+    sleep(BUILD_RETRY_DELAY)
+  end
 end
 
 def push?
@@ -146,8 +167,8 @@ def parse_options
   begin
     parser.parse!
   rescue OptionParser::InvalidOption => e
-    STDERR.puts e.message
-    STDERR.puts parser
+    warn e.message
+    warn parser
     exit 1
   end
 
@@ -157,8 +178,8 @@ def parse_options
   missing << '--version' unless options[:version]
 
   unless missing.empty?
-    STDERR.puts "Missing required option(s): #{missing.join(', ')}"
-    STDERR.puts parser
+    warn "Missing required option(s): #{missing.join(', ')}"
+    warn parser
     exit 1
   end
 
@@ -167,7 +188,9 @@ end
 
 def main
   options = parse_options
-  build(options)
+  Dir.chdir(File.expand_path('..', __dir__)) do
+    build(options)
+  end
 end
 
 main
