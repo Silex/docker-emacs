@@ -1,8 +1,10 @@
-# What
+# Pull request
 
-# Why
+## What
 
-# Checklist
+## Why
+
+## Checklist
 
 - [ ] I ran `bin/images --generate` to spread my changes everywhere.
 - [ ] I built the images locally for both operating systems, which also runs
