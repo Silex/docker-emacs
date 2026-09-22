@@ -56,6 +56,7 @@ They are very welcome! The basic workflow is as follow:
 - Modify `images.yml`.
 - Modify `templates/README.md` and the Dockerfiles in the `templates` directory if needed.
 - Run `bin/images --generate` to spread the changes everywhere.
+- Run `bin/images --check` to confirm nothing is out of date; CI runs the same check.
 - Build the images locally, for instance for Emacs 31.1:
 
 ``` shell

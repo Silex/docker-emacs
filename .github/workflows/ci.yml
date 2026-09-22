@@ -20,6 +20,18 @@ permissions:
   contents: read
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - uses: ruby/setup-ruby@v1
+
+      - name: Check that the generated files are up to date
+        run: bin/images --check
+
   matrix:
     runs-on: ubuntu-latest
     timeout-minutes: 10
