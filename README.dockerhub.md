@@ -1,6 +1,6 @@
 # docker-emacs
 
-![https://github.com/Silex/docker-emacs/actions](https://github.com/Silex/docker-emacs/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/Silex/docker-emacs/actions/workflows/ci.yml/badge.svg)](https://github.com/Silex/docker-emacs/actions/workflows/ci.yml)
 
 ## Description
 
@@ -14,7 +14,7 @@ Wraps [nix-emacs-ci](https://github.com/purcell/nix-emacs-ci) in docker images.
 ## Images
 
 | OS                                | Tag                      | Size (MB) | Inherits from      | Contents                                                               |
-|-----------------------------------|--------------------------|-----------|--------------------|------------------------------------------------------------------------|
+| --------------------------------- | ------------------------ | --------- | ------------------ | ---------------------------------------------------------------------- |
 | [debian](https://debian.org)      | $version                 | 370       |                    | Emacs & curl, gnupg, ssh, wget                                         |
 | [debian](https://debian.org)      | $version-ci              | 470       | $version           | [git](https://git-scm.com) & make                                      |
 | [debian](https://debian.org)      | $version-ci-cask         | 510       | $version-ci        | [Cask](https://cask.readthedocs.io) & [Python](https://www.python.org) |
@@ -142,18 +142,19 @@ docker run -it --rm silex/emacs
 
 ## Alternatives
 
-- [flycheck/emacs-cask](https://hub.docker.com/r/flycheck/emacs-cask): collection of docker images containing a
-  minimal Emacs compiled from source with Cask.
-- [flycheck/emacs-travis](https://github.com/flycheck/emacs-travis): makefile which provides targets to
-  install Emacs stable and emacs-snapshot, Texinfo and Cask.
-- [jgkamat/airy-docker-emacs](https://github.com/jgkamat/airy-docker-emacs): alpine-based docker images that have
-  Emacs installed through the package manager.
-- [JAremko/docker-emacs](https://github.com/JAremko/docker-emacs): collection of docker images with focus on GUI usage.
+- [flycheck/emacs-cask](https://hub.docker.com/r/flycheck/emacs-cask): collection of docker
+  images containing a minimal Emacs compiled from source with Cask.
+- [flycheck/emacs-travis](https://github.com/flycheck/emacs-travis): makefile which provides
+  targets to install Emacs stable and emacs-snapshot, Texinfo and Cask.
+- [jgkamat/airy-docker-emacs](https://github.com/jgkamat/airy-docker-emacs): alpine-based docker
+  images that have Emacs installed through the package manager.
+- [JAremko/docker-emacs](https://github.com/JAremko/docker-emacs): collection of docker images
+  with focus on GUI usage.
 - [rejeep/evm](https://github.com/rejeep/evm): pre-built Emacs binaries.
 
 ## Contributions
 
-They are very welcome! The basic workflow is as follow:
+They are very welcome! The basic workflow is as follows:
 
 - Modify `images.yml`.
 - Modify `templates/README.md` and the Dockerfiles in the `templates` directory if needed.

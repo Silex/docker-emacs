@@ -83,8 +83,8 @@ hash_password() {
 # --- env drift -------------------------------------------------------------
 
 # An env file is rendered once and never revisited, so a key added to its template
-# afterwards never reaches an install that already exists — and a missing key is not a
-# config error, it is whatever fallback the software happened to choose. A registry with
+# afterwards never reaches an install that already exists, and a missing key is not a
+# config error: it is whatever fallback the software happened to choose. A registry with
 # no REGISTRY_PROXY_USERNAME pulls anonymously, which is the rate limit this mirror exists
 # to avoid. Compare key names and report the gap; the operator pastes the lines, because
 # appending a default would silently change a running system at the next restart.
@@ -96,7 +96,7 @@ check_env_drift() {
   if [[ ! -f "$dest" ]]; then
     if (( check_only )); then
       env_drift=1
-      echo "${dest} does not exist — run bin/configure." >&2
+      echo "${dest} does not exist, run bin/configure." >&2
     fi
     return 0
   fi
@@ -114,7 +114,7 @@ check_env_drift() {
   for key in "${missing[@]}"; do
     line="$(grep -m1 "^${key}" "$tmpl")"
     if [[ "$line" == *'${'* ]]; then
-      echo "  ${line}    # generated value — supply one" >&2
+      echo "  ${line}    # generated value, supply one" >&2
     else
       echo "  ${line}" >&2
     fi
@@ -204,7 +204,7 @@ find "${ROOT}/data" -type f -name '*.env' -exec chmod 600 {} +
 
 # Runs on every invocation, the "already configured" path included: that path is the one an
 # install spends its whole life on, and the only one drift can appear on. A warning here,
-# never a failure — bin/configure --check is the gate.
+# never a failure; bin/configure --check is the gate.
 check_all_env_drift
 
 echo

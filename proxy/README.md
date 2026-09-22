@@ -1,6 +1,7 @@
 # Docker Hub pull-through proxy cache (Caddy + Let's Encrypt)
 
-TLS-terminated pull-through cache for Docker Hub. GitHub-hosted runners pull through your mirror instead of hitting Docker Hub directly.
+TLS-terminated pull-through cache for Docker Hub. GitHub-hosted runners pull through your
+mirror instead of hitting Docker Hub directly.
 
 ## Requirements
 
@@ -13,7 +14,7 @@ TLS-terminated pull-through cache for Docker Hub. GitHub-hosted runners pull thr
 
 Run the configure script and answer its prompts:
 
-```
+``` shell
 ./bin/configure
 ```
 
@@ -27,20 +28,20 @@ variables.
 
 Start the stack:
 
-```
+``` shell
 docker compose up -d
 ```
 
 ## Upgrading
 
-```
+``` shell
 git pull
 ./bin/configure --check
 ```
 
 `--check` writes nothing and exits non-zero when an env file is missing a key its template
 defines. Env files are rendered once and never revisited, so a key added to a template after
-this mirror was set up never reaches it on its own — and a missing key is not an error, it is
+this mirror was set up never reaches it on its own, and a missing key is not an error: it is
 whatever default the software falls back to.
 
 The check compares key names only. It cannot see a value that drifted away from its template,
@@ -48,7 +49,7 @@ nor a key the software reads that was never in a template at all.
 
 ## GitHub Actions BuildKit configuration
 
-```
+``` yaml
 - uses: docker/setup-buildx-action@master
   with:
     buildkitd-config-inline: |
@@ -56,7 +57,7 @@ nor a key the software reads that was never in a template at all.
         mirrors = ["https://mirror.example.com"]
 ```
 
-Add `docker login` step for the mirror before the build.
+Add a `docker login` step for the mirror before the build.
 
 ## Notes
 
