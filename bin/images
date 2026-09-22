@@ -5,19 +5,10 @@ require 'json'
 require 'optparse'
 require 'fileutils'
 
-class String
-  def quotify
-    format('"%s"', self)
-  end
-
-  def backquotify
-    format('`%s`', self)
-  end
-end
-
 class Image
   REPOSITORY       = 'silex/emacs'
   CACHE_REPOSITORY = 'ghcr.io/silex/emacs-cache'
+  SOURCE_URL       = 'https://github.com/Silex/docker-emacs'
   IMAGES_YML       = 'images.yml'
 
   attr_reader :os
@@ -260,14 +251,19 @@ def generate_dockerfiles(images)
   end
 end
 
-def generate_readme(images)
-  puts '>>> generating README.md'
-  # Group by version and reverse the order if needed
-  tags = images.group_by(&:version).values.reverse.flatten.flat_map do |image|
-    format('- [%s](https://github.com/Silex/docker-emacs/blob/main/%s)',
-           image.tags.map(&:backquotify).join(', '),
+def tag_bullets(images)
+  # Group by version and reverse the order so the newest comes first.
+  bullets = images.group_by(&:version).values.reverse.flatten.map do |image|
+    format('- [%s](%s/blob/main/%s)',
+           image.tags.map { |tag| format('`%s`', tag) }.join(', '),
+           Image::SOURCE_URL,
            image.dockerfile)
   end
+  bullets.join("\n")
+end
+
+def generate_readme(images)
+  puts '>>> generating README.md'
 
   readme = File.join('templates', 'README.md')
   unless File.exist?(readme)
@@ -277,23 +273,18 @@ def generate_readme(images)
 
   template_content = File.read(readme)
   content = template_content.dup
-  content.gsub!('{{TAGS}}', tags.join("\n"))
+  content.gsub!('{{TAGS}}', tag_bullets(images))
   File.write('README.md', content)
 
   # Docker Hub description: only keep master + latest for each major (25,000 bytes description limit).
   latest_versions = Image.major_latests
-  short_tags = images.select do |image|
+  short = images.select do |image|
     image.version == 'master' || latest_versions.include?(image.version)
-  end
-  short_tags = short_tags.group_by(&:version).values.reverse.flatten.flat_map do |image|
-    format('- [%s](https://github.com/Silex/docker-emacs/blob/main/%s)',
-           image.tags.map(&:backquotify).join(', '),
-           image.dockerfile)
   end
 
   dockerhub_content = template_content.dup
-  dockerhub_content.gsub!('{{TAGS}}', short_tags.join("\n"))
-  dockerhub_content.sub!('## Tags', "## Tags\n\nFull image list: https://github.com/Silex/docker-emacs#tags")
+  dockerhub_content.gsub!('{{TAGS}}', tag_bullets(short))
+  dockerhub_content.sub!('## Tags', format("## Tags\n\nFull image list: %s#tags", Image::SOURCE_URL))
   File.write('README.dockerhub.md', dockerhub_content)
 end
 
