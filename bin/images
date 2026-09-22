@@ -317,8 +317,8 @@ def verify_dockerhub_size(files)
   size = files['README.dockerhub.md'].bytesize
   return if size <= DOCKERHUB_DESCRIPTION_LIMIT
 
-  abort format('README.dockerhub.md is %d bytes, over the %d byte Docker Hub description limit. Reduce the tags it lists.',
-               size, DOCKERHUB_DESCRIPTION_LIMIT)
+  message = 'README.dockerhub.md is %d bytes, over the %d byte Docker Hub description limit. Reduce the tags it lists.'
+  abort format(message, size, DOCKERHUB_DESCRIPTION_LIMIT)
 end
 
 def generate(files)

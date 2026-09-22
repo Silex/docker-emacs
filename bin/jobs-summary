@@ -70,7 +70,8 @@ puts '| --- | ------ | ---------- | ------- | --------- | -------- |'
 sorted.each do |job|
   name = job[:name].gsub('|', '\|')
   duration = format_duration(job[:duration])
-  puts format('| %s | %s | %s | %s | %s | %s |', name, job[:status], job[:conclusion], job[:started_at], job[:completed_at], duration)
+  cells = [name, job[:status], job[:conclusion], job[:started_at], job[:completed_at], duration]
+  puts format('| %s |', cells.join(' | '))
 end
 puts ''
 puts '_Sorted by duration (desc)._'

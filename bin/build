@@ -11,7 +11,8 @@ def build(options)
   subdirs = parse_subdirs(subdirs)
   images = load_images.select { |img| img.values_at('os', 'version') == [os, version] }
   root = images.find { |img| img['subdir'].nil? }
-  abort format('No image for os %s and version %s. Check images.yml, the pair may be excluded.', os, version) if root.nil?
+  message = 'No image for os %s and version %s. Check images.yml, the pair may be excluded.'
+  abort format(message, os, version) if root.nil?
   subdir_index = index_by_subdir(images)
   build_subdirs = build_order(subdirs, subdir_index.keys)
   build_list = [root] + build_subdirs.map { |subdir| subdir_index.fetch(subdir) }
@@ -55,7 +56,8 @@ def build_image(image)
     # The quotes around name= are buildx's own CSV quoting, which keeps the
     # comma-separated tag list in one field. system() takes an argv, so no
     # shell ever sees them.
-    output = ['type=image', "\"name=#{image['tags_with_repository'].join(',')}\"", 'push=true', 'rewrite-timestamp=true']
+    name = format('"name=%s"', image['tags_with_repository'].join(','))
+    output = ['type=image', name, 'push=true', 'rewrite-timestamp=true']
     args << '--output' << output.join(',')
   else
     args << '--load'
@@ -135,7 +137,8 @@ def read_source_date_epoch(path)
   epoch = IO.popen(['git', '-C', repo_root, 'log', '-1', '--format=%ct', '--', path], &:read).strip
   return epoch unless epoch.empty?
 
-  abort format('No git history found for %s. Ensure full git history is available (e.g., checkout with fetch-depth: 0).', path)
+  message = 'No git history found for %s. Ensure full git history is available (e.g., checkout with fetch-depth: 0).'
+  abort format(message, path)
 end
 
 def parse_options
