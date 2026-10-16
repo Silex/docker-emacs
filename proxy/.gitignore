@@ -1,1 +1,4 @@
 /data/
+
+# Per-host compose selection, written by bin/configure behind a shared proxy.
+/.env

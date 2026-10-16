@@ -17,6 +17,7 @@ TEMPLATE_DIR="${ROOT}/templates/render"
 
 CADDY_ENV="${ROOT}/data/caddy/config/.env"
 REGISTRY_ENV="${ROOT}/data/registry/config/.env"
+COMPOSE_ENV="${ROOT}/.env"
 
 check_only=0
 case "${1:-}" in
@@ -64,6 +65,7 @@ env_dest() {
   case "$1" in
     caddy) echo "$CADDY_ENV" ;;
     registry) echo "$REGISTRY_ENV" ;;
+    compose) echo "$COMPOSE_ENV" ;;
   esac
 }
 
@@ -71,6 +73,20 @@ env_dest() {
 render() {
   local tmpl="$1" out="$2" allow="$3"
   envsubst "$allow" < "${TEMPLATE_DIR}/${tmpl}" > "$out"
+}
+
+# Behind a reverse proxy shared with other stacks on the host, proxied.yml keeps Caddy down
+# and puts the registry on that proxy's network. The project-root .env selects it, so a plain
+# `docker compose` picks it up; with no .env the stack runs standalone.
+ask_shared_proxy() {
+  local reply
+  read -rp "Run behind a reverse proxy shared with other stacks on this host? [y/N]: " reply || true
+  [[ "${reply,,}" == "y" || "${reply,,}" == "yes" ]]
+}
+
+# Compose refuses to start a service on an external network that does not exist yet.
+create_proxy_network() {
+  docker network inspect proxy >/dev/null 2>&1 || docker network create proxy >/dev/null
 }
 
 # Caddy's basicauth directive reads a bcrypt hash, while hash-password now defaults to
@@ -156,6 +172,9 @@ if [[ -f "$CADDY_ENV" ]]; then
   echo "${CADDY_ENV} exists, keeping it."
 else
   echo "Configuring Caddy."
+  if [[ ! -f "$COMPOSE_ENV" ]] && ask_shared_proxy; then
+    printf 'COMPOSE_FILE=docker-compose.yml:proxied.yml\n' > "${tmp_dir}/compose.env"
+  fi
   prompt MIRROR_HOST "Public domain of the mirror" mirror.example.com
   prompt BASIC_AUTH_USER "User the CI logs in as" mirror
   BASIC_AUTH_PASSWORD="$(openssl rand -hex 24)"
@@ -179,7 +198,7 @@ fi
 if (( staged )); then
   echo
   echo "Will write:"
-  for name in caddy registry; do
+  for name in caddy registry compose; do
     if [[ -f "${tmp_dir}/${name}.env" ]]; then
       echo
       echo "===> $(env_dest "$name")"
@@ -192,7 +211,10 @@ if (( staged )); then
     echo "Nothing written; re-run bin/configure."
     exit 0
   fi
-  for name in caddy registry; do
+  if [[ -f "${tmp_dir}/compose.env" ]]; then
+    create_proxy_network
+  fi
+  for name in caddy registry compose; do
     if [[ -f "${tmp_dir}/${name}.env" ]]; then
       mv "${tmp_dir}/${name}.env" "$(env_dest "$name")"
     fi

@@ -7,6 +7,8 @@ x-default: &default
       max-file: '10'
 
 services:
+  # Behind a reverse proxy shared with other stacks, proxied.yml replaces this service with
+  # that proxy's network.
   caddy:
     <<: *default
     image: 'caddy:2'

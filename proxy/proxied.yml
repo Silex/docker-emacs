@@ -1,0 +1,18 @@
+# Behind a reverse proxy shared with other stacks on the host. Selected by the project-root .env
+# that bin/configure writes (COMPOSE_FILE=docker-compose.yml:proxied.yml): Caddy stays down and
+# the registry joins the shared proxy network, where that proxy reaches it as proxy-registry-1.
+# The shared proxy then carries the basic auth in front of the registry.
+
+services:
+  caddy:
+    profiles: ['ingress']
+
+  registry:
+    networks:
+      - 'default'
+      - 'proxy'
+
+networks:
+  proxy:
+    name: 'proxy'
+    external: true

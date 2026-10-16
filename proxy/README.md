@@ -32,6 +32,22 @@ Start the stack:
 docker compose up -d
 ```
 
+### Behind a shared reverse proxy
+
+On a host where another stack's reverse proxy already holds ports 80 and 443, answer yes when
+`bin/configure` asks about a shared proxy. It creates the external `proxy` Docker network if it
+is missing and writes a project-root `.env`:
+
+``` shell
+COMPOSE_FILE=docker-compose.yml:proxied.yml
+```
+
+`docker compose` then reads `proxied.yml` as well: Caddy stays down and the registry joins the
+`proxy` network, where the shared proxy reaches it as `proxy-registry-1` on port 5000. That proxy
+then owns the TLS certificate and the basic auth, so the credentials in `data/caddy/config/.env`
+go unused. Without the `.env`, the stack runs standalone with its own Caddy. `bin/configure` asks
+only on its first run; switch an existing install by writing or deleting the `.env` by hand.
+
 ## Upgrading
 
 ``` shell
